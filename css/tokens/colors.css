@@ -33,6 +33,15 @@
     --risa-data-blue-dim:    rgba(0, 102, 255, 0.1);
     --risa-data-blue-light:  #82baff;
 
+    /* ──────────────────────────────────────
+       [1-2] RISA™ 의미 기반 하이레벨 비즈니스 토큰 (Semantic Brand Asset)
+       현장 구조 언어를 브랜드 자산으로 번역한 RISA 핵심 심리 장치
+    ────────────────────────────────────── */
+    --risa-risk-critical:    var(--risa-risk-red);       /* 대표 형사 책임, 중대재해 원천 리스크 */
+    --risa-flow-warning:     var(--risa-warning-orange); /* 지게차 동선 꼬임, 작업자 우회 등 흐름 불안 요소 */
+    --risa-bottleneck-alert: var(--risa-warning-orange); /* 공정 정지 압박, 생산 가동 압박 병목 경고 */
+
+
 
     /* ──────────────────────────────────────
        [2] 브랜드 배경 컬러 (Brand Surface Colors)
