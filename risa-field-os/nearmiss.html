@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 아차사고(Near Miss) 분석지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #1E293B; --risa-orange: #F37021; --risa-red: #C53030; --line: #E2E8F0; --bg-risk: #FFF7ED; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; color: #1E293B; padding: 20px 0; }
+        
+        .page { 
+            background: white; width: 210mm; height: 296mm; 
+            padding: 15mm 20mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.3); 
+            display: flex; flex-direction: column;
+        }
+
+        header { border-bottom: 3px solid var(--risa-orange); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        header h1 { font-size: 24px; color: var(--risa-blue); font-weight: 900; }
+        .header-meta { text-align: right; }
+        .doc-no { font-size: 11px; color: #94A3B8; margin-bottom: 5px; }
+        .doc-tag { background: var(--risa-red); color: white; padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 4px; }
+        
+        /* 토글 버튼 스타일 추가 */
+        .risk-toggle { display: inline-block; padding: 2px 8px; border: 1.5px solid var(--risa-orange); border-radius: 4px; color: var(--risa-orange); font-weight: 900; font-size: 11px; cursor: pointer; margin-left: 10px; }
+
+        /* 가이드 버튼 */
+        .btn-guide { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: var(--risa-orange); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 1001; }
+        .guide-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
+        .guide-content { background: white; width: 90%; max-width: 550px; padding: 30px; border-radius: 20px; }
+
+        section { margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: 900; color: var(--risa-blue); margin-bottom: 10px; border-left: 5px solid var(--risa-orange); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        table th { background: #F1F5F9; border: 1px solid var(--line); padding: 10px; font-weight: 700; width: 20%; }
+        table td { border: 1px solid var(--line); padding: 12px; }
+
+        .risk-desc { background: var(--bg-risk); border: 1.5px solid #FED7AA; border-radius: 8px; padding: 15px; margin-top: 10px; min-height: 100px; }
+
+        [contenteditable="true"]:hover { background: #F8FAFC; outline: 1px dashed var(--risa-orange); }
+
+        .action-plan { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .plan-box { border: 1.5px solid var(--line); border-radius: 8px; padding: 15px; }
+        .plan-box h4 { font-size: 13px; color: var(--risa-blue); margin-bottom: 8px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+
+        .signature-box { margin-top: auto; border-top: 2px solid var(--risa-blue); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; height: 100vh; padding: 15mm 20mm; }
+            .btn-print, .btn-guide, .guide-modal { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-guide" onclick="openGuide()">💡</button>
+    <button class="btn-print" onclick="window.print()">분석지 출력 / 저장</button>
+
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <h3 style="color:var(--risa-blue); margin-bottom:15px;">📊 아차사고 분석 전략</h3>
+            <p style="font-size:14.5px; line-height:1.7; color:#334155;">
+                아차사고는 <b>'구조적 예방'</b>의 시작입니다.<br><br>
+                1. <b>발생 시간/상황:</b> "언제, 어떤 흐름에서" 사고가 날 뻔했는지 기록하세요.<br>
+                2. <b>재발 조건:</b> "물량이 많을 때", "어두울 때" 등 특정 조건을 찾는 것이 핵심입니다.<br>
+                3. <b>구조 개선:</b> 단순히 교육하겠다가 아니라, 동선 분리나 알람 설치 등 물리적 대책을 제안하세요.
+            </p>
+        </div>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>RISA™ 아차사고(Near Miss) 분석지</h1>
+            <div class="header-meta">
+                <div class="doc-no" contenteditable="true">DOC NO: RISA-NM-2026-001</div>
+                <div class="doc-tag">중대재해 예방 증빙자료</div>
+            </div>
+        </header>
+
+        <section>
+            <div class="section-title">01. 발생 개요 및 추적</div>
+            <table>
+                <tr>
+                    <th>발생 일시</th><td width="30%" contenteditable="true">2026. 05. 14 / 15:30</td>
+                    <th>관련 RA 번호</th><td width="30%" contenteditable="true" style="color:var(--risa-orange); font-weight:700;">RISA-RA-2026-011</td>
+                </tr>
+                <tr>
+                    <th>발생 장소</th><td contenteditable="true">제1하역장 중앙 통로</td>
+                    <th>재발 여부</th>
+                    <td>
+                        <span class="risk-toggle" onclick="cycleNearMiss(this, ['최초(First)', '반복(Repeat)', '상습(Habitual)'])">최초(First)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>관련 공정</th><td colspan="3" contenteditable="true">지게차 상차 및 제품 이동 공정</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">02. 상황 묘사 및 원인 분석</div>
+            <div class="risk-desc" contenteditable="true">
+                <strong>[상황]</strong> 제품 적치 후 회전하던 지게차가 사각지대에서 갑자기 튀어 나온 보행자를 발견하고 급제동함. 충돌은 없었으나 보행자와의 거리가 50cm 미만이었음.<br><br>
+                <strong>[원인]</strong> 해당 시간대 상차 집중으로 지게차 운행 속도가 빨라졌으며, 통로에 임시 적치된 제품들로 인해 보행자 시야가 가려지는 <strong>'구조적 사각지대'</strong>가 형성됨.
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">03. 재발 방지 대책</div>
+            <div class="action-plan">
+                <div class="plan-box">
+                    <h4>즉시 조치 (Immediate)</h4>
+                    <p style="font-size:13px; line-height:1.5; color:#475569;" contenteditable="true">통로 주변 임시 적치물 즉시 제거 및 보행자 주의 표지판 설치, 해당 운전자 안전 교육 실시</p>
+                </div>
+                <div class="plan-box">
+                    <h4 style="color:var(--risa-orange);">구조 개선 (Structural)</h4>
+                    <p style="font-size:13px; line-height:1.5; color:#475569;" contenteditable="true">사각지대 반사경 추가 설치 및 바닥 보행 동선 도색 분리, 피크 시간대 지게차 제한 속도 관리 체계 도입</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">04. 최종 조치 완료 확인 (Closed Loop)</div>
+            <table style="border: 2px solid var(--risa-blue);">
+                <tr>
+                    <th style="background:var(--risa-blue); color:white;">조치 완료일</th><td contenteditable="true">2026. 05. 16</td>
+                    <th style="background:var(--risa-blue); color:white;">확인자</th><td contenteditable="true">안전팀장 별이온 (인)</td>
+                </tr>
+                <tr>
+                    <th>조치 결과</th>
+                    <td colspan="3" contenteditable="true">
+                        물리적 안전 펜스 설치 완료 및 바닥 동선 도색 작업 종료. <br>
+                        <strong>[검증]</strong> 피크 시간대 지게차-보행자 간격 2m 이상 확보 확인됨.
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="signature-box" style="margin-top:10px;">
+            <div style="font-size: 13px; color:#64748B;">작성일: 2026. 05. 14</div>
+            <div style="font-size: 18px; font-weight: 900;">작성자: <span contenteditable="true" style="padding: 0 10px; border-bottom:1px solid #000;">별이온</span> (인)</div>
+        </div>
+
+        <footer style="margin-top: 30px; text-align: center; border-top: 1px solid var(--line); padding-top: 15px;">
+            <p style="font-size:11px; color:#94A3B8;">RISA™ | "규격이 아니라 구조를 봅니다." | 리스크 통합 시스템 감사</p>
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_NEARMISS_DATA';
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setupAutoSave(); });
+
+        function openGuide() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuide(e) { if (!e || e.target.id === 'guideModal' || e.target.tagName === 'SPAN') document.getElementById('guideModal').style.display = 'none'; }
+
+        function cycleNearMiss(el, levels) {
+            let current = el.innerText;
+            let nextIndex = (levels.indexOf(current) + 1) % levels.length;
+            el.innerText = levels[nextIndex];
+            if (el.innerText.includes('반복') || el.innerText.includes('상습')) {
+                el.style.color = 'var(--risa-red)'; el.style.borderColor = 'var(--risa-red)';
+            } else {
+                el.style.color = 'var(--risa-orange)'; el.style.borderColor = 'var(--risa-orange)';
+            }
+            saveData();
+        }
+
+        function setupAutoSave() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => saveData());
+            });
+        }
+
+        function saveData() {
+            const data = Array.from(document.querySelectorAll('[contenteditable="true"]')).map(el => el.innerHTML);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+                    if (data[i]) el.innerHTML = data[i];
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

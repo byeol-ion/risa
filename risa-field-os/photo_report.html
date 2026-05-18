@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 비주얼 구조 개선 보고서</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #1A365D; --risa-orange: #F37021; --line: #E2E8F0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; padding: 20px 0; }
+        .page { background: white; width: 210mm; height: 296mm; padding: 15mm 20mm; margin: 0 auto 10px auto; box-shadow: 0 0 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        header { border-bottom: 3px solid var(--risa-blue); padding-bottom: 10px; margin-bottom: 25px; }
+        header h1 { font-size: 26px; color: var(--risa-blue); font-weight: 900; text-align: center; }
+        
+        .report-section { border: 1px solid var(--line); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .photo-box { background: #F8FAFC; border: 1px dashed var(--line); border-radius: 8px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; overflow: hidden; }
+        .photo-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; top:0; left:0; display:none; }
+        .photo-tag { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 4px; font-weight: 900; font-size: 12px; color: white; z-index: 10; }
+        .tag-before { background: #C53030; }
+        .tag-after { background: #10B981; }
+
+        .desc-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .desc-item h4 { font-size: 14px; color: var(--risa-blue); margin-bottom: 8px; border-left: 4px solid var(--risa-orange); padding-left: 8px; }
+        .desc-item p { font-size: 13px; line-height: 1.6; color: #4A5568; min-height: 80px; padding: 10px; background: #F8FAFC; border-radius: 4px; }
+
+        .summary-box { background: var(--risa-blue); color: white; padding: 20px; border-radius: 8px; margin-top: auto; }
+        .summary-box h3 { font-size: 16px; margin-bottom: 10px; color: var(--risa-orange); }
+        .summary-box p { font-size: 13.5px; line-height: 1.7; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+        [contenteditable="true"]:hover { background: #E2E8F0; }
+        @media print { .no-print { display: none !important; } .page { box-shadow: none; margin: 0; width: 100%; padding: 10mm 15mm; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print no-print" onclick="window.print()">보고서 PDF 저장 / 인쇄</button>
+    <div class="page">
+        <header>
+            <h1>RISA™ 비주얼 구조 개선 보고서</h1>
+            <p style="text-align: center; font-size: 12px; color: #64748B; margin-top: 5px;">현장의 위험 흐름을 개선하고 구조적 안전을 확보한 결과 보고서입니다.</p>
+        </header>
+
+        <section class="report-section">
+            <div style="font-weight: 900; margin-bottom: 15px; font-size: 16px;" contenteditable="true">대상 사례 #1: 지게차 및 보행자 동선 분리</div>
+            <div class="photo-grid">
+                <div class="photo-box" onclick="triggerPhoto(this)">
+                    <div class="photo-tag tag-before">개선 전 (Before)</div>
+                    <span style="font-size: 12px; color: #94A3B8;">📸 사진 클릭</span>
+                    <input type="file" style="display:none" onchange="previewImage(this)">
+                    <img src="">
+                </div>
+                <div class="photo-box" onclick="triggerPhoto(this)">
+                    <div class="photo-tag tag-after">개선 후 (After)</div>
+                    <span style="font-size: 12px; color: #94A3B8;">📸 사진 클릭</span>
+                    <input type="file" style="display:none" onchange="previewImage(this)">
+                    <img src="">
+                </div>
+            </div>
+            <div class="desc-box">
+                <div class="desc-item">
+                    <h4>위험 요인 (Risk Structure)</h4>
+                    <p contenteditable="true">통로 구간에 보행로와 지게차 주행로가 도색 없이 혼재되어 있어, 피크 시간대 상호 충돌 위험이 매우 높음.</p>
+                </div>
+                <div class="desc-item">
+                    <h4>개선 조치 (Improvement)</h4>
+                    <p contenteditable="true">보행자 전용 가드레일 설치 및 바닥 동선 선명하게 재도색. 사각지대 반사경 추가 설치로 시야 확보.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="summary-box">
+            <h3>📈 종합 기대 효과 및 재발 방지 전략</h3>
+            <p contenteditable="true">
+                금번 조치를 통해 현장의 고질적인 **'동선 충돌 구조'**가 물리적으로 차단되었습니다. 이는 단순한 교육보다 10배 이상의 사고 예방 효과가 있습니다. 향후 월간 정기 점검을 통해 가드레일의 건전성을 확인하고, 신규 입사자에게 변경된 구조를 즉시 교육하여 안전한 작업 흐름을 유지하겠습니다.
+            </p>
+        </div>
+
+        <footer style="margin-top: 30px; text-align: center; border-top: 1px solid var(--line); padding-top: 15px;">
+            <p style="font-size:12px; font-weight:900; color:var(--risa-blue);">RISA™ | "규격이 아니라 구조를 바꿉니다." | 별이온 대표</p>
+        </footer>
+    </div>
+
+    <script>
+        function triggerPhoto(box) { box.querySelector('input').click(); }
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = input.parentElement.querySelector('img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    input.parentElement.querySelector('span').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

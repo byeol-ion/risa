@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ MASTER FIELD BOOK 2026 - Master Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        :root { --primary: #0F172A; --secondary: #334155; --accent: #F37021; --bg: #F8FAFC; --text: #1E293B; --line: #E2E8F0; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #64748B; color: var(--text); line-height: 1.4; padding: 20px 0; }
+        .container { max-width: 950px; margin: 0 auto; }
+        
+        .page { 
+            width: 210mm; min-height: 297mm; padding: 15mm 20mm; 
+            background: white; margin: 0 auto 15px auto; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.3); 
+            display: flex; flex-direction: column;
+            page-break-after: always;
+        }
+
+        header { border-bottom: 3px solid var(--primary); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-size: 26px; font-weight: 900; color: var(--primary); letter-spacing: 1px; }
+        h1 { font-size: 19px; font-weight: 900; color: var(--secondary); }
+
+        section { margin-bottom: 22px; }
+        h3 { font-size: 14px; color: white; background: var(--primary); padding: 5px 12px; margin-bottom: 10px; border-radius: 4px; display: inline-block; font-weight: 700; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .box { border: 1px solid var(--line); padding: 15px; border-radius: 6px; background: #FBFCFE; }
+        .box h4 { font-size: 13.5px; margin-bottom: 8px; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 4px; font-weight: 900; }
+        .box p, .box li { font-size: 12.5px; list-style: none; margin-bottom: 4px; color: #475569; }
+
+        .record-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .record-table td { border: 1px solid var(--line); padding: 8px 12px; font-size: 12.5px; }
+        .label { background: #F1F5F9; font-weight: 700; width: 18%; text-align: center; color: var(--primary); }
+        
+        .check-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 5px; }
+        .mini-check { display: flex; align-items: center; font-size: 12px; }
+        .mini-check input { margin-right: 6px; transform: scale(1.1); }
+
+        .script-box { background: #FFFDF5; border: 1px solid #F3E8C1; padding: 15px; border-radius: 6px; font-size: 12.5px; line-height: 1.6; }
+        em { font-style: normal; color: #C2410C; font-weight: 900; border-bottom: 1.5px solid #F3E8C1; }
+        
+        .danger { color: #DC2626; font-weight: 700; }
+        .photo { color: #0891B2; font-weight: 700; }
+
+        .flow-diagram { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px dashed var(--line); }
+        .flow-step { font-size: 10.5px; text-align: center; font-weight: 700; color: var(--primary); position: relative; }
+        .flow-arrow { color: var(--accent); font-weight: 900; font-size: 12px; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 35px; font-weight: 700; cursor: pointer; z-index: 1001; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        [contenteditable="true"]:hover { background: #F1F5F9; outline: 1px dashed var(--accent); }
+
+        @media print { 
+            body { background: white; padding: 0; } 
+            .page { margin: 0; border: none; box-shadow: none; width: 100%; height: 297mm; padding: 15mm 20mm; page-break-after: always; }
+            .btn-print, .no-print { display: none !important; }
+        }
+        footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); font-size: 11px; color: #94A3B8; text-align: center; }
+    </style>
+</head>
+<body>
+    <button class="btn-print no-print" onclick="window.print()">필드북 PDF 저장 / 인쇄</button>
+
+    <div class="container">
+        <!-- PAGE 1: 상담 OS -->
+        <div class="page">
+            <header>
+                <div><span class="brand">RISA™</span> <span style="font-size:11px; color:#64748B;">MASTER FIELD BOOK [P.01]</span></div>
+                <h1>[STEP 1] 사업장 기초 정보 및 상담 전략</h1>
+            </header>
+
+            <section>
+                <h3>00. 현장 기본 정보 (메모용)</h3>
+                <table class="record-table">
+                    <tbody contenteditable="true">
+                        <tr><td class="label">사업장명</td><td></td><td class="label">대표자명</td><td></td></tr>
+                        <tr><td class="label">업종/품목</td><td></td><td class="label">근로자수</td><td> 명 (지게차:  대)</td></tr>
+                        <tr>
+                            <td class="label">대표 관심사</td>
+                            <td colspan="3">
+                                <div class="check-group no-print">
+                                    <div class="mini-check"><input type="checkbox"> 사고 예방</div>
+                                    <div class="mini-check"><input type="checkbox"> 노동부 대응</div>
+                                    <div class="mini-check"><input type="checkbox"> 원청 요구/인증</div>
+                                    <div class="mini-check"><input type="checkbox"> 운영 효율</div>
+                                    <div class="mini-check"><input type="checkbox"> 작업 안정화</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>01. RISA™ 5단계 프로세스 & 초기 상담 접근</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>상담 흐름 (RISA-OS)</h4>
+                        <li>1. <strong>접근:</strong> 지게차/물류 흐름 타겟팅</li>
+                        <li>2. <strong>탐색:</strong> 병목구간/구조적 리스크 질문</li>
+                        <li>3. <strong>진단:</strong> 시각적 진단서(Quick Scan) 작성</li>
+                        <li>4. <strong>셋업:</strong> 실무형 서류 간소화 및 체계화</li>
+                        <li>5. <strong>안착:</strong> 월간 케어 및 ISO 인증 연계</li>
+                    </div>
+                    <div class="script-box">
+                        <h4>초기 상담 예시 스크립트</h4>
+                        <p contenteditable="true">"안녕하세요 사장님, 대전 지역 지게차 현장 구조를 진단하는 RISA의 별이온입니다. 최근에 현장에서 <em>'아, 사고 날 뻔했네'</em> 했던 아찔한 순간 있으셨나요? 서류 나열이 아닌 실제 현장 흐름만 20분 봐드리는 <strong>'초기 현장 점검'</strong> 중인데, 내일 잠시 뵐 수 있을까요?"</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>02. 경영진 거절 대응 (신뢰 기반 주도권)</h3>
+                <div class="grid">
+                    <div class="box" contenteditable="true">
+                        <p>● <strong>"사고 없었어요"</strong> → "사고가 없을 때 안전 구조를 잡아야 비용이 가장 적게 들고 효과적입니다."</p>
+                        <p>● <strong>"바빠서 못해요"</strong> → "그래서 실무자가 가장 편한 <em>'1장짜리 간소화 시스템'</em>을 설계해 드립니다."</p>
+                    </div>
+                    <div class="box" contenteditable="true">
+                        <p>● <strong>"비용이 부담돼요"</strong> → "진단비보다 사고 발생 시 <em>경영 부담 및 손실</em>이 수백 배 더 큽니다."</p>
+                        <p>● <strong>"다음에 하죠"</strong> → "안전은 <em>'지금'</em>의 관리 흔적이 있어야 미래의 리스크를 방어할 수 있습니다."</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>03. RISA™ 서비스 메뉴 (가치 중심 제안)</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>[Quick Scan] 30만 원</h4>
+                        <li>● 1회 현장 진단 + 핵심 리포트</li>
+                        <li>● 사진 기반 구조 리스크 3선 분석</li>
+                    </div>
+                    <div class="box">
+                        <h4>[Safety Basic] 80~200만 원</h4>
+                        <li>● 위험성평가 + 5대 핵심 서류 구축</li>
+                        <li>● 실무형 안전보건관리체계 설계</li>
+                    </div>
+                    <div class="box" style="grid-column: span 2; background: #F1F5F9;">
+                        <h4>[Flow Care] 월 30~50만 원 (안심 구독형)</h4>
+                        <li>● 월 1회 정기 방문 및 작업 안정화 교육 | ● TBM/점검 일상화 지원 | ● 내부심사 및 ISO 인증 유지 관리</li>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                Field-Based Risk Operating System | <strong>규격이 아니라 구조를 봅니다.</strong>
+            </footer>
+        </div>
+
+        <!-- PAGE 2: 현장 진단 OS -->
+        <div class="page">
+            <header>
+                <div><span class="brand">RISA™</span> <span style="font-size:11px; color:#64748B;">MASTER FIELD BOOK [P.02]</span></div>
+                <h1>[STEP 2] 현장 진단 및 리스크 관리 OS</h1>
+            </header>
+
+            <div class="grid">
+                <section>
+                    <h3>04. 현장 데이터 촬영 포인트 (Flow 분석)</h3>
+                    <div class="box">
+                        <li class="photo">● 지게차 주행로 및 보행자 교차점 (충돌 구조)</li>
+                        <li class="photo">● 중량물 적재 및 랙(Rack) 하중 변형 상태</li>
+                        <li class="photo">● 바닥 유류 오염 및 통로 물건 적치 상태</li>
+                        <li class="photo">● 보호구(안전화/모) 실제 착용 행동 패턴</li>
+                        <li class="photo">● 설비 안전 장치 무력화 및 배선 노출 여부</li>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>05. 즉시 개선 권고 (Red Flag) 기준</h3>
+                    <div class="box">
+                        <li class="danger">● 지게차 과적으로 인한 전방 시야 불량 주행</li>
+                        <li class="danger">● 비상구 및 소방 시설 앞 적재물 방치</li>
+                        <li class="danger">● 신규/미숙련 작업자 교육 없이 즉시 투입</li>
+                        <li class="danger">● 기계 설비 안전 덮개 및 센서 임의 제거</li>
+                        <li class="danger">● 추락 위험 구간 난간 및 안전대 미비</li>
+                    </div>
+                </section>
+            </div>
+
+            <section>
+                <h3>06. RISA™ 시스템 증빙 흐름 구조 (Traceability)</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">현장 위험 발견<br>(Photo)</div>
+                    <div class="flow-arrow">▶</div>
+                    <div class="flow-step">아차사고 등록<br>(Near Miss)</div>
+                    <div class="flow-arrow">▶</div>
+                    <div class="flow-step">개선 조치 실행<br>(Action)</div>
+                    <div class="flow-arrow">▶</div>
+                    <div class="flow-step">경영자 확인<br>(CEO Check)</div>
+                    <div class="flow-arrow">▶</div>
+                    <div class="flow-step">현장 공유<br>(TBM)</div>
+                    <div class="flow-arrow">▶</div>
+                    <div class="flow-step">재발 방지 검증<br>(Prevention)</div>
+                </div>
+            </section>
+
+            <section>
+                <h3>07. 사후 관리 루틴 (방문 후 24시간 이내)</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>[당일] 데이터 시각화</h4>
+                        <li>● 핵심 리스크 사진 3~5개 선정</li>
+                        <li>● 시각적 개선 가이드 이미지화</li>
+                    </div>
+                    <div class="box">
+                        <h4>[24h] 피드백 발송</h4>
+                        <li>● 간이 진단 리포트 PDF 전송</li>
+                        <li>● 2차 방문 및 Safety Basic 제안</li>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>08. 차별화 핵심 문구 (Brand Identity)</h3>
+                <div class="script-box" style="text-align: center; border: 1.5px solid var(--primary);">
+                    <p style="font-weight: 900; font-size: 14px; color: var(--primary);">
+                        "RISA™는 작업자의 '주의력'에 의존하기보다,<br>
+                        사고가 반복될 수밖에 없는 <span style="color:var(--accent);">『현장의 구조적 결함』</span>을 먼저 찾아내고 교정합니다."
+                    </p>
+                </div>
+            </section>
+
+            <footer>
+                Field-Based Risk Operating System | <strong>규격이 아니라 구조를 봅니다.</strong>
+            </footer>
+        </div>
+
+        <!-- PAGE 3: 통합 운영체계 로드맵 -->
+        <div class="page">
+            <header>
+                <div><span class="brand">RISA™</span> <span style="font-size:11px; color:#64748B;">MASTER FIELD BOOK [P.03]</span></div>
+                <h1>[STEP 3] RISA™ 통합 영업-진단-관리 운영체계 (OS)</h1>
+            </header>
+
+            <section>
+                <h3>0-2. 타겟팅 및 접점 (Targeting & Contact)</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>[0단계] 타겟 선정</h4>
+                        <p>● 지게차/물류창고/절삭가공/소규모제조</p>
+                        <p>● 통로 혼재, 작업자 고령화 현장 집중</p>
+                        <li class="photo">→ "구조적 위험"이 보이는 곳 선별</li>
+                    </div>
+                    <div class="box">
+                        <h4>[1~2단계] 접점 및 탐색</h4>
+                        <p>● <strong>명구:</strong> "현장의 언어를 통역합니다."</p>
+                        <p>● <strong>탐색:</strong> "사고 날 뻔한 순간이 언제인가요?"</p>
+                        <li class="danger">❌ ISO 조항 설명 / 견적 이야기 금지</li>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>3-5. 현장 진단 및 증거 확보 (Diagnosis & Evidence)</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>[3~4단계] Flow 진단 & 촬영</h4>
+                        <p>● 작업 습관, 설비 센서, 동선 병목 확인</p>
+                        <p>● <strong>촬영:</strong> 멀리 + 가까이 (구조가 보이게)</p>
+                        <li class="photo">→ 사장님이 "눈으로 위험"을 보게 함</li>
+                    </div>
+                    <div class="box">
+                        <h4>[5단계] Quick Scan 발송</h4>
+                        <p>● 핵심 위험 TOP 3 + 사진 + 사고 가능성</p>
+                        <p>● <strong>핵심:</strong> 문제 지적이 아닌 "구조 해석"</p>
+                        <li>→ Safety Basic 유료 전환 유도</li>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>6-8. 시스템 구축 및 확장 (System & Expansion)</h3>
+                <div class="grid">
+                    <div class="box">
+                        <h4>[6~7단계] 시스템 & 월관리</h4>
+                        <p>● <strong>Basic:</strong> 작동하는 5대 핵심 서류 세팅</p>
+                        <p>● <strong>Care:</strong> 월간 리포트 + 리스크 흐름 감시</p>
+                        <li class="danger">❌ 복붙 매뉴얼 / 현장 분리 양식 금지</li>
+                    </div>
+                    <div class="box">
+                        <h4>[8단계] ISO 연결 (Expansion)</h4>
+                        <p>● 45001(안전) → 9001(표준) → 14001(환경)</p>
+                        <p>● <strong>전략:</strong> 이미 하고 있는 체계의 '인증화'</p>
+                        <li>→ 고객 생애 가치(LTV) 극대화</li>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>RISA™ 운영 핵심 철학 (Identity)</h3>
+                <div class="script-box" style="background: #0F172A; color: white; border: none;">
+                    <table style="width: 100%; border: none;">
+                        <tr style="border: none;">
+                            <td style="border: none; width: 45%; color: #94A3B8; background:transparent;">일반 컨설팅 (Typical)</td>
+                            <td style="border: none; width: 10%; color: var(--accent); font-weight: 900; background:transparent;">VS</td>
+                            <td style="border: none; width: 45%; color: white; background:transparent;">RISA™ (Structural)</td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td style="border: none; font-size: 11px; background:transparent;">문제 발생 후 대응 / 법 조항 나열</td>
+                            <td style="border: none; background:transparent;"></td>
+                            <td style="border: none; font-size: 11px; font-weight: 700; background:transparent;">문제가 반복되는 "구조" 자체를 수정</td>
+                        </tr>
+                    </table>
+                    <p style="text-align: center; margin-top: 15px; font-size: 14px; color: var(--accent); font-weight: 900;">
+                        "별이온 형님의 경쟁력은 조항 암기가 아니라, 몸으로 익힌 현장의 흐름입니다."
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h3>09. RISA™ 2026-2028 로드맵</h3>
+                <div style="font-size:11px; color:#94A3B8; display:flex; justify-content:space-between; border-top:1px dashed var(--line); padding-top:10px;">
+                    <span>[기반] ~26.06 내부심사원 마스터</span>
+                    <span>[실행] 26.06~12 핵심 사례 3건 구축</span>
+                    <span>[성장] 2027 구독형 모델 대전 안착</span>
+                    <span>[비상] 2028 RISA 전문가 그룹 확장</span>
+                </div>
+            </section>
+
+            <footer>
+                © 2026 RISA™ (Risk Integrated System Audit) | Field-Based Risk Operating System v1.0
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_FIELDBOOK_DATA';
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setupAutoSave(); });
+
+        function setupAutoSave() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => saveData());
+            });
+        }
+
+        function saveData() {
+            const data = Array.from(document.querySelectorAll('[contenteditable="true"]')).map(el => el.innerHTML);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+                    if (data[i]) el.innerHTML = data[i];
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

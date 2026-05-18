@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 통합 문서 관리 대장 (Master Ledger)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #0F172A; --risa-orange: #F37021; --line: #E2E8F0; --bg: #F8FAFC; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #475569; padding: 20px 0; line-height: 1.4; }
+        .page { background: white; width: 210mm; min-height: 296mm; padding: 15mm 20mm; margin: 0 auto 10px auto; box-shadow: 0 0 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        header { border-bottom: 5px double var(--risa-blue); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        header h1 { font-size: 26px; color: var(--risa-blue); font-weight: 900; letter-spacing: 2px; }
+        
+        section { margin-bottom: 25px; }
+        .section-title { font-size: 16px; font-weight: 900; color: var(--risa-blue); margin-bottom: 12px; border-left: 5px solid var(--risa-orange); padding-left: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { background: #F1F5F9; border: 1px solid var(--line); padding: 10px; font-weight: 900; color: var(--risa-blue); }
+        td { border: 1px solid var(--line); padding: 10px; text-align: center; }
+        .file-link { color: #0066FF; text-decoration: none; font-weight: 700; }
+        .file-link:hover { text-decoration: underline; color: var(--risa-orange); }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+        @media print { .no-print { display: none !important; } .page { box-shadow: none; margin: 0; width: 100%; padding: 15mm; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print no-print" onclick="window.print()">관리대장 인쇄 / PDF 저장</button>
+    <div class="page">
+        <header>
+            <h1>RISA™ 통합 문서 관리 대장</h1>
+            <p style="font-size: 11px; color: #94A3B8; margin-top: 5px;">시스템 구축일: 2026. 05. 14 | 관리자: 별이온 대표</p>
+        </header>
+
+        <section>
+            <div class="section-title">01. 브랜드 및 영업 관리 (Sales & Brand)</div>
+            <table>
+                <thead>
+                    <tr><th width="15%">문서번호</th><th width="25%">문서명</th><th width="40%">주요 용도</th><th width="20%">파일명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>RISA-OS-001</td><td><a href="fieldbook.html" class="file-link">MASTER FIELD BOOK</a></td><td>3페이지 구성의 통합 영업-진단-관리 운영체계(OS) 및 현장 스크립트</td><td>fieldbook.html</td></tr>
+                    <tr><td>RISA-DOC-001</td><td><a href="intro.html" class="file-link">브랜드 소개문</a></td><td>초기 미팅용 브랜드 철학 및 서비스 안내</td><td>intro.html</td></tr>
+                    <tr><td>RISA-STR-001</td><td><a href="strategy.html" class="file-link">실무 전략 구조안</a></td><td>B2B 영업 전략 및 단계별 서비스 제안서</td><td>strategy.html</td></tr>
+                    <tr><td>RISA-Q-001</td><td><a href="quote.html" class="file-link">마스터 견적서</a></td><td>진단 비용 및 후속 서비스 견적 발송</td><td>quote.html</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">02. 정밀 진단 및 분석 (Diagnosis & Analysis)</div>
+            <table>
+                <thead>
+                    <tr><th width="15%">문서번호</th><th width="25%">문서명</th><th width="40%">주요 용도</th><th width="20%">파일명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>RISA-QS-001</td><td><a href="index.html" class="file-link">Quick Scan (White)</a></td><td>현장 1차 고속 리스크 체크리스트</td><td>index.html</td></tr>
+                    <tr><td>RISA-QS-002</td><td><a href="quickscan.html" class="file-link">고성능 진단기 (Dark)</a></td><td>다크모드 지원 고성능 현장 분석기</td><td>quickscan.html</td></tr>
+                    <tr><td>RISA-SB-001</td><td><a href="safety_basic.html" class="file-link">정밀 분석 리포트</a></td><td>2페이지 구성의 세부 구조 분석 보고서</td><td>safety_basic.html</td></tr>
+                    <tr><td>RISA-PR-001</td><td><a href="photo_report.html" class="file-link">사진 개선 보고서</a></td><td>Before/After 시각적 개선 성과 보고</td><td>photo_report.html</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">03. 안전보건 경영 시스템 (Management System)</div>
+            <table>
+                <thead>
+                    <tr><th width="15%">문서번호</th><th width="25%">문서명</th><th width="40%">주요 용도</th><th width="20%">파일명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>RISA-PLAN-001</td><td><a href="plan.html" class="file-link">안전보건 운영계획서</a></td><td>대표이사 연간 목표 및 예산 수립</td><td>plan.html</td></tr>
+                    <tr><td>RISA-RA-001</td><td><a href="risa_ra.html" class="file-link">실무형 위험성평가</a></td><td>작업 흐름 기반 유해위험요인 발굴</td><td>risa_ra.html</td></tr>
+                    <tr><td>RISA-TBM-001</td><td><a href="tbm.html" class="file-link">현장 TBM 기록지</a></td><td>작업 전 안전 미팅 및 위험 공유 기록</td><td>tbm.html</td></tr>
+                    <tr><td>RISA-NM-001</td><td><a href="nearmiss.html" class="file-link">아차사고 분석지</a></td><td>사고 징후 수집 및 구조적 원인 분석</td><td>nearmiss.html</td></tr>
+                    <tr><td>RISA-ACT-001</td><td><a href="action_ledger.html" class="file-link">이행 관리 대장</a></td><td>지적 사항의 최종 완료 여부 추적 관리</td><td>action_ledger.html</td></tr>
+                    <tr><td>RISA-CEO-001</td><td><a href="ceo_check.html" class="file-link">경영책임자 점검부</a></td><td>대표이사 의무 이행 확인 및 최종 승인</td><td>ceo_check.html</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">04. 외주 및 지속 관리 (Contractor & Monthly)</div>
+            <table>
+                <thead>
+                    <tr><th width="15%">문서번호</th><th width="25%">문서명</th><th width="40%">주요 용도</th><th width="20%">파일명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>RISA-CON-001</td><td><a href="contractor_safety.html" class="file-link">협력업체 안전확인서</a></td><td>외주 업체 안전 수칙 전달 및 책임 확인</td><td>contractor_safety.html</td></tr>
+                    <tr><td>RISA-PTW-001</td><td><a href="ptw.html" class="file-link">고위험 작업허가서</a></td><td>화기/고소 등 고위험 작업 사전 승인</td><td>ptw.html</td></tr>
+                    <tr><td>RISA-MON-001</td><td><a href="monthly_report.html" class="file-link">월간 리스크 리포트</a></td><td>월간 안전 지표 및 차월 계획 종합 보고</td><td>monthly_report.html</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer style="margin-top: auto; padding-top: 15px; border-top: 1px solid var(--line); text-align: center;">
+            <p style="font-size: 12px; font-weight: 900; color: var(--risa-blue);">RISA™ 통합 문서 관리 체계 v1.0</p>
+            <p style="font-size: 11px; color: #94A3B8; margin-top: 5px;">"체계적인 문서 관리가 안전 경영의 시작입니다."</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 고위험 작업허가서 (PTW)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #0F172A; --risa-red: #C53030; --line: #E2E8F0; --bg-gray: #F8FAFC; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; padding: 20px 0; line-height: 1.4; }
+        .page { background: white; width: 210mm; height: 296mm; padding: 15mm 20mm; margin: 0 auto 10px auto; box-shadow: 0 0 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        header { border-bottom: 4px solid var(--risa-red); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        header h1 { font-size: 24px; color: var(--risa-red); font-weight: 900; }
+        .doc-no { font-size: 11px; color: #94A3B8; }
+        section { margin-bottom: 15px; }
+        .section-title { background: var(--risa-blue); color: white; padding: 5px 10px; font-size: 14px; font-weight: 700; border-radius: 4px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
+        th { background: var(--bg-gray); border: 1px solid var(--line); padding: 8px; font-weight: 700; width: 20%; }
+        td { border: 1px solid var(--line); padding: 8px; }
+        .check-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 4px; }
+        .check-item { font-size: 12px; display: flex; align-items: center; }
+        .check-item input { margin-right: 6px; }
+        .sign-area { margin-top: auto; border: 2px solid var(--risa-red); padding: 20px; border-radius: 8px; text-align: center; }
+        [contenteditable="true"]:hover { background: #F1F5F9; }
+        @media print { .no-print { display: none !important; } .page { box-shadow: none; margin: 0; width: 100%; padding: 10mm 15mm; } }
+    </style>
+</head>
+<body>
+    <div style="text-align:center; margin-bottom:10px;" class="no-print">
+        <button onclick="window.print()" style="background:var(--risa-red); color:white; border:none; padding:10px 20px; border-radius:30px; font-weight:900; cursor:pointer;">허가서 출력 / PDF 저장</button>
+    </div>
+    <div class="page">
+        <header>
+            <h1>RISA™ 고위험 작업허가서 (Permit To Work)</h1>
+            <div class="doc-no" contenteditable="true">DOC NO: RISA-PTW-2026-001</div>
+        </header>
+        <section>
+            <div class="section-title">01. 작업 개요</div>
+            <table>
+                <tr><th>작업명</th><td colspan="3" contenteditable="true">2층 컨베이어 벨트 모터 교체 및 용접 작업</td></tr>
+                <tr><th>작업 장소</th><td contenteditable="true">제2공장 생산라인</td><th>작업 시간</th><td contenteditable="true">2026.05.14 / 14:00~17:00</td></tr>
+                <tr><th>신청업체</th><td contenteditable="true">(주) 샘플기계</td><th>현장책임자</th><td contenteditable="true">김철수 (010-0000-0000)</td></tr>
+            </table>
+        </section>
+        <section>
+            <div class="section-title">02. 위험 요인 및 안전 조치 (Checklist)</div>
+            <div class="check-grid">
+                <div class="check-item"><input type="checkbox"> 화기작업 (용접/절단)</div>
+                <div class="check-item"><input type="checkbox"> 고소작업 (2m 이상)</div>
+                <div class="check-item"><input type="checkbox"> 정전/밀폐공간 작업</div>
+                <div class="check-item"><input type="checkbox"> LOTO (에너지 차단)</div>
+                <div class="check-item"><input type="checkbox"> 소화기 현장 배치</div>
+                <div class="check-item"><input type="checkbox"> 화기감시자 배치</div>
+                <div class="check-item"><input type="checkbox"> 안전난간/생명줄 확인</div>
+                <div class="check-item"><input type="checkbox"> 개인 보호구 전원 착용</div>
+                <div class="check-item"><input type="checkbox"> 주변 가연물 제거</div>
+            </div>
+        </section>
+        <section>
+            <div class="section-title">03. 특이사항 및 경영자 지시</div>
+            <div style="border:1px solid var(--line); padding:15px; min-height:80px; font-size:13px;" contenteditable="true">
+                "작업 중 지게차 운행을 전면 중지하고, 화기 작업 전 주변 먼지 및 유증기를 완전히 제거한 후 작업을 시작할 것."
+            </div>
+        </section>
+        <div class="sign-area">
+            <p style="font-size:16px; font-weight:900; color:var(--risa-red); margin-bottom:10px;">위 안전조치가 완료되었음을 확인하며 작업을 승인함</p>
+            <div style="display:flex; justify-content:space-around; margin-top:20px; font-size:15px; font-weight:700;">
+                <div>신청인(업체): _______________ (인)</div>
+                <div>승인인(대표): _______________ (인)</div>
+            </div>
+        </div>
+        <footer style="margin-top:20px; text-align:center; font-size:11px; color:#94A3B8;">
+            RISA™ | 고위험 작업 시 대표이사의 승인이 없는 작업은 절대 금지합니다.
+        </footer>
+    </div>
+</body>
+</html>

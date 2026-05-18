@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISA™ 통합 마스터 진단 리포트 (v2.4 - 최종수리)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #F37021;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --line: #e2e8f0;
+            --bg: #f8fafc;
+        }
+
+        @page { size: A4; margin: 15mm; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #64748b; color: #1e293b; padding: 40px 0; }
+
+        .page {
+            width: 210mm; min-height: 297mm; background: white; margin: 0 auto 20px auto;
+            padding: 20mm; box-shadow: 0 0 30px rgba(0,0,0,0.3); box-sizing: border-box;
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+        }
+
+        header { border-bottom: 4px solid var(--primary); padding-bottom: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .brand { font-size: 28px; font-weight: 900; color: var(--primary); letter-spacing: 1px; }
+        .doc-type { font-size: 14px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); padding: 2px 10px; border-radius: 4px; }
+
+        h1 { font-size: 24px; font-weight: 900; margin: 15px 0; text-align: center; }
+
+        .ceo-summary { background: var(--primary); color: white; padding: 22px; border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; margin: 20px 0 35px 0; line-height: 1.5; }
+
+        section { margin-bottom: 25px; }
+        h2 { font-size: 17px; color: var(--primary); border-left: 6px solid var(--accent); padding-left: 12px; margin-bottom: 15px; font-weight: 900; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .info-table td { border: 1px solid var(--line); padding: 10px; font-size: 13px; }
+        .label { background: #f8fafc; font-weight: 700; width: 18%; color: var(--primary); }
+
+        .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        .summary-box { border: 1px solid var(--line); padding: 18px; border-radius: 12px; text-align: center; background: #fffdfa; }
+
+        /* 무조건 작동하는 업로드 영역 */
+        .upload-container { 
+            border: 2px dashed var(--line); 
+            background: #fafafa; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .upload-container input[type="file"] {
+            margin-top: 10px;
+            font-size: 11px;
+            width: 100%;
+        }
+        .upload-container .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 5;
+        }
+        .upload-container .placeholder-text {
+            font-size: 12px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .risk-map-zone { height: 220px; margin-bottom: 10px; }
+        .site-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+        .preview-box { height: 130px; }
+
+        .finding-row { display: flex; gap: 15px; margin-bottom: 15px; border: 1px solid #f1f5f9; padding: 15px; border-radius: 8px; }
+        .finding-img { width: 120px; height: 120px; flex-shrink: 0; }
+        .finding-text { flex: 1; font-size: 13px; line-height: 1.6; }
+
+        .status-box { display: flex; justify-content: space-around; background: #f8fafc; border: 1px solid var(--line); padding: 20px; border-radius: 12px; margin: 20px 0; }
+        .status-item { text-align: center; }
+        .status-item .val { font-size: 18px; font-weight: 900; color: var(--primary); }
+
+        footer { margin-top: auto; border-top: 1px solid var(--line); padding-top: 15px; text-align: center; font-size: 11px; color: #94a3b8; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+        [contenteditable="true"] { outline: none; }
+        [contenteditable="true"]:hover { background: #fffbeb; }
+
+        @media print { 
+            .btn-print, .no-print, input[type="file"], .placeholder-text { display: none !important; } 
+            body { background: white; padding: 0; } 
+            .page { box-shadow: none; margin: 0; width: 100%; } 
+            .upload-container { border: none; background: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="btn-print no-print" onclick="window.print()">마스터 리포트 PDF 저장</button>
+
+<div class="page">
+    <header>
+        <div class="brand">RISA™</div>
+        <div class="doc-type">MANAGEMENT RISK REPORT</div>
+    </header>
+
+    <h1>통합 리스크 진단 및 경영 관리 리포트</h1>
+
+    <div class="ceo-summary" contenteditable="true">
+        “현재 가장 큰 리스크는 ‘지게차 동선 혼재’이며,<br>3개월 내 물리적 분리가 필요합니다.”
+    </div>
+
+    <section>
+        <h2>01. 리스크 경영 개요</h2>
+        <table class="info-table">
+            <tr><td class="label">사업장명</td><td contenteditable="true"></td><td class="label">진단 기간</td><td contenteditable="true">2026. 05. 01 ~ 05. 15</td></tr>
+            <tr><td class="label">수행 책임자</td><td contenteditable="true">별이온 대표 (RISA™)</td><td class="label">보고 일자</td><td contenteditable="true">2026. 05. 15</td></tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>02. 핵심 리스크 경영 지표</h2>
+        <div class="summary-grid">
+            <div class="summary-box">
+                <div class="label-sm">중대 리스크 발견</div>
+                <div class="num" contenteditable="true">12</div>
+                <div class="unit">건</div>
+            </div>
+            <div class="summary-box">
+                <div class="label-sm">현장 이상징후 수집</div>
+                <div class="num" contenteditable="true">45</div>
+                <div class="unit">건</div>
+            </div>
+            <div class="summary-box">
+                <div class="label-sm">리스크 조치 이행률</div>
+                <div class="num" contenteditable="true">85</div>
+                <div class="unit">%</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>03. 주요 위험 구역 가시화</h2>
+        <div class="upload-container risk-map-zone">
+            <div class="placeholder-text">현장 배치도/지도</div>
+            <input type="file" accept="image/*" onchange="previewImage(this)">
+            <img class="preview-img">
+        </div>
+        <div class="site-preview">
+            <div class="upload-container preview-box">
+                <div class="placeholder-text">현장 사진 1</div>
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img class="preview-img">
+            </div>
+            <div class="upload-container preview-box">
+                <div class="placeholder-text">현장 사진 2</div>
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img class="preview-img">
+            </div>
+            <div class="upload-container preview-box">
+                <div class="placeholder-text">현장 사진 3</div>
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img class="preview-img">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>04. 경영 리스크 및 구조적 대안</h2>
+        <div class="finding-row">
+            <div class="upload-container finding-img">
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img class="preview-img">
+            </div>
+            <div class="finding-text" contenteditable="true">
+                <b>[리스크]</b> 지게차와 보행자의 '공간 모순' 발생.<br>
+                <b>[구조 대안]</b> 물리적 차단 펜스 및 LED 바닥 라이트 설치.
+            </div>
+        </div>
+        <div class="finding-row">
+            <div class="upload-container finding-img">
+                <input type="file" accept="image/*" onchange="previewImage(this)">
+                <img class="preview-img">
+            </div>
+            <div class="finding-text" contenteditable="true">
+                <b>[리스크]</b> 랙 하단 변형에 따른 대형 전도 사고 리스크 감지.<br>
+                <b>[구조 대안]</b> 랙 전용 보강 가드 설치 및 과적 방지 하중 표시제 도입.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        RISA™ | “좋은 현장은 작업자를 조심시키기보다, 위험한 구조 자체를 줄입니다.”
+    </footer>
+</div>
+
+<div class="page">
+    <header>
+        <div class="brand">RISA™</div>
+        <div class="doc-type">MANAGEMENT RISK REPORT</div>
+    </header>
+
+    <section>
+        <h2>05. RISA™ 현장 운영 상태 평가</h2>
+        <div class="status-box">
+            <div class="status-item"><div class="label-sm">구조 안정화</div><div class="val" contenteditable="true">진행중</div></div>
+            <div class="status-item"><div class="label-sm">현장 실행력</div><div class="val" contenteditable="true">양호</div></div>
+            <div class="status-item"><div class="label-sm">경영진 개선 의지</div><div class="val" contenteditable="true">높음</div></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>06. 경영진 요약 의견</h2>
+        <div style="font-size: 13.5px; line-height: 1.8; padding: 20px; background: #f8fafc; border-radius: 12px; min-height: 180px;" contenteditable="true">
+            귀 사업장은 지게차 운영 효율은 높으나, 작업 밀집도가 높아질 때 동선이 엉키는 '구조적 병목'이 발생하고 있습니다. 이는 작업자의 부주의 문제가 아니라, 공간 설계상의 리스크입니다. RISA™ Flow Care를 통해 현장 이상징후를 지속적으로 데이터화하여 큰 사고를 방어할 것을 권고합니다.
+        </div>
+    </section>
+
+    <div style="margin-top: 60px; text-align: center;">
+        <p style="font-size: 18px; font-weight: 900; color: var(--primary);">RISA™ 대표 : 별이온 (Seong-rae)</p>
+    </div>
+
+    <footer>
+        RISA™ | “사고는 사람 때문이 아니라, 반복될 수밖에 없는 구조에서 시작됩니다.”
+    </footer>
+</div>
+
+<script>
+    function previewImage(input) {
+        const file = input.files[0];
+        const container = input.parentElement;
+        const preview = container.querySelector('.preview-img');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    preview.src = dataUrl;
+                    preview.style.display = 'block';
+                };
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ Master Quote - Final Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        :root { --risa-blue: #1A365D; --risa-orange: #F37021; --risa-gold: #D4AF37; --bg: #F8FAFC; --line: #E2E8F0; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; color: #1E293B; padding: 20px 0; line-height: 1.4; }
+        
+        .page { 
+            background: white; width: 210mm; height: 296mm; 
+            padding: 12mm 15mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.3); 
+            display: flex; flex-direction: column; position: relative;
+            border-top: 10px solid var(--risa-blue);
+        }
+
+        header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .brand-box .brand { font-size: 26px; color: var(--risa-blue); font-weight: 900; }
+        .value-statement { font-size: 12px; color: #64748B; font-weight: 700; margin-top: 5px; border-left: 4px solid var(--risa-orange); padding-left: 10px; }
+        .doc-no { font-size: 10px; color: #94A3B8; text-align: right; }
+
+        h1 { text-align: center; font-size: 34px; letter-spacing: 15px; margin: 15px 0; font-weight: 900; color: #1E293B; }
+
+        .info-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; margin-bottom: 18px; }
+        .client-info { font-size: 16px; border-bottom: 2px solid var(--line); padding-bottom: 10px; }
+        .provider-info { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; font-size: 11px; line-height: 1.6; }
+
+        /* 사진 티저 박스 */
+        .photo-teaser { background: #FFF5F5; border: 1px solid #FED7D7; padding: 10px; border-radius: 8px; margin-bottom: 18px; display: flex; align-items: center; gap: 15px; cursor: pointer; position: relative; min-height: 90px; }
+        .photo-box { width: 120px; height: 80px; background: #CBD5E1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; text-align: center; overflow: hidden; position: relative; flex-shrink: 0; }
+        .photo-box img { width: 100%; height: 100%; object-fit: contain; position: absolute; top:0; left:0; display:none; }
+        .photo-desc { flex: 1; font-size: 12.5px; color: #C53030; line-height: 1.4; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th { background: var(--risa-blue); color: white; padding: 8px; font-size: 13px; }
+        td { border: 1px solid var(--line); padding: 10px; text-align: center; font-size: 14px; }
+
+        .deliverables { background: #FFFDF5; border: 1px solid #F3E8C1; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .deliverables h4 { color: #856404; font-size: 14px; margin-bottom: 6px; border-bottom: 1px solid #F3E8C1; padding-bottom: 4px; font-weight: 700; }
+        .deliverables ul { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; list-style: none; font-size: 12px; }
+        .deliverables li::before { content: "✓ "; color: var(--risa-orange); font-weight: 900; }
+
+        .upsell-box { background: #F1F5F9; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #CBD5E1; }
+        .upsell-box h4 { font-size: 11px; color: var(--risa-blue); margin-bottom: 5px; font-weight: 700; }
+        .upsell-grid { display: flex; gap: 6px; justify-content: space-between; }
+        .upsell-item { font-size: 10px; background: white; padding: 3px 8px; border-radius: 20px; border: 1px solid var(--line); color: #4A5568; }
+
+        .total-section { border-top: 3px solid var(--risa-blue); padding-top: 10px; text-align: right; margin-bottom: 18px; }
+        .total-amount { font-size: 24px; font-weight: 900; color: var(--risa-blue); }
+
+        .disclaimer { font-size: 10.5px; color: #718096; background: #F8FAFC; padding: 8px; border-radius: 5px; border-left: 4px solid #CBD5E1; margin-bottom: 18px; line-height: 1.4; }
+
+        .signature-section { display: flex; justify-content: space-between; margin-top: auto; padding-bottom: 10px; }
+        .sign-box { width: 45%; }
+        .sign-line { border-bottom: 2px solid #2D3748; height: 40px; margin-top: 5px; position: relative; }
+        .sign-text { font-size: 12px; font-weight: bold; color: #4A5568; }
+
+        footer { text-align: center; margin-top: 15px; border-top: 1px solid var(--line); padding-top: 8px; color: #A0AEC0; font-size: 11px; }
+
+        /* 공통 버튼/모달 */
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+        .btn-guide { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: var(--risa-orange); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 1001; }
+        .guide-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
+        .guide-content { background: white; width: 90%; max-width: 500px; padding: 30px; border-radius: 20px; }
+
+        [contenteditable="true"]:hover { background: #F1F5F9; outline: 1px dashed var(--risa-orange); }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; height: 100vh; padding: 15mm 15mm; }
+            .btn-print, .btn-guide, .guide-modal, .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-guide" onclick="openGuide()">💡</button>
+    <button class="btn-print" onclick="window.print()">견적서 출력 / PDF 저장</button>
+
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <h3 style="color:var(--risa-blue); margin-bottom:15px; font-weight:900;">💰 견적 전략 가이드</h3>
+            <p style="font-size:14px; line-height:1.7; color:#334155;">
+                1. <b>티저 사진 활용:</b> 오늘 발견한 가장 위험한 구조 사진을 넣으세요. "이 사진 한 장이 진단의 가치를 증명합니다."<br><br>
+                2. <b>후속 서비스 제안:</b> 견적서 하단의 '연계 서비스'를 언급하며 "정기적인 관리가 필요함"을 넌지시 비치세요.<br><br>
+                3. <b>신뢰도 구축:</b> 대전/충남 기반의 전문성을 강조하여 지역 사장님들의 신뢰를 확보하세요.
+            </p>
+        </div>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-box">
+                <div class="brand">RISA™</div>
+                <div class="value-statement" contenteditable="true">"현장의 병목·충돌 구조 분석을 통한 대표이사 경영 리스크 예방 지원"</div>
+            </div>
+            <div class="doc-no" contenteditable="true">문서번호: RISA-Q-260514-001</div>
+        </header>
+
+        <h1>견 적 서</h1>
+
+        <div class="info-grid">
+            <div class="client-info">
+                <p><strong>귀하:</strong> <span contenteditable="true">○○○ 주식회사 대표이사</span> 귀중</p>
+                <div style="font-size: 13px; color: #718096; margin-top: 12px;" contenteditable="true">
+                    ⏱️ <strong>현장 진단 시간:</strong> 약 1~2시간 소요 (대전/충남 전문)<br>
+                    📧 <strong>리포트 제공:</strong> 방문 후 24시간 이내 발송
+                </div>
+            </div>
+            <div class="provider-info" contenteditable="true">
+                <p><strong>공급자:</strong> RISA™ (리스크 통합 시스템 진단)</p>
+                <p><strong>대표:</strong> 별이온 (Seong-rae)</p>
+                <p><strong>연락처:</strong> 010-XXXX-XXXX</p>
+                <p><strong>이메일:</strong> starion@risa.com</p>
+            </div>
+        </div>
+
+        <div class="photo-teaser" onclick="triggerPhoto()">
+            <div class="photo-box" id="photoBox">
+                <span id="photoText">현장 위험 사진 클릭</span>
+                <input type="file" id="photoInput" style="display:none" onchange="previewImage(this)">
+                <img id="previewImg" src="">
+            </div>
+            <div class="photo-desc" contenteditable="true">
+                <strong>현장 사전 관찰 결과:</strong><br>
+                "현재 지게차 주행로와 보행자 동선이 겹치는 구조가 확인되었습니다. 본 진단을 통해 사고 예방을 위한 <strong>구조적 대안</strong>을 제시해 드립니다."
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>서비스 항목</th><th>단위</th><th>단가</th><th>금액</th></tr>
+            </thead>
+            <tbody contenteditable="true">
+                <tr>
+                    <td style="text-align: left; padding-left: 20px;">
+                        <strong>RISA Quick Scan</strong><br>
+                        <span style="font-size:12px; color:#718096;">(지속적 사고 예방을 위한 현장 구조 리스크 진단)</span>
+                    </td>
+                    <td>1회</td>
+                    <td>300,000</td>
+                    <td>300,000</td>
+                </tr>
+                <tr><td colspan="3" style="text-align: right; background: #F8FAFC; font-size:12px;">부가가치세 (VAT 10%)</td><td>30,000</td></tr>
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            <span style="font-size: 15px; color: #718096;">총 합계금액 (VAT 포함):</span><br>
+            <span class="total-amount" contenteditable="true">￦ 330,000원</span>
+        </div>
+
+        <div class="deliverables">
+            <h4>제공 산출물 (Deliverables)</h4>
+            <ul contenteditable="true">
+                <li>현장 핵심 리스크 진단 리포트 (PDF)</li>
+                <li>위험 사진 및 시각적 개선 가이드</li>
+                <li>개선 우선순위 및 즉시 조치 항목 정리</li>
+                <li>대표이사 경영 리스크 포인트 요약</li>
+            </ul>
+        </div>
+
+        <div class="upsell-box">
+            <h4>연계 가능 후속 서비스 (RISA™ 추천)</h4>
+            <div class="upsell-grid">
+                <div class="upsell-item">위험성평가 정기 구축</div>
+                <div class="upsell-item">TBM 체계 정비</div>
+                <div class="upsell-item">ISO 45001 내부심사 지원</div>
+                <div class="upsell-item">월간 Flow Care 관리</div>
+            </div>
+        </div>
+
+        <div class="disclaimer" contenteditable="true">
+            ※ <strong>적용 제외 범위:</strong> 본 진단은 현장 구조 및 운영 흐름 중심의 간이 진단이며, 관련 법령에 따른 법정 정밀안전진단 및 ISO 정식 인증 심사를 대체하지 않습니다.
+        </div>
+
+        <div class="signature-section">
+            <div class="sign-box">
+                <p class="sign-text">고객 확인 (승인)</p>
+                <div class="sign-line"></div>
+            </div>
+            <div class="sign-box">
+                <p class="sign-text">공급자 확인 (RISA™)</p>
+                <div class="sign-line" style="text-align:right; line-height:45px; font-weight:900; padding-right:20px;">별 이 온 (인)</div>
+            </div>
+        </div>
+
+        <footer>
+            대전 기반 제조업 리스크 진단 파트너 | <strong>규격이 아니라 구조를 봅니다.</strong>
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_QUOTE_DATA';
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setupAutoSave(); });
+
+        function openGuide() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuide(e) { if (!e || e.target.id === 'guideModal' || e.target.tagName === 'SPAN') document.getElementById('guideModal').style.display = 'none'; }
+
+        function triggerPhoto() { document.getElementById('photoInput').click(); }
+        function previewImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('previewImg');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    document.getElementById('photoText').style.display = 'none';
+                    saveData();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setupAutoSave() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => saveData());
+            });
+        }
+
+        function saveData() {
+            const data = {
+                fields: Array.from(document.querySelectorAll('[contenteditable="true"]')).map(el => el.innerHTML),
+                image: document.getElementById('previewImg').src
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+                    if (data.fields[i]) el.innerHTML = data.fields[i];
+                });
+                if (data.image && data.image.startsWith('data:image')) {
+                    const img = document.getElementById('previewImg');
+                    img.src = data.image;
+                    img.style.display = 'block';
+                    document.getElementById('photoText').style.display = 'none';
+                }
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

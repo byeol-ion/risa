@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 경영책임자 현장 점검 기록부</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #0F172A; --risa-orange: #F37021; --risa-red: #C53030; --line: #1E293B; --bg-gray: #F1F5F9; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #475569; color: #1E293B; padding: 20px 0; }
+        
+        .page { 
+            background: white; width: 210mm; height: 296mm; 
+            padding: 20mm 25mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+            display: flex; flex-direction: column;
+        }
+
+        header { border-bottom: 5px double var(--risa-blue); padding-bottom: 15px; margin-bottom: 25px; text-align: center; }
+        header h1 { font-size: 26px; color: var(--risa-blue); font-weight: 900; letter-spacing: 2px; }
+        header p { font-size: 12px; color: #64748B; margin-top: 5px; font-weight: 700; }
+
+        /* 가이드 버튼 */
+        .btn-guide { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: var(--risa-orange); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 1001; }
+        .guide-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; }
+        .guide-content { background: white; width: 90%; max-width: 550px; padding: 35px; border-radius: 20px; }
+
+        section { margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: 900; color: var(--risa-blue); margin-bottom: 10px; display: flex; align-items: center; }
+        .section-title::before { content: '■'; color: var(--risa-orange); margin-right: 8px; font-size: 12px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        table th { background: var(--bg-gray); border: 1.5px solid var(--line); padding: 12px; font-weight: 700; }
+        table td { border: 1.5px solid var(--line); padding: 12px; }
+
+        .check-box { border: 2px solid var(--risa-blue); padding: 20px; border-radius: 8px; background: #FBFCFE; }
+        .check-box ul { list-style: none; }
+        .check-box li { margin-bottom: 10px; display: flex; align-items: center; font-weight: 700; }
+        .check-box input { margin-right: 15px; transform: scale(1.3); }
+
+        [contenteditable="true"]:hover { background: #F8FAFC; outline: 1px dashed var(--risa-orange); }
+
+        .approval-area { margin-top: auto; border-top: 3px solid var(--risa-blue); padding-top: 25px; }
+        .approval-info { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 900; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 15px 30px; border-radius: 35px; font-weight: 700; cursor: pointer; z-index: 1001; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; height: 100vh; padding: 15mm 20mm; }
+            .btn-print, .btn-guide, .guide-modal { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-guide" onclick="openGuide()">💡</button>
+    <button class="btn-print" onclick="window.print()">CEO 점검부 출력 / 저장</button>
+
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <h2 style="color:var(--risa-blue); margin-bottom:20px; font-weight:900;">🛡️ 대표이사 보호 전략</h2>
+            <p style="font-size:15px; line-height:1.8; color:#334155;">
+                중처법 수사관이 가장 먼저 찾는 문서입니다.<br><br>
+                1. <b>점검의 실제성:</b> 단순 체크가 아니라 "지게차 사각지대 확인"처럼 실제 내용을 적으세요.<br>
+                2. <b>예산 지시:</b> "개선안 발주 지시" 같은 문구가 대표를 보호합니다.<br>
+                3. <b>미조치 사유:</b> 조치가 안 된 게 있다면 "예산 검토 중"이라고라도 적어두는 것이 아예 안 적는 것보다 훨씬 낫습니다.
+            </p>
+        </div>
+    </div>
+
+    <div class="page">
+        <header>
+            <div style="text-align:right; font-size:11px; color:#94A3B8; margin-bottom:5px;" contenteditable="true">DOC NO: RISA-CEO-2026-001</div>
+            <h1>경영책임자 안전보건 현장 점검 기록부</h1>
+            <p>※ 본 문서는 중대재해처벌법 제4조 및 제5조에 따른 경영책임자의 이행 증빙 자료입니다.</p>
+        </header>
+
+        <section>
+            <table>
+                <tr>
+                    <th width="15%">점검 일시</th><td width="35%" contenteditable="true">2026. 05. 14 / 14:00~15:00</td>
+                    <th width="15%">점검자</th><td width="35%" contenteditable="true">대표이사 별이온</td>
+                </tr>
+                <tr>
+                    <th>참석자</th><td colspan="3" contenteditable="true">안전관리자, 물류팀장, 생산팀장</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">01. 경영책임자 핵심 점검 사항</div>
+            <div class="check-box">
+                <ul>
+                    <li><input type="checkbox" checked> 유해·위험요인 확인 및 개선 이행 상태 점검</li>
+                    <li><input type="checkbox" checked> 안전보건 예산 집행 및 인력 배치 적정성 확인</li>
+                    <li><input type="checkbox" checked> 종사자 의견 청취 및 아차사고 후속 조치 확인</li>
+                    <li><input type="checkbox" checked> 비상 상황 대응 체계 및 훈련 상태 점검</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">02. 점검 결과 및 조치 지시 (Traceability)</div>
+            <table>
+                <thead>
+                    <tr><th width="15%">연결 문서 No</th><th width="25%">발견된 리스크</th><th width="35%">조치 지시 사항</th><th width="25%">검증 상태</th></tr>
+                </thead>
+                <tbody contenteditable="true">
+                    <tr>
+                        <td style="color:var(--risa-orange); font-weight:700;">NM-2026-001</td>
+                        <td>하역장 동선 혼재 및 사각지대 존재</td>
+                        <td>보행로 물리적 분리 펜스 설치 완료 지시</td>
+                        <td contenteditable="false">
+                            <span style="padding:2px 8px; border:1.5px solid #10B981; color:#10B981; border-radius:4px; font-weight:900; font-size:11px; cursor:pointer;" onclick="cycleStatus(this)">조치완료(Done)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--risa-orange); font-weight:700;">RA-2026-015</td>
+                        <td>신규 작업자 교육 미흡</td>
+                        <td>입사 당일 직무 안전 교육 강화 및 멘토링 제도 도입</td>
+                        <td contenteditable="false">
+                            <span style="padding:2px 8px; border:1.5px solid var(--risa-orange); color:var(--risa-orange); border-radius:4px; font-weight:900; font-size:11px; cursor:pointer;" onclick="cycleStatus(this)">진행중(Ing)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">03. 점검 소견 및 차기 계획</div>
+            <div style="border:1px solid var(--line); padding:15px; border-radius:8px; font-size:13.5px; min-height:80px;" contenteditable="true">
+                <strong>[종합 소견]</strong> 전반적으로 안전 수칙은 준수되고 있으나, 피크 타임의 시간 압박이 여전함. 생산 부서와 협의하여 작업 물량 분산 방안을 차기 점검 전까지 보고할 것.
+            </div>
+        </section>
+
+        <div class="approval-area">
+            <div class="approval-info">
+                <div>차기 점검 예정일: <span contenteditable="true">2026. 06. 18</span></div>
+                <div style="font-size: 20px;">대표이사 별이온 (인)</div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 30px; text-align: center; border-top: 1px solid #000; padding-top: 15px;">
+            <p style="font-size:12px; font-weight:900; color:var(--risa-blue);">RISA™ | Risk Integrated System Audit | "구조를 바꾸면 사고는 멈춥니다."</p>
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_CEO_CHECK_DATA';
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setupAutoSave(); });
+
+        function openGuide() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuide(e) { if (!e || e.target.id === 'guideModal' || e.target.tagName === 'SPAN') document.getElementById('guideModal').style.display = 'none'; }
+
+        function cycleStatus(el) {
+            const levels = ['조치완료(Done)', '진행중(Ing)', '검토중(Wait)'];
+            let current = el.innerText;
+            let nextIndex = (levels.indexOf(current) + 1) % levels.length;
+            el.innerText = levels[nextIndex];
+            
+            if (el.innerText.includes('완료')) {
+                el.style.color = '#10B981'; el.style.borderColor = '#10B981';
+            } else if (el.innerText.includes('진행')) {
+                el.style.color = 'var(--risa-orange)'; el.style.borderColor = 'var(--risa-orange)';
+            } else {
+                el.style.color = '#64748B'; el.style.borderColor = '#64748B';
+            }
+            saveData();
+        }
+
+        function setupAutoSave() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => saveData());
+            });
+        }
+
+        function saveData() {
+            const data = Array.from(document.querySelectorAll('[contenteditable="true"]')).map(el => el.innerHTML);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+                    if (data[i]) el.innerHTML = data[i];
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

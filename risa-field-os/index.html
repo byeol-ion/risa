@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 필드 체크리스트 (1페이지 고정)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #1a365d; --secondary: #2c5282; --risa-orange: #F37021; --risa-red: #dc2626; --line: #cbd5e1; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* 인쇄 시 여백 강제 제어 */
+        @page { size: A4; margin: 10mm; } 
+
+        body { font-family: 'Noto Sans KR', sans-serif; background: #e2e8f0; color: #1e293b; padding: 10px; line-height: 1.35; }
+        
+        .edit-guide {
+            position: fixed; top: 20px; right: 80px; background: white; color: var(--primary);
+            padding: 12px; border-radius: 10px; border: 2px solid var(--risa-orange);
+            z-index: 1000; font-size: 11px; line-height: 1.4; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 가이드 아이콘 스타일 */
+        .btn-guide {
+            position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
+            background: var(--risa-orange); color: white; border: none; border-radius: 50%;
+            font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(243, 112, 33, 0.4); z-index: 1001; transition: transform 0.2s;
+        }
+        .btn-guide:hover { transform: scale(1.1); }
+
+        /* 가이드 모달 스타일 */
+        .guide-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); z-index: 2000; backdrop-filter: blur(4px);
+            align-items: center; justify-content: center;
+        }
+        .guide-content {
+            background: white; width: 90%; max-width: 600px; max-height: 85vh;
+            border-radius: 20px; padding: 30px; overflow-y: auto; position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .close-guide {
+            position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #94a3b8;
+        }
+        .guide-body h2 { color: var(--risa-orange); margin-bottom: 15px; border-bottom: 2px solid #fef3c7; padding-bottom: 10px; }
+        .guide-body h3 { color: var(--primary); margin: 20px 0 10px 0; font-size: 16px; display: flex; align-items: center; }
+        .guide-body h3::before { content: '◈'; margin-right: 8px; color: var(--risa-orange); }
+        .guide-body p, .guide-body li { font-size: 14px; line-height: 1.6; color: #475569; margin-bottom: 8px; }
+        .guide-body ul { padding-left: 20px; }
+        .guide-body .point { background: #fff7ed; border-left: 4px solid var(--risa-orange); padding: 10px; margin: 10px 0; font-weight: 500; }
+
+        /* 컨테이너 여백과 높이 미세 조정 */
+        .checklist-container { 
+            max-width: 800px; margin: 0 auto; background: white; 
+            padding: 25px 30px; border-radius: 4px; border: 1.5px solid var(--line); 
+            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        header { border-bottom: 3px solid var(--primary); padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .brand { font-size: 22px; font-weight: 900; color: var(--primary); }
+        h1 { font-size: 20px; font-weight: 900; }
+
+        [contenteditable="true"]:hover { background: #F8FAFC; outline: 1px dashed var(--risa-orange); }
+        [contenteditable="true"]:focus { background: white; outline: 1.5px solid var(--risa-orange); }
+
+        section { margin-bottom: 12px; page-break-inside: avoid; }
+        h3 { font-size: 14px; color: var(--primary); border-left: 5px solid var(--risa-orange); padding-left: 8px; margin-bottom: 8px; font-weight: 900; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+        td { border: 1px solid var(--line); padding: 7px 10px; font-size: 13px; }
+        .label { background: #f8fafc; font-weight: 700; width: 18%; color: var(--primary); }
+        
+        .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .check-box-list { border: 1.2px solid #f1f5f9; padding: 10px; border-radius: 6px; }
+        .check-box-list h4 { font-size: 13px; margin-bottom: 6px; color: var(--secondary); border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; font-weight: 900; }
+        
+        .item { display: flex; align-items: flex-start; margin-bottom: 5px; font-size: 12.5px; cursor: pointer; color: #334155; }
+        .sq { 
+            width: 15px; height: 15px; border: 1.5px solid #64748b; margin-right: 8px; flex-shrink: 0; margin-top: 1px; 
+            background: white; position: relative; display: flex; align-items: center; justify-content: center;
+        }
+        .sq.checked::after { content: '✔'; color: var(--risa-orange); font-weight: 900; font-size: 13px; }
+        
+        .memo-area { border: 1px solid var(--line); min-height: 80px; margin-top: 8px; padding: 10px; font-size: 12.5px; color: #333; background: white; white-space: pre-wrap; }
+        .highlight { color: var(--risa-red); font-weight: 700; }
+
+        .action-area { font-size: 13px; line-height: 2.0; min-height: 80px; border: 1px dashed var(--line); padding: 10px; color: #333; }
+
+        footer { text-align: center; font-size: 10.5px; color: #94a3b8; margin-top: 15px; border-top: 1px solid var(--line); padding-top: 8px; }
+        
+        @media print { 
+            body { background: white; padding: 0; margin: 0; } 
+            .checklist-container { box-shadow: none; border: 1px solid #eee; padding: 10px 15px; width: 100%; height: 98vh; } 
+            .btn-print, .edit-guide, .btn-guide, .guide-modal { display: none !important; } 
+            [contenteditable="true"] { outline: none !important; }
+        }
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1001; }
+    </style>
+</head>
+<body>
+    <div class="edit-guide no-print">
+        <strong>✅ 현장 진단 모드</strong><br>
+        한 장에 쏙 들어가게 설계되었습니다.
+    </div>
+
+    <!-- 가이드 버튼 -->
+    <button class="btn-guide no-print" onclick="openGuide()" title="작성 가이드 보기">💡</button>
+
+    <button class="btn-print no-print" onclick="window.print()">한 장으로 인쇄 / PDF 저장</button>
+
+    <!-- 가이드 모달 -->
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <span class="close-guide" onclick="closeGuide()">&times;</span>
+            <div class="guide-body">
+                <h2>RISA™ Quick Scan 가이드</h2>
+                <p><strong>"왜 위험이 반복되는 구조인가?"</strong>를 찾는 것이 핵심입니다.</p>
+                
+                <h3>기본 운영 원칙</h3>
+                <ul>
+                    <li>❌ 규정 암기식 점검이나 작업자 개인 책임 추궁은 지양합니다.</li>
+                    <li>✅ 사람 → 장비 → 정보 → 시간의 흐름 속에서 <strong>구조적 모순</strong>을 찾습니다.</li>
+                </ul>
+
+                <h3>STEP별 핵심 포인트</h3>
+                <div class="point">
+                    <strong>STEP 01: 맥락 파악</strong><br>
+                    최근 아차사고 패턴과 지게차 동선 혼재 여부를 우선 확인하세요.
+                </div>
+                <div class="point">
+                    <strong>STEP 02: 현장 관찰 (스캔)</strong><br>
+                    작업자가 어디서 서두르는지, 정보 전달이 어디서 끊기는지 관찰하세요. 특히 "원래 그래요"라는 말이 나오는 곳이 구조적 결함 지점입니다.
+                </div>
+                <div class="point">
+                    <strong>STEP 03: 구조 원인 해석</strong><br>
+                    "부주의함" 대신 "생산량 대비 협소한 공간", "동선 충돌 설계" 등 시스템 원인으로 해석하세요.
+                </div>
+
+                <h3>대표 브리핑 전략</h3>
+                <p>길고 어려운 말보다 즉시 실행 가능한 3가지 Action을 제안하세요. (예: 동선 분리 표시, 작업 시간 분산 등)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="checklist-container">
+        <header>
+            <div><span class="brand">RISA™</span> <span style="font-size:11px; color:#64748b;">Quick Scan Field Tool</span></div>
+            <h1>현장 구조 리스크 진단표</h1>
+        </header>
+
+        <!-- 샘플 표기 추가 -->
+        <div style="text-align: center; margin-bottom: 12px; color: var(--risa-red); font-weight: 900; font-size: 15px; background: #fee2e2; padding: 8px; border-radius: 6px; border: 1.5px dashed var(--risa-red);">
+            ※ [샘플 / 작업 예시] 본 양식은 물류형 샘플이며, 실제 진단 시 각 기업 공정에 맞게 커스텀 됩니다.
+        </div>
+
+        <section>
+            <h3>[STEP 01] 사업장 기본 정보</h3>
+            <table>
+                <tr><td class="label">사업장명</td><td colspan="3" contenteditable="true"></td></tr>
+                <tr><td class="label">주요공정</td><td contenteditable="true"></td><td class="label">인원/교대</td><td contenteditable="true"> 명 / (주/야)</td></tr>
+                <tr><td class="label">지게차보유</td><td contenteditable="true"> 대</td><td class="label">최근사고</td><td contenteditable="true"></td></tr>
+                <tr><td class="label">사전 확인</td><td colspan="3" contenteditable="true">□ 배치도 □ 최근 아차사고 기록 □ 작업지시 전달방식</td></tr>
+            </table>
+        </section>
+
+        <section>
+            <h3>[STEP 02] RISA 실시간 구조 스캔 (현장 관찰)</h3>
+            <div class="check-grid">
+                <div class="check-box-list">
+                    <h4>① 사람의 흐름 (보행 동선)</h4>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 어디서 사람이 몰리거나 멈추는가?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 작업자가 뛰거나 서두르는 구간은?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 지게차 주행로를 가로지르는 지점은?</div>
+                </div>
+                <div class="check-box-list">
+                    <h4>② 장비의 흐름 (지게차/설비)</h4>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 지게차 후진/회전 시 사각지대는?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 랙(Rack) 사이 통로가 협소한가?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 설비 간 간격이 좁아 끼임 위험은?</div>
+                </div>
+                <div class="check-box-list">
+                    <h4>③ 정보의 흐름 (의사소통)</h4>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 소음 속 구두 지시가 혼선될 여지?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> TBM 시 실제 위험이 공유되는가?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 비상 알람이 현장 끝까지 들리는가?</div>
+                </div>
+                <div class="check-box-list">
+                    <h4>④ 시간/심리 (압박/익숙함)</h4>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> <span class="highlight">상차 마감 직전</span> 서두르는 구조?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> "원래 그래요" - 익숙해진 위험은?</div>
+                    <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> 납기 압박으로 장치를 우회하는가?</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>[STEP 03] RISA 구조적 원인 추정 (심층 분석)</h3>
+            <div class="check-box-list" style="border:1px solid #f3e8c1; background: #fffdf9; padding: 8px;">
+                <p style="font-size:11.5px; margin-bottom:5px; color: var(--secondary);"><strong>※ 시스템의 결함을 찾으세요:</strong></p>
+                <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> <strong>공간 모순:</strong> 생산량 대비 좁은 적치 공간</div>
+                <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> <strong>동선 모순:</strong> 사람과 지게차가 반드시 교차함</div>
+                <div class="item" onclick="toggleCheck(this)"><div class="sq"></div> <strong>설계 모순:</strong> 보호구 착용이 작업에 방해됨</div>
+                <div class="memo-area" contenteditable="true">현장 특이사항 및 대표/근로자 인터뷰 메모:</div>
+            </div>
+        </section>
+
+        <section style="margin-bottom: 0;">
+            <h3>[Quick Action] 대표에게 즉시 제안할 3가지</h3>
+            <div class="action-area" contenteditable="true">
+                1. <br>
+                2. <br>
+                3. 
+            </div>
+        </section>
+
+        <footer>
+            RISA™ | 대전 기반 제조업 리스크 진단 전문가 | 규격이 아니라 구조를 봅니다.
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_FIELD_CHECKLIST_DATA';
+
+        // 페이지 로드 시 데이터 복구
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupAutoSave();
+        });
+
+        function toggleCheck(element) {
+            const sq = element.querySelector('.sq');
+            sq.classList.toggle('checked');
+            saveData(); // 체크 상태 변경 시 저장
+        }
+
+        function openGuide() {
+            document.getElementById('guideModal').style.display = 'flex';
+        }
+
+        function closeGuide(event) {
+            if (!event || event.target.id === 'guideModal' || event.target.className === 'close-guide') {
+                document.getElementById('guideModal').style.display = 'none';
+            }
+        }
+
+        // --- 저장 및 복구 로직 ---
+
+        function setupAutoSave() {
+            // 모든 수정 가능한 영역에 입력 이벤트 리스너 추가
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => {
+                    saveData();
+                });
+            });
+        }
+
+        function saveData() {
+            const data = {
+                fields: [],
+                checks: []
+            };
+
+            // 모든 텍스트 영역 저장
+            document.querySelectorAll('[contenteditable="true"]').forEach((el, index) => {
+                data.fields.push({ index, content: el.innerHTML });
+            });
+
+            // 모든 체크박스 상태 저장
+            document.querySelectorAll('.sq').forEach((el, index) => {
+                data.checks.push({ index, checked: el.classList.contains('checked') });
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            console.log('RISA Data Auto-saved');
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (!savedData) return;
+
+            try {
+                const data = JSON.parse(savedData);
+                
+                // 텍스트 영역 복구
+                data.fields.forEach(item => {
+                    const el = document.querySelectorAll('[contenteditable="true"]')[item.index];
+                    if (el) el.innerHTML = item.content;
+                });
+
+                // 체크박스 복구
+                data.checks.forEach(item => {
+                    const el = document.querySelectorAll('.sq')[item.index];
+                    if (el) {
+                        if (item.checked) el.classList.add('checked');
+                        else el.classList.remove('checked');
+                    }
+                });
+            } catch (e) {
+                console.error('Failed to load RISA data', e);
+            }
+        }
+    </script>
+</body>
+</html>

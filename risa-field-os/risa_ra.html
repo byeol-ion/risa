@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 실무형 위험성평가(RA) 기록지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #1E293B; --risa-orange: #F37021; --risa-red: #C53030; --line: #E2E8F0; --bg-gray: #F8FAFC; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; color: #1E293B; padding: 10px 0; line-height: 1.4; }
+        
+        .page { 
+            background: white; width: 210mm; height: 296mm; 
+            padding: 15mm 20mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.4); 
+            display: flex; flex-direction: column; position: relative;
+            page-break-after: always;
+        }
+
+        header { border-bottom: 3px solid var(--risa-blue); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .logo-area h1 { font-size: 24px; color: var(--risa-blue); font-weight: 900; }
+        .logo-area p { font-size: 11px; color: #64748B; margin-top: 2px; }
+        .doc-no { text-align: right; font-size: 10px; color: #94A3B8; }
+
+        /* 가이드 버튼/모달 */
+        .btn-guide { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: var(--risa-orange); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 1001; box-shadow: 0 4px 12px rgba(243,112,33,0.4); }
+        .guide-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+        .guide-content { background: white; width: 90%; max-width: 650px; padding: 35px; border-radius: 20px; overflow-y: auto; max-height: 85vh; }
+        .guide-body h2 { color: var(--risa-blue); border-bottom: 3px solid var(--risa-orange); padding-bottom: 10px; margin-bottom: 15px; }
+        .guide-body h3 { color: var(--risa-orange); margin-top: 20px; font-size: 16px; }
+        .guide-body li { font-size: 14px; margin-bottom: 8px; color: #334155; }
+
+        section { margin-bottom: 18px; }
+        .section-title { background: var(--risa-blue); color: white; padding: 6px 12px; font-size: 14px; font-weight: 700; margin-bottom: 10px; border-radius: 4px; display: flex; justify-content: space-between; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 10px; }
+        table th { background: var(--bg-gray); color: var(--risa-blue); border: 1px solid var(--line); padding: 8px; font-weight: 700; }
+        table td { border: 1px solid var(--line); padding: 8px; text-align: center; }
+
+        .input-main { width: 100%; border: none; outline: none; background: transparent; font-family: inherit; font-size: inherit; text-align: center; }
+        [contenteditable="true"]:hover { background: #F1F5F9; }
+
+        /* RA Table */
+        .ra-table th { font-size: 11px; }
+        .ra-table td { font-size: 11.5px; height: 60px; }
+
+        .photo-cell { width: 120px; position: relative; cursor: pointer; }
+        .photo-cell img { width: 100%; height: 100%; object-fit: contain; position: absolute; top:0; left:0; display:none; }
+        .photo-placeholder { font-size: 10px; color: #94A3B8; }
+
+        /* Structural Risk Box */
+        .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .risk-item { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--line); padding: 8px; border-radius: 4px; }
+        .risk-item label { font-weight: 700; font-size: 12px; color: var(--risa-blue); }
+        .risk-select { border: 1.5px solid var(--risa-orange); color: var(--risa-orange); padding: 2px 6px; border-radius: 4px; font-weight: 900; font-size: 11px; }
+
+        /* Near Miss Section */
+        .near-miss-box { border: 1.5px solid var(--risa-blue); border-radius: 4px; padding: 10px; font-size: 12.5px; line-height: 1.6; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; height: 100vh; padding: 10mm 15mm; }
+            .btn-print, .btn-guide, .guide-modal, .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-guide" onclick="openGuide()">💡</button>
+    <button class="btn-print" onclick="window.print()">RA 기록지 출력 / PDF 저장</button>
+
+    <!-- 가이드 모달 -->
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <span style="float:right; cursor:pointer;" onclick="closeGuide()">&times;</span>
+            <div class="guide-body">
+                <h2>📊 RISA™형 RA 작성 비법</h2>
+                <p>일반 위험성평가와 격이 다른 RISA만의 통찰을 담으세요.</p>
+                
+                <h3>1. 구조적 원인 (Structural Cause)</h3>
+                <ul>
+                    <li>단순 '부주의' 대신 <b>'동선 겹침', '공간 협소', '납기 압박'</b> 등 시스템적 원인을 적으세요.</li>
+                </ul>
+
+                <h3>2. 반복 발생 조건 (Repeat Condition)</h3>
+                <ul>
+                    <li>언제 위험이 집중되나요? <b>'상차 마감 30분 전', '교대 시간 직후'</b> 등이 핵심입니다.</li>
+                </ul>
+
+                <h3>3. 숙련자 의존도 & 우회 가능성</h3>
+                <ul>
+                    <li><b>의존도 높음:</b> 숙련자의 감각으로만 안전이 유지되는 위험한 상태입니다.</li>
+                    <li><b>우회 가능성 높음:</b> 바쁠 때 절차가 무너질 확률이 매우 높음을 경고하세요.</li>
+                </ul>
+
+                <div style="background:#fff7ed; padding:12px; border-radius:8px; margin-top:20px; font-weight:700;">
+                    💡 대표님께 드리는 멘트:<br>
+                    "사고는 운이 나빠서가 아니라, 이런 구조적 조건이 맞춰질 때 터지는 필연입니다."
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1페이지 -->
+    <div class="page">
+        <header>
+            <div class="logo-area">
+                <h1>RISA™ 실무형 위험성평가(RA) 기록지</h1>
+                <p>"사고 원인 조사가 아닌, '사전 위험 찾기' - 구조가 지켜야 합니다."</p>
+            </div>
+            <div class="doc-no" contenteditable="true">DOC NO: RISA-RA-2026-001</div>
+        </header>
+
+        <section>
+            <div class="section-title">0. 기본 정보</div>
+            <table>
+                <tr>
+                    <th width="15%">사업장명</th><td width="35%"><input type="text" class="input-main" placeholder="기업명"></td>
+                    <th width="15%">평가일자</th><td width="35%"><input type="date" class="input-main"></td>
+                </tr>
+                <tr>
+                    <th>평가대상공정</th><td><input type="text" class="input-main" placeholder="공정명"></td>
+                    <th>참여자(근로자)</th><td><input type="text" class="input-main" placeholder="성명 (서명필수)"></td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">
+                1. 위험 파악 및 구조 분석 (Flow & System 중심)
+                <button class="no-print" onclick="addRow()" style="background:var(--risa-orange); color:white; border:none; padding:2px 10px; border-radius:4px; font-size:11px; cursor:pointer;">+ 진단 항목 추가</button>
+            </div>
+            <table class="ra-table">
+                <thead>
+                    <tr>
+                        <th width="12%">작업 흐름<br>(Flow)</th>
+                        <th width="20%">무엇이 위험한가?<br>(병목/충돌)</th>
+                        <th width="18%">구조적 원인<br>(Structural Cause)</th>
+                        <th width="15%">반복 발생 조건<br>(Peak/Condition)</th>
+                        <th width="20%">구조적 대책<br>(Fail-Safe/LOTO)</th>
+                        <th width="15%">조치/일정</th>
+                    </tr>
+                </thead>
+                <tbody id="ra-body" contenteditable="true">
+                    <!-- 행은 JS로 제어되거나 초기 3줄 유지 -->
+                    <tr>
+                        <td class="photo-cell" contenteditable="false" onclick="triggerPhoto(this)">
+                            <span class="photo-placeholder">📸 사진 클릭</span>
+                            <input type="file" style="display:none" onchange="previewRAImage(this)">
+                            <img src="">
+                        </td>
+                        <td>예: 지게차 동선과 보행로 중첩</td>
+                        <td>물리적 분리 부재</td>
+                        <td>상차 마감 시간대</td>
+                        <td>펜스 설치 및 동선 도색</td>
+                        <td>안전팀장 / 06.30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">2. RISA™ 구조적 리스크 진단 (Structural Risk Diagnosis)</div>
+            <div class="risk-grid">
+                <div class="risk-item">
+                    <label>숙련자 의존도</label>
+                    <div class="risk-select no-print" onclick="cycleRisk(this, ['낮음(Low)', '중간(Mid)', '높음(High)', '심각(Critical)'])">중간(Mid)</div>
+                </div>
+                <div class="risk-item">
+                    <label>절차 우회 가능성</label>
+                    <div class="risk-select no-print" onclick="cycleRisk(this, ['없음(None)', '낮음(Low)', '높음(High)', '심각(Critical)'])">높음(High)</div>
+                </div>
+                <div class="risk-item">
+                    <label>피크 시간 위험 증가</label>
+                    <div class="risk-select no-print" onclick="cycleRisk(this, ['없음(None)', '있음(Exist)', '심각(Critical)'])">심각(Critical)</div>
+                </div>
+                <div class="risk-item">
+                    <label>생산 압박 영향</label>
+                    <div class="risk-select no-print" onclick="cycleRisk(this, ['없음(None)', '있음(Exist)', '심각(Critical)'])">있음(Exist)</div>
+                </div>
+                <div class="risk-item" style="grid-column: span 2; background: var(--risa-blue); color: white; margin-top: 5px;">
+                    <label style="color:white">🚀 현재 생산 압박 지수 (Production Pressure Index)</label>
+                    <div class="risk-select no-print" onclick="cycleRisk(this, ['정상(Normal)', '증가(Increase)', '마감집중(Deadline)', '긴급납기(Emergency)', '인력부족(Shortage)'])" style="border-color:white; color:white;">정상(Normal)</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">3. 아차사고(Near Miss) & 현장 근거</div>
+            <div class="near-miss-box" contenteditable="true">
+                <strong>🚩 최근 아차사고 사례:</strong> 한 달 전 마감 시간대 지게차 급제동 발생 (보행자 미확인)<br>
+                <strong>👷 현장 인터뷰:</strong> "바쁠 때는 사람 지나가는 거 신경 쓸 틈이 없어요. 원래 그래요."
+            </div>
+        </section>
+        <p style="text-align: center; color: #CBD5E1; font-size: 11px; margin-top: auto;">- 1 -</p>
+    </div>
+
+    <!-- 2페이지 -->
+    <div class="page">
+        <section style="margin-top: 20px;">
+            <div class="section-title">4. 구조 개선 우선순위 (Structural Countermeasure)</div>
+            <table class="analysis-table" style="font-size: 13px;">
+                <thead>
+                    <tr><th width="15%">등급</th><th width="45%">개선 방향 (구조 중심)</th><th width="40%">기대 효과</th></tr>
+                </thead>
+                <tbody contenteditable="true">
+                    <tr><td style="color:var(--risa-red); font-weight:900;">A (긴급)</td><td style="text-align:left;">물리적 보행로 분리 및 가드레일 설치</td><td>협착 사고 원천 차단</td></tr>
+                    <tr><td style="color:var(--risa-red); font-weight:900;">A (긴급)</td><td style="text-align:left;">마감 시간 작업 부하 분산 운영</td><td>시간 압박에 의한 과속 방지</td></tr>
+                    <tr><td>B (보통)</td><td style="text-align:left;">지게차 충돌방지 센서 보강</td><td>사각지대 보조 감지</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">5. 경영자 확인 및 승인 (Leadership)</div>
+            <div style="border: 2px solid var(--risa-blue); padding: 30px; border-radius: 8px; background: var(--bg-gray); position: relative;">
+                <p style="font-size: 15px; font-weight: 700; line-height: 1.8; color: var(--risa-blue);" contenteditable="true">
+                    위의 위험요소를 확인하였으며, 개선 예산을 우선적으로 편성하여 이행할 것을 승인합니다.<br>
+                    <span style="color: var(--risa-red); font-size: 12px;">※ 중대재해처벌법 이행 증빙: 경영책임자의 주기적 점검 및 조치 여부 확인용</span>
+                </p>
+                <div style="margin-top: 40px; text-align: right; font-size: 18px; font-weight: 900;">
+                    대표이사 : ___________________________ (인)
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 20px; text-align: center; color: #64748B;">
+            <p style="font-style: italic; font-size: 13px;">"사람은 실수하고 기계는 고장난다. 구조가 지켜야 한다."</p>
+            <p style="font-weight: 900; color: var(--risa-blue); margin-top: 5px;">RISA™ Risk Integrated System Audit</p>
+        </section>
+
+        <footer style="margin-top: auto; border-top: 1px solid var(--line); padding-top: 10px; display: flex; justify-content: space-between; font-size: 11px; color: #94A3B8;">
+            <div>RISA™ | 대전 기반 제조업 리스크 진단 파트너</div>
+            <div>별 이 온 (Seong-rae)</div>
+        </footer>
+        <p style="text-align: center; color: #CBD5E1; font-size: 11px; margin-top: auto;">- 2 -</p>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_RA_DATA';
+        const MAX_IMAGE_WIDTH = 600;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupAutoSave();
+        });
+
+        function triggerPhoto(cell) {
+            cell.querySelector('input[type="file"]').click();
+        }
+
+        async function previewRAImage(input) {
+            const cell = input.parentElement;
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const compressed = await compressImage(e.target.result);
+                    const img = cell.querySelector('img');
+                    img.src = compressed;
+                    img.style.display = 'block';
+                    cell.querySelector('.photo-placeholder').style.display = 'none';
+                    saveData();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function compressImage(base64Str) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = base64Str;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > MAX_IMAGE_WIDTH) {
+                        height = (MAX_IMAGE_WIDTH / width) * height;
+                        width = MAX_IMAGE_WIDTH;
+                    }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.6));
+                };
+            });
+        }
+
+        function openGuide() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuide(event) { if (!event || event.target.id === 'guideModal' || event.target.tagName === 'SPAN') document.getElementById('guideModal').style.display = 'none'; }
+
+        function addRow(data = null) {
+            const tbody = document.getElementById('ra-body');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="photo-cell" contenteditable="false" onclick="triggerPhoto(this)">
+                    <span class="photo-placeholder" style="${data && data.img ? 'display:none' : ''}">📸</span>
+                    <input type="file" style="display:none" onchange="previewRAImage(this)">
+                    <img src="${data ? data.img : ''}" style="${data && data.img ? 'display:block' : ''}">
+                </td>
+                <td>${data ? data.c1 : ''}</td>
+                <td>${data ? data.c2 : ''}</td>
+                <td>${data ? data.c3 : ''}</td>
+                <td>${data ? data.c4 : ''}</td>
+                <td>${data ? data.c5 : ''}</td>
+            `;
+            tbody.appendChild(tr);
+            if (!data) saveData();
+        }
+
+        function cycleRisk(el, levels) {
+            let current = el.innerText;
+            let nextIndex = (levels.indexOf(current) + 1) % levels.length;
+            el.innerText = levels[nextIndex];
+            
+            if (el.innerText.includes('심각') || el.innerText.includes('Critical') || el.innerText.includes('높음') || el.innerText.includes('High')) {
+                el.style.color = 'var(--risa-red)'; el.style.borderColor = 'var(--risa-red)';
+            } else if (el.innerText.includes('중간') || el.innerText.includes('Mid') || el.innerText.includes('있음') || el.innerText.includes('Exist')) {
+                el.style.color = 'var(--risa-orange)'; el.style.borderColor = 'var(--risa-orange)';
+            } else {
+                el.style.color = 'var(--risa-blue)'; el.style.borderColor = 'var(--line)';
+            }
+            saveData();
+        }
+
+        function setupAutoSave() {
+            document.querySelectorAll('.input-main').forEach(el => el.addEventListener('input', () => saveData()));
+            // RA 바디는 동적이라 상위에서 감시하거나, 각 셀에 걸어야 함. 여기선 간단히 델리게이션
+            document.getElementById('ra-body').addEventListener('input', () => saveData());
+            document.querySelectorAll('[contenteditable="true"]:not(#ra-body)').forEach(el => el.addEventListener('input', () => saveData()));
+        }
+
+        function saveData() {
+            const rows = Array.from(document.querySelectorAll('#ra-body tr')).map(tr => {
+                const tds = tr.querySelectorAll('td');
+                return {
+                    img: tds[0].querySelector('img').src,
+                    c1: tds[1].innerHTML,
+                    c2: tds[2].innerHTML,
+                    c3: tds[3].innerHTML,
+                    c4: tds[4].innerHTML,
+                    c5: tds[5].innerHTML
+                };
+            });
+
+            const data = {
+                inputs: Array.from(document.querySelectorAll('.input-main')).map(el => el.value),
+                fields: Array.from(document.querySelectorAll('[contenteditable="true"]:not(#ra-body)')).map(el => el.innerHTML),
+                risks: Array.from(document.querySelectorAll('.risk-select')).map(el => el.innerText),
+                raRows: rows
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) {
+                addRow(); addRow(); addRow();
+                return;
+            }
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('.input-main').forEach((el, i) => el.value = data.inputs[i] || '');
+                // 리스크 선택 버튼 복구 및 색상 적용
+                document.querySelectorAll('.risk-select').forEach((el, i) => {
+                    if (data.risks && data.risks[i]) {
+                        el.innerText = data.risks[i];
+                        // 로드 시 색상 재설정
+                        if (el.innerText.includes('심각') || el.innerText.includes('높음')) {
+                            el.style.color = 'var(--risa-red)'; el.style.borderColor = 'var(--risa-red)';
+                        } else if (el.innerText.includes('중간') || el.innerText.includes('있음')) {
+                            el.style.color = 'var(--risa-orange)'; el.style.borderColor = 'var(--risa-orange)';
+                        }
+                    }
+                });
+
+                document.querySelectorAll('.photo-cell').forEach((cell, i) => {
+                    if (data.images[i] && data.images[i].startsWith('data:image')) {
+                        const img = cell.querySelector('img');
+                        img.src = data.images[i];
+                        img.style.display = 'block';
+                        cell.querySelector('.photo-placeholder').style.display = 'none';
+                    }
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

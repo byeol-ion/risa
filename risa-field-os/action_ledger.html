@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 개선조치 이행관리대장 (PDCA Master)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #0F172A; --risa-orange: #F37021; --risa-green: #10B981; --line: #1E293B; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4 landscape; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #475569; padding: 20px 0; }
+        
+        .page { 
+            background: white; width: 297mm; min-height: 210mm; 
+            padding: 12mm 15mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+            display: flex; flex-direction: column;
+        }
+
+        header { border-bottom: 5px double var(--risa-blue); padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+        header h1 { font-size: 26px; color: var(--risa-blue); font-weight: 900; letter-spacing: 1px; }
+        .doc-tag { background: var(--risa-blue); color: white; padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 4px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+        th { background: #F1F5F9; border: 1.5px solid var(--line); padding: 10px; font-weight: 900; color: var(--risa-blue); }
+        td { border: 1.5px solid var(--line); padding: 10px; text-align: center; word-break: break-all; height: 55px; }
+
+        .status-badge { padding: 3px 8px; border-radius: 4px; font-weight: 900; font-size: 11px; cursor: pointer; border: 1px solid transparent; }
+        .status-wait { background: #FEE2E2; color: #991B1B; border-color: #F87171; }
+        .status-ing { background: #FEF3C7; color: #92400E; border-color: #FBBF24; }
+        .status-done { background: #D1FAE5; color: #065F46; border-color: #34D399; }
+
+        .btn-add { background: var(--risa-blue); color: white; border: none; padding: 8px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: 0.2s; }
+        .btn-add:hover { background: var(--risa-orange); transform: translateY(-2px); }
+
+        [contenteditable="true"]:hover { background: #F8FAFC; outline: 1px dashed var(--risa-orange); }
+
+        footer { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--line); text-align: center; }
+        .motto { font-weight: 900; color: var(--risa-blue); font-style: italic; font-size: 13px; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; min-height: 100vh; padding: 10mm 10mm; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center;" class="no-print">
+        <button class="btn-add" onclick="addRow()">+ 이행 내역 추가</button>
+        <button class="btn-add" onclick="window.print()" style="background:var(--risa-orange);">PDF 저장 / 인쇄</button>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>RISA™ 개선조치 이행관리대장 (Action Ledger)</h1>
+            <div style="text-align:right;">
+                <div class="doc-tag">중대재해처벌법 핵심 증빙</div>
+                <div style="font-size:10px; color:#64748B; margin-top:5px;" contenteditable="true">DOC NO: RISA-ACT-2026-001</div>
+            </div>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th width="4%">No</th>
+                    <th width="10%">발견일</th>
+                    <th width="12%">연결 번호</th>
+                    <th width="20%">위험 내용 (Issue)</th>
+                    <th width="18%">개선 대책 및 지시</th>
+                    <th width="8%">담당자</th>
+                    <th width="9%">기한</th>
+                    <th width="9%">상태</th>
+                    <th width="10%">완료확인(인)</th>
+                </tr>
+            </thead>
+            <tbody id="ledger-body" contenteditable="true">
+                <tr>
+                    <td>1</td>
+                    <td>2026-05-14</td>
+                    <td style="color:var(--risa-orange); font-weight:700;">NM-2026-001</td>
+                    <td>지게차 상차 구간 동선 혼재</td>
+                    <td>안전펜스 설치 및 바닥 도색</td>
+                    <td>물류팀장</td>
+                    <td>2026-05-30</td>
+                    <td contenteditable="false"><span class="status-badge status-done" onclick="cycleStatus(this)">완료(Done)</span></td>
+                    <td>별이온</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2026-05-14</td>
+                    <td style="color:var(--risa-orange); font-weight:700;">RA-2026-015</td>
+                    <td>노후 연마기 덮개 파손</td>
+                    <td>LOTO 적용 및 덮개 신규 제작</td>
+                    <td>생산팀장</td>
+                    <td>2026-06-05</td>
+                    <td contenteditable="false"><span class="status-badge status-ing" onclick="cycleStatus(this)">진행중(Ing)</span></td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer>
+            <p class="motto">"지시보다 중요한 것은 이행의 확인입니다. RISA™가 끝까지 추적합니다."</p>
+            <p style="font-size:11px; color:#94A3B8; margin-top:5px;">RISA™ Risk Integrated System Audit | 별이온 대표</p>
+        </footer>
+    </div>
+
+    <script>
+        function addRow() {
+            const tbody = document.getElementById('ledger-body');
+            const rowCount = tbody.rows.length + 1;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${rowCount}</td>
+                <td>2026-05-14</td>
+                <td>-</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td contenteditable="false"><span class="status-badge status-wait" onclick="cycleStatus(this)">검토중(Wait)</span></td>
+                <td>-</td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function cycleStatus(el) {
+            const statusMap = {
+                '검토중(Wait)': { next: '진행중(Ing)', class: 'status-ing' },
+                '진행중(Ing)': { next: '완료(Done)', class: 'status-done' },
+                '완료(Done)': { next: '검토중(Wait)', class: 'status-wait' }
+            };
+            const current = el.innerText;
+            const next = statusMap[current];
+            el.innerText = next.next;
+            el.className = 'status-badge ' + next.class;
+        }
+    </script>
+</body>
+</html>

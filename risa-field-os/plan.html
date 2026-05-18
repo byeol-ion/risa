@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 안전보건 운영계획서 (경영책임자용)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #0F172A; --risa-orange: #F37021; --risa-red: #C53030; --line: #E2E8F0; --bg-soft: #F8FAFC; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @page { size: A4; margin: 0; }
+        
+        body { font-family: 'Noto Sans KR', sans-serif; background: #94A3B8; color: #1E293B; padding: 20px 0; line-height: 1.5; }
+        
+        .page { 
+            background: white; width: 210mm; height: 296mm; 
+            padding: 20mm 25mm; margin: 0 auto 10px auto; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.4); 
+            display: flex; flex-direction: column; position: relative;
+        }
+
+        header { border-bottom: 4px solid var(--risa-blue); padding-bottom: 15px; margin-bottom: 30px; }
+        header h1 { font-size: 28px; color: var(--risa-blue); font-weight: 900; text-align: center; }
+        header p { text-align: center; font-size: 13px; color: var(--risa-orange); font-weight: 700; margin-top: 5px; }
+
+        /* 가이드 버튼 */
+        .btn-guide { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: var(--risa-orange); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 1001; box-shadow: 0 4px 12px rgba(243,112,33,0.4); }
+        .guide-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+        .guide-content { background: white; width: 90%; max-width: 600px; padding: 35px; border-radius: 20px; }
+
+        section { margin-bottom: 25px; }
+        .section-title { font-size: 18px; font-weight: 900; color: var(--risa-blue); margin-bottom: 12px; display: flex; align-items: center; }
+        .section-title::before { content: ''; width: 5px; height: 18px; background: var(--risa-orange); margin-right: 10px; }
+
+        .content-box { background: var(--bg-soft); border: 1.5px solid var(--line); border-radius: 8px; padding: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        table th { background: #F1F5F9; color: var(--risa-blue); border: 1px solid var(--line); padding: 10px; font-weight: 700; width: 25%; }
+        table td { border: 1px solid var(--line); padding: 12px; line-height: 1.6; }
+
+        [contenteditable="true"]:hover { background: #F1F5F9; outline: 1px dashed var(--risa-orange); }
+        
+        .philosophy { text-align: center; border: 2px solid var(--risa-blue); padding: 20px; border-radius: 12px; margin-top: auto; }
+        .philosophy p { font-size: 14px; font-style: italic; color: #64748B; }
+        .philosophy h2 { font-size: 20px; color: var(--risa-blue); font-weight: 900; margin-top: 5px; }
+
+        .signature-area { margin-top: 30px; text-align: right; border-top: 1.5px solid var(--line); padding-top: 20px; }
+        .signature-area div { font-size: 18px; font-weight: 900; }
+
+        .btn-print { position: fixed; bottom: 20px; right: 20px; background: var(--risa-blue); color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 700; cursor: pointer; z-index: 1001; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; margin: 0; width: 100%; height: 100vh; padding: 15mm 20mm; }
+            .btn-print, .btn-guide, .guide-modal { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-guide" onclick="openGuide()">💡</button>
+    <button class="btn-print" onclick="window.print()">운영계획서 출력 / PDF 저장</button>
+
+    <div id="guideModal" class="guide-modal" onclick="closeGuide(event)">
+        <div class="guide-content" onclick="event.stopPropagation()">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="color:var(--risa-blue); font-weight:900;">📊 운영계획서 작성 전략</h2>
+                <span style="cursor:pointer; font-size:24px;" onclick="closeGuide()">&times;</span>
+            </div>
+            <p style="font-size:14.5px; line-height:1.7; color:#334155;">
+                중처법 대응의 핵심은 <b>"대표가 알고 있었는가?"</b>입니다.<br><br>
+                1. <b>연간 목표:</b> "지게차 사고 0건"처럼 구체적인 목표를 적으세요.<br>
+                2. <b>예산 편성:</b> 안전 펜스, 바닥 도색 등 실제 지출될 항목을 넣어 실효성을 증빙하세요.<br>
+                3. <b>점검/교육:</b> 정기적인 '흔적'을 남기겠다는 계획이 중요합니다.<br><br>
+                <span style="color:var(--risa-orange); font-weight:700;">💡 Tip: 이 문서는 사장님 책상 위에 항상 올려져 있어야 하는 경영 문서입니다.</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>2026년 안전보건 운영계획서</h1>
+            <p>"안전은 비용이 아니라, 생산을 보호하는 경영 전략입니다."</p>
+        </header>
+
+        <section>
+            <div class="section-title">01. 경영방침 및 목표</div>
+            <div class="content-box" contenteditable="true">
+                <ul style="padding-left: 20px;">
+                    <li><strong>핵심 방침:</strong> 사람을 탓하지 않는 구조적 안전 체계 구축</li>
+                    <li><strong>연간 목표:</strong> 중대재해 Zero, 지게차 충돌 사고 0건, Near Miss 월 1회 발굴</li>
+                    <li><strong>실천 과제:</strong> 공정별 위험성평가 내실화 및 전사적 안전문화 정착</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">02. 안전보건 예산 편성 (투자 계획)</div>
+            <table>
+                <tr>
+                    <th>설비 보강</th>
+                    <td contenteditable="true">현장 동선 분리용 안전 펜스 설치, 바닥 도색 보강 (예상: 500만원)</td>
+                </tr>
+                <tr>
+                    <th>보호구/측정</th>
+                    <td contenteditable="true">지게차 접근 알람 센서 도입, 신규 안전화/작업복 지급 (예상: 200만원)</td>
+                </tr>
+                <tr>
+                    <th>컨설팅/교육</th>
+                    <td contenteditable="true">RISA™ 정기 구조 진단 및 근로자 TBM 역량 강화 교육 (예상: 300만원)</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <div class="section-title">03. 점검 및 교육 계획</div>
+            <table>
+                <tr>
+                    <th>정기 점검</th>
+                    <td contenteditable="true">매월 3주차 금요일: 경영책임자(대표) 현장 순회 점검 및 피드백</td>
+                </tr>
+                <tr>
+                    <th>위험성평가</th>
+                    <td contenteditable="true">매 분기 1회: 공정별 위험 구조 재진단 및 개선 이행 확인</td>
+                </tr>
+                <tr>
+                    <th>교육 훈련</th>
+                    <td contenteditable="true">분기별 전 직원 안전 교육, 신규 입사자 즉시 교육 실시</td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="philosophy">
+            <p>"사람은 실수하고 기계는 고장난다. 구조가 지켜야 한다."</p>
+            <h2>RISA™ Risk Integrated System Audit</h2>
+        </div>
+
+        <div class="signature-area">
+            <div contenteditable="true">2026년 05월 14일</div>
+            <div style="margin-top: 10px;" contenteditable="true">
+                (주) 샘플 사업장 대표이사 : ____________________ (인)
+            </div>
+        </div>
+
+        <footer style="margin-top: 20px; font-size: 11px; color: #94A3B8; text-align: center; border-top: 1px solid var(--line); padding-top: 10px;">
+            RISA™ | 대전 기반 제조업 리스크 진단 파트너 | 별이온 형의 다정한 조력자
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'RISA_PLAN_DATA';
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setupAutoSave(); });
+
+        function openGuide() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuide(e) { if (!e || e.target.id === 'guideModal' || e.target.tagName === 'SPAN') document.getElementById('guideModal').style.display = 'none'; }
+
+        function setupAutoSave() {
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('input', () => saveData());
+            });
+        }
+
+        function saveData() {
+            const data = Array.from(document.querySelectorAll('[contenteditable="true"]')).map(el => el.innerHTML);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+                    if (data[i]) el.innerHTML = data[i];
+                });
+            } catch (e) {}
+        }
+    </script>
+</body>
+</html>

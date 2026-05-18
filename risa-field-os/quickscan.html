@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISA™ Quick Scan v5 - Structural Diagnosis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header Section -->
+        <header class="app-header no-print">
+            <div class="logo-area">
+                <span class="logo-brand">RISA™ Quick Scan</span>
+                <span class="logo-sub">Hybrid v5 - Structural Diagnosis</span>
+            </div>
+            <div class="status-area">
+                <span id="save-status" class="status-indicator">저장 완료</span>
+                <div class="header-actions">
+                    <button id="btn-export" class="btn-icon" title="JSON 백업">💾 백업</button>
+                    <button id="btn-import-trigger" class="btn-icon" title="데이터 복구">📂 복원</button>
+                    <input type="file" id="file-import" accept=".json" style="display:none">
+                    <button id="btn-print" class="btn-primary" onclick="window.print()">🖨️ 보고서 출력</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <!-- Company Info Section -->
+            <section class="section company-info">
+                <div class="info-grid">
+                    <div class="input-group">
+                        <label>대상 기업명</label>
+                        <input type="text" id="company-name" placeholder="기업명" class="input-main">
+                    </div>
+                    <div class="input-group">
+                        <label>공정명</label>
+                        <input type="text" id="process-name" placeholder="진단 공정" class="input-main">
+                    </div>
+                    <div class="input-group">
+                        <label>심사 일자</label>
+                        <input type="date" id="audit-date" class="input-main">
+                    </div>
+                    <div class="input-group">
+                        <label>참석자</label>
+                        <input type="text" id="attendees" placeholder="참석자 명단" class="input-main">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Risk Diagnosis Section -->
+            <section class="section risk-diagnosis">
+                <div class="section-header">
+                    <h2>리스크 구조 진단</h2>
+                    <button id="btn-add-card" class="btn-secondary no-print">+ 진단 항목 추가</button>
+                </div>
+                
+                <div id="risk-cards-container" class="cards-grid">
+                    <!-- Cards will be injected here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer / Print Only -->
+        <footer class="print-only report-footer">
+            <div class="footer-sign">
+                <p>위와 같이 현장 구조적 리스크 진단 결과를 보고합니다.</p>
+                <div class="signature-line">
+                    <span>심사원: 별이온 (인)</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Template for Risk Card -->
+    <template id="risk-card-template">
+        <div class="risk-card" data-id="">
+            <button class="btn-delete no-print" onclick="this.parentElement.remove()">×</button>
+            
+            <div class="card-image-area">
+                <div class="image-placeholder">
+                    <span>현장 사진 업로드</span>
+                    <input type="file" accept="image/*" class="photo-input" capture="environment">
+                </div>
+                <img src="" class="preview-img hidden">
+                <div class="image-actions no-print">
+                    <button class="btn-change-photo">사진 변경</button>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <!-- 1. Current State -->
+                <div class="input-group">
+                    <label>[현재 상태] 관찰 증상</label>
+                    <textarea class="input-symptom" placeholder="무엇을 보았습니까? (예: 절삭유 누출)"></textarea>
+                </div>
+
+                <!-- 2. Structural Cause (Buttons) -->
+                <div class="input-group highlight">
+                    <label>구조적 원인 (Structural Cause)</label>
+                    <div class="cause-tags no-print" id="cause-tags">
+                        <button class="tag-btn" data-value="생산압박">생산압박</button>
+                        <button class="tag-btn" data-value="유지보수 부재">유지보수 부재</button>
+                        <button class="tag-btn" data-value="교육 형식화">교육 형식화</button>
+                        <button class="tag-btn" data-value="책임 불명확">책임 불명확</button>
+                        <button class="tag-btn" data-value="작업동선 충돌">작업동선 충돌</button>
+                        <button class="tag-btn" data-value="임시조치 고착">임시조치 고착</button>
+                        <button class="tag-btn" data-value="숙련자 의존">숙련자 의존</button>
+                        <button class="tag-btn" data-value="보고 지연 문화">보고 지연 문화</button>
+                    </div>
+                    <textarea class="input-cause" placeholder="위 버튼을 선택하거나 추가 메모를 입력하세요."></textarea>
+                </div>
+
+                <!-- 3. Auditor Insight -->
+                <div class="input-group">
+                    <label>현장 인사이트 (Auditor Interpretation)</label>
+                    <textarea class="input-insight" placeholder="심사원의 해석을 입력하세요."></textarea>
+                </div>
+
+                <!-- 4. Actions -->
+                <div class="action-grid">
+                    <div class="input-group">
+                        <label>즉시조치 (Today)</label>
+                        <textarea class="input-immediate" placeholder="오늘 당장 할 일"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>구조개선 (Long-term)</label>
+                        <textarea class="input-structural" placeholder="장기적 개선 방향"></textarea>
+                    </div>
+                </div>
+
+                <!-- 5. CEO Impact -->
+                <div class="input-group ceo-impact-box">
+                    <label>⚠️ CEO 영향 (Management Language)</label>
+                    <textarea class="input-ceo" placeholder="경영진이 알아야 할 리스크 핵심 요약"></textarea>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
