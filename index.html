@@ -19,6 +19,43 @@
     
     <!-- 기존 메인 스타일 (바탕화면의 risa_style.css와 연결됨) -->
     <link rel="stylesheet" href="style.css?v=1.4">
+    
+    <!-- 모바일 캐시 뚫는 초강력 인라인 정렬 패치 (이모지 렌더링 및 픽셀 밀림 정밀 복구) -->
+    <style>
+    .hero-cta-subtext {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        margin-top: 24px !important;
+    }
+    .hero-cta-subtext i {
+        font-family: "Font Awesome 6 Free", "FontAwesome" !important;
+        font-weight: 900 !important;
+        font-style: normal !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        top: -1px !important;
+        font-size: 1.15rem !important;
+        line-height: 1 !important;
+    }
+    .hero-cta-subtext span {
+        display: inline-block !important;
+        line-height: 1.2 !important;
+    }
+    @media screen and (max-width: 768px) {
+        .hero-cta-subtext {
+            justify-content: center !important;
+            font-size: 1rem !important;
+            margin-top: 20px !important;
+        }
+        .hero-cta-subtext i {
+            top: -1px !important; /* 모바일 환경 미세 오프셋 조율 */
+        }
+    }
+    </style>
 </head>
 <body>
     <header id="header">
