@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design System - Typography Rules
+   ========================================================================== */
+
+h1, h2, h3, h4, p, span {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary);
+    line-height: 1.3;
+}

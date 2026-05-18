@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design System - Form Components (Contact Input Box)
+   ========================================================================== */
+
+.contact-box {
+    background: var(--primary);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    overflow: hidden;
+    box-shadow: var(--shadow-heavy);
+    border: 2px solid #002244;
+}
+
+.contact-info {
+    padding: var(--space-xl);
+    color: white;
+    background: var(--primary-light);
+}
+
+.contact-info h2 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.contact-info p {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: var(--space-lg);
+    font-size: 1.125rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.125rem;
+}
+
+.detail-item i {
+    width: 24px;
+    margin-right: var(--space-sm);
+    color: var(--color-accent);
+}
+
+.contact-form-container {
+    padding: var(--space-xl);
+    background: white;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-dark);
+    transition: var(--motion-fast);
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+/* --- Responsive Form Rules (Inline) --- */
+@media (max-width: 992px) {
+    .contact-box {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-info, 
+    .contact-form-container {
+        padding: var(--space-lg);
+    }
+}

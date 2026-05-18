@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design System - Buttons Components
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--motion-fast);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(0, 102, 255, 0.39);
+}
+
+.btn-primary:hover {
+    background-color: #0052cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 102, 255, 0.23);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-ivory {
+    background-color: #F5EFE6;
+    color: var(--primary);
+    border: 1px solid #DCD0C0;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-ivory:hover {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-text {
+    color: var(--color-accent);
+    padding: 14px 0;
+    background: transparent;
+}
+
+.btn-text i {
+    margin-left: var(--space-xs);
+    transition: transform 0.2s;
+}
+
+.btn-text:hover i {
+    transform: translateX(4px);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-outline-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--motion-fast);
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+/* --- Tab Selection Buttons inside Media Tab Container --- */
+.tab-container .btn-outline {
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid #e1e8f0;
+    background: white;
+    color: var(--text-gray);
+    transition: var(--motion-fast);
+}
+
+.tab-container .btn-outline.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(10, 37, 64, 0.2);
+}
+
+/* --- Case Study Inner CTA Action Button --- */
+.case-content .btn-text {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.case-content .btn-text:hover {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+/* --- B2B Case Study Download Sub-Modifiers (BEM matched) --- */
+.btn-logistics {
+    border: 1px solid var(--color-info);
+    color: var(--color-info);
+}
+
+.btn-food {
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+}
+
+.btn-metal {
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+}
+
+.case-content .btn-text.btn-logistics:hover {
+    background: var(--color-info);
+    color: white;
+}
+
+.case-content .btn-text.btn-food:hover {
+    background: var(--color-success);
+    color: white;
+}
+
+.case-content .btn-text.btn-metal:hover {
+    background: var(--color-danger);
+    color: white;
+}
+
+/* --- Responsive Button Adjustments (Inline) --- */
+@media screen and (max-width: 768px) {
+    .btn-mobile-cta {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 30px;
+        background-color: var(--color-accent);
+        color: white;
+        border-radius: 50px;
+        font-weight: 700;
+        box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
+    }
+}

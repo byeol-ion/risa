@@ -1,0 +1,538 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design System - Card Components & Grids
+   ========================================================================== */
+
+/* --- 1. Philosophy Cards --- */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-gap);
+}
+
+.philosophy-card {
+    background: var(--bg-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: var(--motion-fast);
+}
+
+.philosophy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.philosophy-card.highlight-card {
+    background: var(--primary);
+    color: white;
+    border: none;
+}
+
+.philosophy-card.highlight-card h3, 
+.philosophy-card.highlight-card .icon-wrapper i {
+    color: white;
+}
+
+.philosophy-card.highlight-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 102, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+}
+
+.icon-wrapper i {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+}
+
+.philosophy-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.philosophy-card p {
+    color: var(--text-gray);
+    line-height: 1.7;
+}
+
+/* --- 2. Professional Services BEM Card --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-gap);
+}
+
+.service-card {
+    background: var(--bg-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    border-top: 4px solid transparent;
+    transition: var(--motion-fast);
+}
+
+.service-card:hover {
+    border-top-color: var(--color-accent);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.service-card__icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+}
+
+.service-card__title {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.service-card__desc {
+    color: var(--text-gray);
+    line-height: 1.7;
+}
+
+/* BEM Modifier Colors */
+.service-card--blue { background-color: #F4F7FB; border: 1px solid #E1E8F0; }
+.service-card--mint { background-color: #F2F8F5; border: 1px solid #E0EBE4; }
+.service-card--red { background-color: #FDF6F5; border: 1px solid #F0E6E4; }
+
+/* --- 3. Expert / Bio Component --- */
+#expert .expert-container {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-lg);
+}
+
+#expert .expert-image {
+    flex: 1;
+}
+
+#expert .expert-image .image-placeholder {
+    height: 100%;
+    width: 100%;
+    background: #f5f5f5;
+    border-radius: var(--radius-md);
+    position: relative;
+}
+
+#expert .expert-image .image-placeholder::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    z-index: -1;
+}
+
+#expert .expert-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--radius-md);
+    display: block;
+}
+
+#expert .expert-content {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+}
+
+.expert-label {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    margin-bottom: var(--space-xs);
+}
+
+.expert-name {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-xs);
+}
+
+.expert-nickname {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+.expert-divider {
+    height: 2px;
+    width: 40px;
+    background-color: var(--border);
+    margin-bottom: var(--space-md);
+}
+
+.expert-quote {
+    font-weight: 900;
+    color: var(--color-warning);
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.expert-bio {
+    color: var(--primary);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+    font-size: 15.5px;
+}
+
+.expert-bio span {
+    display: block;
+    margin-top: 6px;
+}
+
+.expert-list {
+    margin-bottom: var(--space-md);
+}
+
+.expert-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: var(--text-gray);
+    font-size: 1.125rem;
+}
+
+.expert-list i {
+    color: var(--color-accent);
+    margin-right: 12px;
+}
+
+.trust-badge {
+    background: var(--bg-light);
+    padding: var(--space-md);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-gray);
+    margin-bottom: 0;
+    font-size: 14.5px;
+}
+
+.trust-badge strong {
+    color: var(--primary);
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-size: 1.125rem;
+}
+
+.expert-btn {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    font-weight: 900;
+    border-radius: var(--radius-md);
+    margin-top: auto;
+    width: 100%;
+}
+
+/* --- 4. Bottleneck Grid (5 Columns) --- */
+.bottleneck-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-md);
+}
+
+.bottleneck-card {
+    background: white;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: var(--motion-fast);
+}
+
+.bottleneck-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.bottleneck-card span {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+}
+
+.bottleneck-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.bottleneck-card p {
+    font-size: 0.92rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+/* --- 5. Quickscan Spotlight Flow --- */
+.quickscan-flow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-flow);
+    border: 1px solid var(--border);
+    margin-top: 20px;
+}
+
+.scan-step {
+    flex: 1;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+}
+
+.step-problem { background: #FFF5F5; border-left: 4px solid var(--color-danger); }
+.step-risk { background: #FFF9F0; border-left: 4px solid var(--color-warning); }
+.step-solution { background: #F0F9F5; border-left: 4px solid var(--color-success); }
+
+.step-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.step-problem .step-header { color: #D32F2F; }
+.step-risk .step-header { color: #E65100; }
+.step-solution .step-header { color: #00897B; }
+
+.step-header i {
+    margin-right: var(--space-xs);
+    font-size: 1.2rem;
+}
+
+.step-content strong {
+    display: block;
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
+}
+
+.step-content p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.scan-arrow {
+    padding: 0 20px;
+    font-size: 2rem;
+    color: #C0C8D0;
+}
+
+.quickscan-warning-box {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #E65100;
+    background-color: #FFF9F0;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-warning);
+    line-height: 1.5;
+}
+
+/* --- 6. Media Insight Card Component --- */
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-gap);
+    align-items: stretch;
+}
+
+.media-card {
+    background: var(--bg-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.case-content .media-card {
+    background: #ffffff;
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-lg);
+}
+
+.media-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.media-icon.youtube {
+    color: #FF0000;
+}
+
+.media-icon.brunch {
+    color: var(--color-success);
+}
+
+.media-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.media-card p {
+    color: var(--text-gray);
+    margin-bottom: var(--space-md);
+    flex-grow: 1;
+}
+
+/* 미디어 사례 이미지 영역 */
+.media-img-container {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0 25px;
+}
+
+.media-img-half {
+    width: 48%;
+    border-radius: var(--radius-md);
+}
+
+/* 바이럴 다운로드 박스 및 버튼 */
+.viral-download-box {
+    width: 100%;
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    text-align: center;
+    margin-top: auto;
+}
+
+.viral-download-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.viral-btn {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: var(--motion-fast);
+}
+
+.viral-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 업종별 컬러 클래스 (단일화) */
+.icon-blue { color: var(--color-info); } 
+.icon-mint { color: var(--color-success); } 
+.icon-red { color: var(--color-danger); }
+.border-blue { border: 2px solid var(--color-info); }
+.border-mint { border: 2px solid var(--color-success); }
+.border-red { border: 2px solid var(--color-danger); }
+
+.viral-box-logistics { background: #F4F7FB; border: 1px dashed var(--color-info); }
+.viral-box-food { background: #F0F9F5; border: 1px dashed var(--color-success); }
+.viral-box-metal { background: #FFF5F5; border: 1px dashed var(--color-danger); }
+
+/* --- Responsive Card/Grid Rules (Inline) --- */
+@media (max-width: 1200px) {
+    .bottleneck-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .philosophy-grid, 
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .expert-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .expert-image .image-placeholder {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .bottleneck-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .philosophy-card p, 
+    .service-card__desc {
+        padding: 0 5px;
+    }
+    
+    #expert .expert-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    #expert .btn-ivory {
+        margin-top: 25px;
+    }
+    
+    .quickscan-flow {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .scan-step {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .scan-arrow {
+        transform: rotate(90deg);
+        padding: 15px 0;
+    }
+    
+    .bottleneck-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .media-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .media-img-container {
+        flex-direction: column;
+    }
+    
+    .media-img-half {
+        width: 100%;
+    }
+}

@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Premium B2B Design System - Cascade Layered Main Controller
+   ========================================================================== */
+
+/* --- 1. CSS Cascade Layers Definition (ISO-Style Strict Order) --- */
+@layer reset, base, layout, component, utility;
+
+/* --- 2. Base Layer --- */
+@import url('css/base/variables.css') layer(base);
+@import url('css/base/reset.css') layer(reset);
+@import url('css/base/typography.css') layer(base);
+
+/* --- 3. Layout Layer --- */
+@import url('css/layout/grid.css') layer(layout);
+@import url('css/layout/header.css') layer(layout);
+@import url('css/layout/footer.css') layer(layout);
+
+/* --- 4. Component Layer --- */
+@import url('css/components/buttons.css') layer(component);
+@import url('css/components/cards.css') layer(component);
+@import url('css/components/forms.css') layer(component);
+@import url('css/components/hero.css') layer(component);
+
+/* --- 5. Page Layer --- */
+@import url('css/pages/home.css') layer(component);
+
+/* --- 6. Utility Layer --- */
+@import url('css/utilities/spacing.css') layer(utility);
+@import url('css/utilities/helpers.css') layer(utility);
