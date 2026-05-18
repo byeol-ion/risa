@@ -84,13 +84,19 @@
     font-weight: 700;
     color: var(--risa-orange);
     margin-top: 24px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 
 .hero-cta-subtext i {
     font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: middle;
 }
 
 .hero-cta-proof {
@@ -156,9 +162,12 @@
     }
     
     .hero-cta-subtext {
+        display: flex;
+        align-items: center;
         justify-content: center;
         font-size: 1rem;
         margin-top: 20px;
+        gap: 6px;
     }
     
     .hero-cta-proof {
