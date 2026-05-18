@@ -3,6 +3,7 @@
 /* ==========================================================================
    RISA™ Design System - Helper & Animation Utilities
    원칙: 실제 반복 사용 + 브랜드 의미 + 재사용 가능 3조건 충족 시만 추가
+   모든 색상·그림자·반경 값은 Design Token 변수 참조 — 하드코딩 금지
    ========================================================================== */
 
 /* --- Layout & Display --- */
@@ -15,88 +16,114 @@
 .flex-shrink-0  { flex-shrink: 0 !important; }
 
 /* --- Gap Utilities --- */
-.gap-8   { gap: 8px !important; }
+.gap-8   { gap: var(--space-2) !important; }
 .gap-10  { gap: 10px !important; }
 
 /* --- Width Utilities --- */
 .w-48    { width: 48% !important; }
 .w-100   { width: 100% !important; }
 
-/* --- Border Radius --- */
-.rounded-sm { border-radius: 4px !important; }
-.rounded-md { border-radius: 8px !important; }
+/* --- Border Radius (Token 참조) --- */
+.rounded-sm { border-radius: var(--radius-sm) !important; }
+.rounded-md { border-radius: var(--radius-md) !important; }
+.rounded-lg { border-radius: var(--radius-lg) !important; }
 
-/* --- Typography: Alignment --- */
+/* ─────────────────────────────────────────────
+   Typography: Alignment
+───────────────────────────────────────────── */
 .text-white  { color: white !important; }
 .text-center { text-align: center !important; }
 .text-right  { text-align: right !important; }
 .text-left   { text-align: left !important; }
 
-/* --- Typography: Size --- */
-.text-sm     { font-size: 0.85rem !important; }
-.text-md     { font-size: 0.92rem !important; }
-.text-base   { font-size: 0.95rem !important; }
-.text-lg     { font-size: 0.93rem !important; }
-.text-body   { font-size: 15.5px !important; }
-.text-xl     { font-size: 18px !important; }
+/* ─────────────────────────────────────────────
+   Typography: Size (Token 참조)
+───────────────────────────────────────────── */
+.text-sm     { font-size: var(--text-sm)   !important; }
+.text-md     { font-size: var(--text-md)   !important; }
+.text-base   { font-size: var(--text-base) !important; }
+.text-lg     { font-size: var(--text-lg)   !important; }
+.text-body   { font-size: var(--text-body) !important; }
+.text-xl     { font-size: var(--text-xl)   !important; }
 
-/* --- Typography: Weight --- */
-.font-normal { font-weight: 400 !important; }
-.font-bold   { font-weight: 700 !important; }
-.font-black  { font-weight: 900 !important; }
+/* ─────────────────────────────────────────────
+   Typography: Weight (Token 참조)
+───────────────────────────────────────────── */
+.font-normal       { font-weight: var(--weight-regular)  !important; }
+.font-bold         { font-weight: var(--weight-bold)     !important; }
+.font-black        { font-weight: var(--weight-black)    !important; }
 .font-normal-style { font-style: normal !important; }
 
-/* --- Typography: Line Height --- */
-.lh-base     { line-height: 1.6 !important; }
+/* ─────────────────────────────────────────────
+   Typography: Line Height (Token 참조)
+───────────────────────────────────────────── */
+.lh-base     { line-height: var(--leading-base)    !important; }
+.lh-tight    { line-height: var(--leading-tight)   !important; }
 
-/* --- Brand Color Tokens (의미 기반 네이밍) --- */
-.text-orange       { color: var(--risa-orange) !important; }
-.text-blue         { color: var(--risa-blue) !important; }
-.text-red          { color: var(--risa-red, #FF5E5E) !important; }
-.text-mint         { color: var(--risa-mint) !important; }
-.text-primary-light { color: var(--primary-light) !important; }
-.text-blue-light   { color: #82baff !important; }
-.text-warn         { color: #FF9800 !important; }
-.text-white-dim    { color: rgba(255, 255, 255, 0.95) !important; }
+/* ─────────────────────────────────────────────
+   Brand Color Tokens (의미 기반 네이밍 — 하드코딩 없음)
+───────────────────────────────────────────── */
+.text-orange        { color: var(--risa-warning-orange) !important; }
+.text-blue          { color: var(--risa-data-blue)      !important; }
+.text-red           { color: var(--risa-risk-red)       !important; }
+.text-mint          { color: var(--risa-safe-mint)      !important; }
+.text-primary-light { color: var(--risa-surface-navy-2) !important; }
+.text-blue-light    { color: var(--risa-data-blue-light) !important; }
+.text-warn          { color: var(--risa-warning-orange) !important; }
+.text-white-dim     { color: var(--risa-text-on-dark-dim) !important; }
 
-/* --- Brand Background Tokens --- */
-.bg-cream    { background-color: #FFF9F0 !important; }
-.bg-red-dim  { background-color: rgba(255, 94, 94, 0.1) !important; }
+/* ─────────────────────────────────────────────
+   Brand Background Tokens (Token 참조)
+───────────────────────────────────────────── */
+.bg-cream    { background-color: var(--risa-surface-cream) !important; }
+.bg-red-dim  { background-color: var(--risa-risk-red-dim)  !important; }
 
-/* --- Border: Section Dividers --- */
-.border-cream     { border-top: 1px solid #FFE8D1 !important; border-bottom: 1px solid #FFE8D1 !important; }
-.border-white-dim { border-top: 1px solid rgba(255, 255, 255, 0.15) !important; }
+/* ─────────────────────────────────────────────
+   Border: Section Dividers (Token 참조)
+───────────────────────────────────────────── */
+.border-cream     { border-top: 1px solid var(--risa-border-cream) !important;
+                    border-bottom: 1px solid var(--risa-border-cream) !important; }
+.border-white-dim { border-top: 1px solid var(--risa-border-light) !important; }
 
-/* --- Border: Card Top Accent (Bottleneck Cards) --- */
-.border-t-red          { border-top: 4px solid var(--risa-red, #FF5E5E) !important; }
-.border-t-orange       { border-top: 4px solid var(--risa-orange) !important; }
-.border-t-blue         { border-top: 4px solid var(--risa-blue) !important; }
-.border-t-primary-light { border-top: 4px solid var(--primary-light) !important; }
-.border-t-mint         { border-top: 4px solid var(--risa-mint) !important; }
+/* ─────────────────────────────────────────────
+   Border: Card Top Accent — 현장 신호 컬러 (Token 참조)
+───────────────────────────────────────────── */
+.border-t-red          { border-top: 4px solid var(--risa-risk-red)       !important; }
+.border-t-orange       { border-top: 4px solid var(--risa-warning-orange) !important; }
+.border-t-blue         { border-top: 4px solid var(--risa-data-blue)      !important; }
+.border-t-primary-light { border-top: 4px solid var(--risa-surface-navy-2) !important; }
+.border-t-mint         { border-top: 4px solid var(--risa-safe-mint)      !important; }
 
-/* --- Border: Image Accent (Case Study Images) --- */
-.border-blue-outline  { border: 2px solid #0066FF !important; }
-.border-mint-outline  { border: 2px solid #00C6BE !important; }
-.border-red-outline   { border: 2px solid #FF5E5E !important; }
+/* ─────────────────────────────────────────────
+   Border: Image & Warning Accents (Token 참조)
+───────────────────────────────────────────── */
+.border-blue-outline  { border: 2px solid var(--risa-data-blue)      !important; }
+.border-mint-outline  { border: 2px solid var(--risa-safe-mint)      !important; }
+.border-red-outline   { border: 2px solid var(--risa-risk-red)       !important; }
+.border-l-red         { border-left: 4px solid var(--risa-risk-red)  !important; }
 
-/* --- Border: Warning Left Accent --- */
-.border-l-red  { border-left: 4px solid #FF5E5E !important; }
+/* ─────────────────────────────────────────────
+   Shadow Utilities (Token 참조)
+───────────────────────────────────────────── */
+.shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.shadow-md { box-shadow: var(--shadow-md) !important; }
+.shadow-lg { box-shadow: var(--shadow-lg) !important; }
 
-/* --- Shadow Utilities --- */
-.shadow-sm { box-shadow: 0 2px 8px rgba(0, 0, 0, .08) !important; }
-.shadow-md { box-shadow: 0 4px 16px rgba(0, 0, 0, .12) !important; }
+/* ─────────────────────────────────────────────
+   Transition Utilities (Token 참조)
+───────────────────────────────────────────── */
+.transition-base { transition: var(--motion-smooth) !important; }
+.transition-fast { transition: var(--motion-fast)   !important; }
 
-/* --- Transition Utilities --- */
-.transition-base { transition: all .3s ease !important; }
-
-/* --- Scroll Entrance Animation (Fade In) --- */
+/* ─────────────────────────────────────────────
+   Scroll Entrance Animation (Fade In)
+───────────────────────────────────────────── */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
                 transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);

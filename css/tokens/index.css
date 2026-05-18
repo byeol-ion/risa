@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design Tokens — Unified Entry
+   이 파일 하나만 @import하면 전체 토큰 시스템이 로드됨.
+   
+   사용법: @import url('css/tokens/index.css') layer(token);
+   ========================================================================== */
+
+@import url('./colors.css');
+@import url('./spacing.css');
+@import url('./typography.css');
+@import url('./shadows.css');

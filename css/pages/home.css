@@ -1,86 +1,136 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   RISA™ Design System - Home Page Specific Styles
+   RISA™ Design System - Home Page Component Library
+   
    원칙: 반복 패턴 → 컴포넌트 클래스 우선 / 미세 조정 → utility
+   모든 값은 Design Token 참조 — 하드코딩 금지
+   
+   ┌─────────────────────────────────────────────────────────┐
+   │  COMPONENT MAP (컴포넌트 사용 목적 문서)                │
+   ├─────────────────────────────────────────────────────────┤
+   │  .philosophy-bg-overlay   현장 철학 섹션 어두운 배경    │
+   │  .media-icon--{type}      인사이트 탭 아이콘 브랜드 색  │
+   │  .border-{type}-img       사례 "개선 완료" 이미지 테두리│
+   │  .contact-worry-section   대표 우려 항목 래퍼 블록     │
+   │  .contact-worry-label     "혹시 이런 고민?" 레이블     │
+   │  .contact-worry-row       우려 항목 아이콘+텍스트 행   │
+   │  .contact-icon-warn       우려 항목 경고 아이콘 (🔶)   │
+   │  .owner-risk-box          대표 형사 책임 경고 박스     │
+   │  .owner-risk-row          경고 박스 아이콘+텍스트 행   │
+   │  .owner-risk-icon         경고 박스 위험 아이콘 (🔴)   │
+   └─────────────────────────────────────────────────────────┘
    ========================================================================== */
 
-/* --- Philosophy Section Dark Industrial Overlay --- */
+
+/* ─────────────────────────────────────────────────────────────────────
+   [1] Philosophy Section — 현장 철학 다크 산업 배경
+   사용: #philosophy 섹션 어두운 오버레이
+───────────────────────────────────────────────────────────────────── */
 .philosophy-bg-overlay {
     position: relative;
-    background-image: linear-gradient(rgba(10, 37, 64, 0.85), rgba(10, 37, 64, 0.95)), 
-                      url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp');
+    background-image:
+        linear-gradient(rgba(10, 37, 64, 0.85), rgba(10, 37, 64, 0.95)),
+        url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp');
     background-size: cover;
     background-position: center;
 }
 
-/* --- Insight: 탭 미디어 아이콘 브랜드 컬러 컴포넌트 --- */
-/* 원칙: 3개 탭 모두에서 반복되는 패턴이므로 컴포넌트 클래스로 처리 */
-.media-icon--logistics { color: #0066FF; }
-.media-icon--food      { color: #00C6BE; }
-.media-icon--metal     { color: #FF5E5E; }
 
-/* --- Insight: 사례 이미지 오른쪽 액센트 보더 --- */
-/* 원칙: 각 탭의 "개선 완료" 이미지에만 적용되는 고유 의미를 가지므로 컴포넌트 클래스 */
-.border-blue-img { border-radius: 8px; border: 2px solid #0066FF; }
-.border-mint-img { border-radius: 8px; border: 2px solid #00C6BE; }
-.border-red-img  { border-radius: 8px; border: 2px solid #FF5E5E; }
+/* ─────────────────────────────────────────────────────────────────────
+   [2] Insight Tabs — 탭 미디어 아이콘 브랜드 컬러
+   사용: 물류/식품/금속 탭 내 .media-icon 안의 <i> 태그
+   원칙: 3개 탭 반복 패턴 → 컴포넌트 클래스로 처리 (Token 참조)
+───────────────────────────────────────────────────────────────────── */
+.media-icon--logistics { color: var(--risa-data-blue);      }
+.media-icon--food      { color: var(--risa-safe-mint);      }
+.media-icon--metal     { color: var(--risa-risk-red);       }
 
-/* --- Contact Section: 반복 우려 항목 래퍼 컴포넌트 --- */
+
+/* ─────────────────────────────────────────────────────────────────────
+   [3] Case Study Images — 사례 "개선 완료" 이미지 액센트 보더
+   사용: 각 탭의 오른쪽(After) 이미지에만 적용
+   의미: "위험(Before) → 안전(After)" 시각적 신호 전달 (Token 참조)
+───────────────────────────────────────────────────────────────────── */
+.border-blue-img {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--risa-data-blue);
+}
+.border-mint-img {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--risa-safe-mint);
+}
+.border-red-img {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--risa-risk-red);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────
+   [4] Contact Worry Section — 대표 우려 항목 블록
+   사용: Contact 섹션 내 "혹시 이런 고민?" 질문 목록 전체 래퍼
+   효과: 섹션 구분선(상단 border) + 상하 여백으로 시각적 분리
+───────────────────────────────────────────────────────────────────── */
 .contact-worry-section {
     margin: 25px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--risa-border-light);
     padding-top: 20px;
 }
 
-/* --- Contact Section: 우려 항목 레이블 --- */
+/* 사용: "혹시 이런 고민을 하고 계신가요?" 레이블 텍스트 (Token 참조) */
 .contact-worry-label {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #82baff;
+    font-size: var(--text-base);
+    font-weight: var(--weight-bold);
+    color: var(--risa-data-blue-light);
     margin-bottom: 12px;
     font-style: normal;
 }
 
-/* --- Contact Section: 우려 항목 행 (반복 패턴 3회) --- */
+/* 사용: 우려 항목 아이콘 + 텍스트 한 행 (3회 반복) (Token 참조) */
 .contact-worry-row {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    font-size: 0.92rem;
-    color: rgba(255, 255, 255, 0.95);
+    gap: var(--space-2);
+    font-size: var(--text-md);
+    color: var(--risa-text-on-dark-dim);
 }
 
-/* --- Contact Section: 우려 항목 아이콘 --- */
+/* 사용: 우려 항목 행의 경고 아이콘 🔶 (Token 참조) */
 .contact-icon-warn {
-    color: #FF9800;
+    color: var(--risa-warning-orange);
     margin-top: 4px;
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     flex-shrink: 0;
 }
 
-/* --- Contact Section: 대표 책임 경고 박스 컴포넌트 --- */
+
+/* ─────────────────────────────────────────────────────────────────────
+   [5] Owner Risk Box — 대표 형사 책임 경고 박스
+   사용: Contact 섹션 하단 강렬한 경고 메시지 2줄 박스
+   효과: 반투명 레드 배경 + 좌측 레드 보더 → 50~60대 대표 심리 직격
+   (Token 참조)
+───────────────────────────────────────────────────────────────────── */
 .owner-risk-box {
-    margin-top: 20px;
-    padding: 12px 15px;
-    background: rgba(255, 94, 94, 0.1);
-    border-left: 4px solid #FF5E5E;
-    border-radius: 4px;
+    margin-top: var(--space-5);
+    padding: var(--space-3) 15px;
+    background: var(--risa-risk-red-dim);
+    border-left: 4px solid var(--risa-risk-red);
+    border-radius: var(--radius-sm);
 }
 
-/* --- Contact Section: 대표 책임 경고 행 (반복 패턴 2회) --- */
+/* 사용: 경고 박스 내 아이콘 + 텍스트 한 행 (2회 반복) (Token 참조) */
 .owner-risk-row {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    font-size: 0.93rem;
-    color: #fff;
-    font-weight: 700;
+    gap: var(--space-2);
+    font-size: var(--text-lg);
+    color: var(--risa-text-on-dark);
+    font-weight: var(--weight-bold);
 }
 
-/* --- Contact Section: 대표 경고 아이콘 --- */
+/* 사용: 경고 박스 내 위험 아이콘 🔴 (Token 참조) */
 .owner-risk-icon {
-    color: #FF5E5E;
+    color: var(--risa-risk-red);
     margin-top: 4px;
     font-size: 0.9rem;
     flex-shrink: 0;
