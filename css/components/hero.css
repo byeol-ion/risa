@@ -84,9 +84,8 @@
     font-weight: 700;
     color: var(--risa-orange);
     margin-top: 24px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
 }
 
@@ -95,8 +94,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    top: -2px; /* 강제로 위로 2px 미세 이동시켜 글자 높이와 정중앙 정렬 */
     line-height: 1;
-    vertical-align: middle;
+}
+
+.hero-cta-subtext span {
+    line-height: 1.2;
+    display: inline-block;
 }
 
 .hero-cta-proof {
