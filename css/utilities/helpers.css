@@ -2,94 +2,92 @@
 
 /* ==========================================================================
    RISA™ Design System - Helper & Animation Utilities
-   All values reference design tokens from variables.css
+   원칙: 실제 반복 사용 + 브랜드 의미 + 재사용 가능 3조건 충족 시만 추가
    ========================================================================== */
 
-/* --- Display Utilities --- */
+/* --- Layout & Display --- */
 .display-block  { display: block !important; }
-.display-flex   { display: flex !important; }
-
-/* --- Flexbox Layout Utilities --- */
-/* "반복 flex inline" 완전 차단 — 모바일 제어 1개 지점에서 가능 */
-.flex-row     { display: flex !important; flex-direction: row !important; }
-.flex-column  { display: flex !important; flex-direction: column !important; }
-.items-start  { align-items: flex-start !important; }
-.items-center { align-items: center !important; }
-.items-stretch { align-items: stretch !important; }
+.flex-row       { display: flex !important; flex-direction: row !important; }
+.flex-column    { display: flex !important; flex-direction: column !important; }
+.items-start    { align-items: flex-start !important; }
+.items-center   { align-items: center !important; }
+.items-stretch  { align-items: stretch !important; }
+.flex-shrink-0  { flex-shrink: 0 !important; }
 
 /* --- Gap Utilities --- */
-.gap-8  { gap: 8px !important; }
-.gap-10 { gap: 10px !important; }
+.gap-8   { gap: 8px !important; }
+.gap-10  { gap: 10px !important; }
 
 /* --- Width Utilities --- */
-.w-48  { width: 48% !important; }
-.w-100 { width: 100% !important; }
+.w-48    { width: 48% !important; }
+.w-100   { width: 100% !important; }
 
-/* --- Border Radius (token-mapped) --- */
-.rounded-sm { border-radius: var(--radius-sm) !important; }  /* 4px */
-.rounded-md { border-radius: var(--radius-md) !important; }  /* 8px */
-.rounded-lg { border-radius: var(--radius-lg) !important; }  /* 16px */
+/* --- Border Radius --- */
+.rounded-sm { border-radius: 4px !important; }
+.rounded-md { border-radius: 8px !important; }
 
-/* --- Shadow Utilities (token-mapped) --- */
-.shadow-sm { box-shadow: var(--shadow-sm) !important; }
-.shadow-md { box-shadow: var(--shadow-md) !important; }
-.shadow-lg { box-shadow: var(--shadow-lg) !important; }
-
-/* --- Transition Utilities (token-mapped) --- */
-.transition-fast   { transition: var(--motion-fast) !important; }
-.transition-base   { transition: var(--motion-smooth) !important; }
-.transition-slow   { transition: var(--motion-emphasis) !important; }
-
-/* --- Typography Helpers --- */
+/* --- Typography: Alignment --- */
 .text-white  { color: white !important; }
 .text-center { text-align: center !important; }
-.text-left   { text-align: left !important; }
 .text-right  { text-align: right !important; }
+.text-left   { text-align: left !important; }
 
-.font-bold   { font-weight: 700 !important; }
-.font-black  { font-weight: 900 !important; }
-
+/* --- Typography: Size --- */
 .text-sm     { font-size: 0.85rem !important; }
 .text-md     { font-size: 0.92rem !important; }
 .text-base   { font-size: 0.95rem !important; }
-.text-lg     { font-size: 15.5px !important; }
+.text-lg     { font-size: 0.93rem !important; }
+.text-body   { font-size: 15.5px !important; }
 .text-xl     { font-size: 18px !important; }
 
+/* --- Typography: Weight --- */
+.font-normal { font-weight: 400 !important; }
+.font-bold   { font-weight: 700 !important; }
+.font-black  { font-weight: 900 !important; }
+.font-normal-style { font-style: normal !important; }
+
+/* --- Typography: Line Height --- */
 .lh-base     { line-height: 1.6 !important; }
 
-/* --- Brand Color Utilities (semantic token-mapped) --- */
-/* Text */
-.text-orange        { color: var(--color-warning) !important; }
-.text-blue          { color: var(--color-info) !important; }
-.text-mint          { color: var(--color-success) !important; }
-.text-red           { color: var(--color-danger) !important; }
+/* --- Brand Color Tokens (의미 기반 네이밍) --- */
+.text-orange       { color: var(--risa-orange) !important; }
+.text-blue         { color: var(--risa-blue) !important; }
+.text-red          { color: var(--risa-red, #FF5E5E) !important; }
+.text-mint         { color: var(--risa-mint) !important; }
 .text-primary-light { color: var(--primary-light) !important; }
-.text-blue-light    { color: #82baff !important; }     /* Contact 섹션 강조 헤딩 */
-.text-warning       { color: #FF9800 !important; }     /* 경고 삼각형 아이콘 전용 */
+.text-blue-light   { color: #82baff !important; }
+.text-warn         { color: #FF9800 !important; }
+.text-white-dim    { color: rgba(255, 255, 255, 0.95) !important; }
 
-/* Background */
-.bg-cream   { background-color: #FFF9F0 !important; }
-.bg-red-dim { background-color: rgba(255, 94, 94, 0.1) !important; }
+/* --- Brand Background Tokens --- */
+.bg-cream    { background-color: #FFF9F0 !important; }
+.bg-red-dim  { background-color: rgba(255, 94, 94, 0.1) !important; }
 
-/* --- Border Top Utilities (병목 카드 상단 강조선) --- */
-.border-t-red          { border-top: 4px solid var(--color-danger) !important; }
-.border-t-orange       { border-top: 4px solid var(--color-warning) !important; }
-.border-t-blue         { border-top: 4px solid var(--color-info) !important; }
-.border-t-mint         { border-top: 4px solid var(--color-success) !important; }
-.border-t-primary-light{ border-top: 4px solid var(--primary-light) !important; }
+/* --- Border: Section Dividers --- */
+.border-cream     { border-top: 1px solid #FFE8D1 !important; border-bottom: 1px solid #FFE8D1 !important; }
+.border-white-dim { border-top: 1px solid rgba(255, 255, 255, 0.15) !important; }
 
-/* --- Border Left Utilities (경고 callout용) --- */
-.border-l-red          { border-left: 4px solid var(--color-danger) !important; }
-.border-l-orange       { border-left: 4px solid var(--color-warning) !important; }
+/* --- Border: Card Top Accent (Bottleneck Cards) --- */
+.border-t-red          { border-top: 4px solid var(--risa-red, #FF5E5E) !important; }
+.border-t-orange       { border-top: 4px solid var(--risa-orange) !important; }
+.border-t-blue         { border-top: 4px solid var(--risa-blue) !important; }
+.border-t-primary-light { border-top: 4px solid var(--primary-light) !important; }
+.border-t-mint         { border-top: 4px solid var(--risa-mint) !important; }
 
-/* --- Border Outline Utilities (이미지 쌍 구분선) --- */
-.border-blue-outline   { border: 2px solid var(--color-info) !important; }
-.border-mint-outline   { border: 2px solid var(--color-success) !important; }
-.border-red-outline    { border: 2px solid var(--color-danger) !important; }
+/* --- Border: Image Accent (Case Study Images) --- */
+.border-blue-outline  { border: 2px solid #0066FF !important; }
+.border-mint-outline  { border: 2px solid #00C6BE !important; }
+.border-red-outline   { border: 2px solid #FF5E5E !important; }
 
-/* --- Divider Separator --- */
-.border-white-dim      { border-top: 1px solid rgba(255, 255, 255, 0.15) !important; }
-.border-cream-hr       { border-top: 1px solid #FFE8D1; border-bottom: 1px solid #FFE8D1; }
+/* --- Border: Warning Left Accent --- */
+.border-l-red  { border-left: 4px solid #FF5E5E !important; }
+
+/* --- Shadow Utilities --- */
+.shadow-sm { box-shadow: 0 2px 8px rgba(0, 0, 0, .08) !important; }
+.shadow-md { box-shadow: 0 4px 16px rgba(0, 0, 0, .12) !important; }
+
+/* --- Transition Utilities --- */
+.transition-base { transition: all .3s ease !important; }
 
 /* --- Scroll Entrance Animation (Fade In) --- */
 .fade-in {
@@ -98,6 +96,7 @@
     transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
                 transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
