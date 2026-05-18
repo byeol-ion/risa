@@ -175,6 +175,10 @@
         gap: 6px;
     }
     
+    .hero-cta-subtext i {
+        top: -3px; /* 모바일 이모지 렌더링 쏠림 현상을 1px 더 강력하게 들어 올려 정중앙 매칭! */
+    }
+    
     .hero-cta-proof {
         font-size: 0.85rem;
     }
