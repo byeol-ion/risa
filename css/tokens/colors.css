@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   RISA™ Design Tokens — Colors
+   "규격이 아니라 구조를 본다" 철학을 CSS 변수 언어로 번역한 컬러 시스템.
+   
+   네이밍 원칙: --risa-[의미]-[역할]
+   - 물리적 색상(#FF5E5E)이 아닌 현장 의미(risk-red)를 네이밍에 반영
+   ========================================================================== */
+
+:root {
+
+    /* ──────────────────────────────────────
+       [1] 현장 시그널 컬러 (Field Signal Colors)
+       ISO 45001 현장 신호 체계에서 영감받은 의미 기반 토큰
+    ────────────────────────────────────── */
+
+    /* 위험 / 중대재해 / 대표 책임 */
+    --risa-risk-red:        #FF5E5E;
+    --risa-risk-red-dim:    rgba(255, 94, 94, 0.1);
+    --risa-risk-red-border: rgba(255, 94, 94, 0.3);
+
+    /* 경고 / 구조적 병목 / 재촉 */
+    --risa-warning-orange:        #FF9800;
+    --risa-warning-orange-dim:    rgba(255, 152, 0, 0.1);
+
+    /* 안전 / 개선 완료 / 통제 확보 */
+    --risa-safe-mint:        #00C6BE;
+    --risa-safe-mint-dim:    rgba(0, 198, 190, 0.1);
+
+    /* 진단 / 분석 / 데이터 흐름 */
+    --risa-data-blue:        #0066FF;
+    --risa-data-blue-dim:    rgba(0, 102, 255, 0.1);
+    --risa-data-blue-light:  #82baff;
+
+
+    /* ──────────────────────────────────────
+       [2] 브랜드 배경 컬러 (Brand Surface Colors)
+       RISA™ 심야 네이비 → 크림 → 화이트 계층 구조
+    ────────────────────────────────────── */
+
+    --risa-surface-navy:    #0A2540;   /* 히어로·Contact 진한 배경 */
+    --risa-surface-navy-2:  #183C66;   /* Expert 섹션 등 중간 배경 */
+    --risa-surface-cream:   #FFF9F0;   /* Bottleneck 섹션 따뜻한 배경 */
+    --risa-surface-light:   #F7F9FC;   /* Service·Media 섹션 연한 배경 */
+    --risa-surface-white:   #FFFFFF;   /* 기본 흰 배경 */
+
+
+    /* ──────────────────────────────────────
+       [3] 텍스트 컬러 (Text Colors)
+    ────────────────────────────────────── */
+
+    --risa-text-strong:   #1A1F36;   /* 섹션 제목, 핵심 카피 */
+    --risa-text-body:     #4F566B;   /* 본문 설명 */
+    --risa-text-muted:    #8792A2;   /* 보조 설명, 레이블 */
+    --risa-text-on-dark:  #FFFFFF;   /* 다크 배경 위 흰 텍스트 */
+    --risa-text-on-dark-dim: rgba(255, 255, 255, 0.85); /* 다크 배경 위 보조 */
+
+
+    /* ──────────────────────────────────────
+       [4] 보더 (Border Colors)
+    ────────────────────────────────────── */
+
+    --risa-border-default:   #E3E8EE;
+    --risa-border-light:     rgba(255, 255, 255, 0.15); /* 다크 섹션 내 구분선 */
+    --risa-border-cream:     #FFE8D1;                   /* Bottleneck 크림 테두리 */
+
+
+    /* ──────────────────────────────────────
+       [5] 기존 시스템 변수 연결 (하위 호환)
+       기존 코드가 깨지지 않도록 기존 변수명을 새 토큰으로 연결
+    ────────────────────────────────────── */
+
+    --risa-blue:    var(--risa-data-blue);
+    --risa-mint:    var(--risa-safe-mint);
+    --risa-red:     var(--risa-risk-red);
+    --risa-orange:  var(--risa-warning-orange);
+
+    --primary:         var(--risa-surface-navy);
+    --primary-light:   var(--risa-surface-navy-2);
+    --accent:          var(--risa-data-blue);
+    --bg-white:        var(--risa-surface-white);
+    --bg-light:        var(--risa-surface-light);
+    --text-dark:       var(--risa-text-strong);
+    --text-gray:       var(--risa-text-body);
+    --text-light:      var(--risa-text-muted);
+    --border:          var(--risa-border-default);
+
+    --color-success:  var(--risa-safe-mint);
+    --color-warning:  var(--risa-warning-orange);
+    --color-danger:   var(--risa-risk-red);
+    --color-info:     var(--risa-data-blue);
+}
