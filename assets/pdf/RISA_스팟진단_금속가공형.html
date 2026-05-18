@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>RISA™ 현장 구조 정밀 리포트 (금속가공형)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        :root { --risa-blue: #2C5FAD; --risa-orange: #F37021; --soft-gray: #F1F5F9; }
+        body { font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; }
+        .page { background: white; width: 210mm; height: 297mm; padding: 15mm 20mm; box-sizing: border-box; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 10px auto; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 4px solid var(--risa-blue); padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 28px; color: var(--risa-blue); font-weight: 900; }
+        .header .meta { text-align: right; font-size: 14px; color: #64748B; }
+        
+        .intro-quote { font-size: 19px; font-weight: 700; background: var(--soft-gray); padding: 18px; border-radius: 12px; border-left: 10px solid var(--risa-orange); margin-bottom: 25px; line-height: 1.5; color: #1E293B; }
+        
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; flex-grow: 1; max-height: 180mm; }
+        .section { display: flex; flex-direction: column; min-height: 0; }
+        .section-title { font-size: 18px; font-weight: 900; color: var(--risa-blue); margin-bottom: 10px; display: flex; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 5px; }
+        .section-title::before { content: ''; width: 5px; height: 18px; background: var(--risa-orange); margin-right: 10px; display: inline-block; }
+        
+        .content-box { font-size: 15px; line-height: 1.6; color: #334155; }
+        .photo-box { width: 100%; height: 170px; background: #f8fafc; border-radius: 12px; margin-top: 25px; overflow: hidden; border: 1px solid #E2E8F0; }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .insight-box { background: #f8fafc; border: 2px dashed var(--risa-blue); padding: 30px; border-radius: 20px; margin-top: 10px; }
+        .insight-box h3 { font-size: 20px; margin-bottom: 15px; color: var(--risa-blue); }
+        .insight-box p { font-size: 16px; line-height: 1.8; color: #334155; }
+        
+        .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
+        .roadmap-item { background: white; border: 2px solid #F1F5F9; padding: 20px 10px; border-radius: 15px; text-align: center; }
+        .roadmap-item h4 { color: var(--risa-orange); margin: 0 0 10px 0; font-size: 17px; font-weight: 900; }
+        .roadmap-item p { font-size: 13px; color: #64748B; margin: 0; line-height: 1.4; }
+        
+        .cta-section { background: var(--risa-blue); color: white; padding: 25px 30px; border-radius: 20px; margin-top: auto; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .cta-text h3 { margin: 0; font-size: 22px; font-weight: 900; }
+        .cta-contact { text-align: right; font-weight: 900; font-size: 20px; line-height: 1.4; }
+        
+        .footer { padding-top: 20px; border-top: 2px solid #F1F5F9; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .page-number { position: absolute; bottom: 8mm; left: 0; width: 100%; text-align: center; color: #CBD5E1; font-size: 13px; font-weight: 700; }
+        
+        @media print { 
+            body { background: none; } 
+            .page { box-shadow: none; margin: 0; page-break-after: always; height: 297mm; } 
+            .cta-section { -webkit-print-color-adjust: exact; background-color: var(--risa-blue) !important; color: white !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div><h1>RISA™ 현장 구조 정밀 리포트</h1><p style="margin: 5px 0 0 0; color: var(--risa-orange); font-weight: 900; font-size: 18px;">[금속가공형 - 현장 진단 결과서]</p></div>
+            <div class="meta">진단일: 2026. 05. 11<br>사업장: (주)RISA 샘플 사업장</div>
+        </div>
+        <div class="intro-quote">"납기를 맞추는 프레스 속도보다 더 빠른 건, 찰나의 순간에 일어나는 끼임 사고입니다."</div>
+        <div class="grid-container">
+            <div class="section"><div class="section-title">STEP 01. 현장 흐름 관찰 (Flow)</div><div class="content-box">반복적인 프레스 작업 중 수동 원재료 투입이 이루어지고 있습니다. 안전 센서가 꺼져 있거나 작동 범위가 제한적인 구간이 관찰됩니다.<div class="photo-box"><img src="../images/metal_risk.png"></div></div></div>
+            <div class="section"><div class="section-title">STEP 02. 잠재 리스크 분석 (Risk)</div><div class="content-box"><strong>1. 영구적 신체 손상:</strong> 프레스 작업 특성상 끼임 사고는 장애 또는 사망으로 직결됩니다.<br><br><strong>2. 형사 책임 리스크:</strong> 중대재해 발생 시 경영책임자의 강력한 처벌 및 경영 파탄 리스크가 상존합니다.</div></div>
+            <div class="section"><div class="section-title">STEP 03. 구조적 원인 추정 (Cause)</div><div class="content-box"><strong>1. 안전과 생산의 충돌:</strong> 노후 센서가 생산 속도를 저해하고, 이를 해결하기 위해 센서를 임의 해제하는 것이 관습화된 구조입니다.<br><br><strong>2. 지그(Jig) 설계 부재:</strong> 사람의 손이 위험 구역에 직접 들어가는 원시적 구조입니다.</div></div>
+            <div class="section"><div class="section-title">STEP 04. 우선 개선 제안 (Action)</div><div class="content-box">프레스 라이트 커튼 고도화 및 수동 투입을 대체할 보조 지그(Jig) 또는 자동화 장치 검토가 시급합니다.<div class="photo-box"><img src="../images/metal_safe.png"></div></div></div>
+        </div>
+        <div class="page-number">- 1 -</div>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <div><h1 style="color: var(--risa-orange);">RISA™ 전문가 심층 제언</h1><p style="margin: 5px 0 0 0; color: var(--risa-blue); font-weight: 900; font-size: 18px;">[CEO를 위한 구조 개선 로드맵]</p></div>
+        </div>
+        <div class="insight-box">
+            <h3>💡 RISA™ 심사원 종합 의견</h3>
+            <p>
+                사장님, 숙련된 작업자일수록 자기 기술을 믿고 위험을 감수합니다. 하지만 기계는 사람의 숙련도를 봐주지 않습니다. '설마'가 '역시'가 되기 전에, 안전 장치가 작업자의 실수까지 받아줄 수 있는 <strong>'구조적 안전망'</strong>을 구축하셔야 합니다.<br><br>
+                오늘 발견된 프레스 센서 무력화 현상은 작업자의 부주의가 아니라, 생산 효율을 따라가지 못하는 <strong>'낡은 안전 구조'</strong>의 문제입니다. 사람을 탓하기 전에 시스템을 먼저 개선하는 것, 그것이 진정한 안전 경영의 시작이자 사장님의 소중한 가업을 지키는 길입니다.
+            </p>
+        </div>
+        <h3 style="margin-top: 40px; color: var(--risa-blue); font-size: 20px; font-weight: 900;">🚀 향후 안전 경영 개선 로드맵</h3>
+        <div class="roadmap-grid">
+            <div class="roadmap-item"><h4>Phase 1</h4><p>설비 안전 고도화<br><strong>(센서 및 지그 개선)</strong></p></div>
+            <div class="roadmap-item"><h4>Phase 2</h4><p>위험성평가 기반<br><strong>안전 시스템 정립</strong></p></div>
+            <div class="roadmap-item"><h4>Phase 3</h4><p>자율 안전 구조<br><strong>전사적 내재화</strong></p></div>
+        </div>
+        <div class="cta-section">
+            <div class="cta-text">
+                <h3>📞 무료 정밀 진단 신청</h3>
+                <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">"사장님의 든든한 동생이 되어드리겠습니다."</p>
+            </div>
+            <div class="cta-contact">010-3955-4994<br><span style="font-size: 14px; font-weight: 400;">hsr0131@gmail.com</span></div>
+        </div>
+        <div class="footer">
+            <div style="font-size: 12px; color: #94A3B8; line-height: 1.6;">RISA™ | Risk Integrated System Audit <br>"규격이 아니라 구조를 봅니다"</div>
+            <div style="text-align: right;">
+                <p style="margin: 0; font-size: 14px; font-weight: 700;">현장 구조 통역사</p>
+                <h2 style="margin: 0; color: var(--risa-blue); font-size: 24px; font-weight: 900;">별이온 (Seong-rae)</h2>
+            </div>
+        </div>
+        <div class="page-number">- 2 -</div>
+    </div>
+</body>
+</html>
