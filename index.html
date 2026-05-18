@@ -99,41 +99,41 @@
     </section>
 
     <!-- 현장에서 발견되는 5가지 구조적 병목 (신규 전략 섹션) -->
-    <section id="bottlenecks" class="section" style="background-color: #FFF9F0; border-top: 1px solid #FFE8D1; border-bottom: 1px solid #FFE8D1;">
+    <section id="bottlenecks" class="section bottleneck-section">
         <div class="container">
             <div class="section-header fade-in">
                 <h2 class="section-title">현장에서 발견되는 5가지 구조적 병목</h2>
-                <div class="divider" style="background-color: var(--risa-orange);"></div>
+                <div class="divider" style="background-color: var(--risa-orange);"></div><!-- TODO: .divider--orange 컴포넌트 클래스로 개선 예정 -->
                 <p class="section-desc">매뉴얼이 작동하지 않는 진짜 이유는 작업자의 부주의가 아니라 구조적 결함 때문입니다.</p>
             </div>
             
             <div class="bottleneck-grid fade-in">
-                <div class="bottleneck-card" style="border-top: 4px solid var(--risa-red);">
-                    <span style="color: var(--risa-red);">물류/이동 병목</span>
+                <div class="bottleneck-card border-t-red">
+                    <span class="text-red">물류/이동 병목</span>
                     <h3>지게차·인원 동선 혼재</h3>
                     <p>속도가 최우선인 현장에서 동선이 꼬이면 작업자는 매뉴얼을 어기고 지름길을 택할 수밖에 없습니다.</p>
                 </div>
                 
-                <div class="bottleneck-card" style="border-top: 4px solid var(--risa-orange);">
-                    <span style="color: var(--risa-orange);">가동/압박 병목</span>
+                <div class="bottleneck-card border-t-orange">
+                    <span class="text-orange">가동/압박 병목</span>
                     <h3>설비 정지시간의 압박</h3>
                     <p>'설비가 멈추면 손해'라는 압박 속에서, 작업자는 기계가 돌고 있는 상태로 손을 밀어 넣는 위험을 감수합니다.</p>
                 </div>
                 
-                <div class="bottleneck-card" style="border-top: 4px solid var(--risa-blue);">
-                    <span style="color: var(--risa-blue);">운영/인적 병목</span>
+                <div class="bottleneck-card border-t-blue">
+                    <span class="text-blue">운영/인적 병목</span>
                     <h3>개인화된 노하우 의존</h3>
                     <p>표준 공정서가 없거나 맞지 않아, 고참 작업자의 '감'과 암묵지에 의존해 불안정한 품질과 안전을 유지합니다.</p>
                 </div>
                 
-                <div class="bottleneck-card" style="border-top: 4px solid var(--primary-light);">
-                    <span style="color: var(--primary-light);">소통/대응 병목</span>
+                <div class="bottleneck-card border-t-primary-light">
+                    <span class="text-primary-light">소통/대응 병목</span>
                     <h3>관리자 보고 지연 체계</h3>
                     <p>현장 이상 징후가 보고 라인을 타고 경영진까지 전달되는 데 시간이 지체되어 초기 골든타임을 놓치게 됩니다.</p>
                 </div>
 
-                <div class="bottleneck-card" style="border-top: 4px solid var(--risa-mint);">
-                    <span style="color: var(--risa-mint);">조직/책임 병목</span>
+                <div class="bottleneck-card border-t-mint">
+                    <span class="text-mint">조직/책임 병목</span>
                     <h3>불량 책임 전가 구조</h3>
                     <p>문제가 터졌을 때 구조가 아닌 '사람의 실수'로 꼬리 자르기를 반복하여 숨겨진 진짜 원인을 은폐합니다.</p>
                 </div>
@@ -177,33 +177,33 @@
                 </div>
             </div>
             <div class="expert-content fade-in">
-                <h4 class="expert-label" style="margin-bottom: 5px;">대표 심사원</h4>
-                <h2 class="expert-name" style="margin-bottom: 8px;">황 성 래 <span class="expert-nickname">(별이온)</span></h2>
-                <div class="expert-divider" style="margin-bottom: 12px;"></div>
+                <h4 class="expert-label mb-5">대표 심사원</h4>
+                <h2 class="expert-name mb-8">황 성 래 <span class="expert-nickname">(별이온)</span></h2>
+                <div class="expert-divider mb-12"></div>
                 
-                <h3 style="font-weight: 900; color: var(--risa-orange); margin-bottom: 12px; font-size: 18px;">
+                <h3 class="font-black text-orange mb-12 text-xl">
                     "나는 현장에서 화가 난 적이 있습니다."
                 </h3>
                 
-                <p class="expert-bio" style="line-height: 1.6; margin-bottom: 15px; font-size: 15.5px;">
+                <p class="expert-bio lh-base mb-15 text-lg">
                     20년간 비영리 조직을 운영하며 시스템의 언어를 다뤘습니다. 그리고 50대에, 직접 지게차를 몰았습니다.<br>
-                    <span style="display:block; margin-top: 6px;">현장은 저를 기다려주지 않았습니다. 적응하는 데 한 달, 하지만 재촉은 첫날부터였습니다.</span>
-                    <span style="display:block; margin-top: 6px;">그 경험이 저를 바꿨습니다. 규격보다 구조를 보게 됐고, 서류보다 흐름을 먼저 묻게 됐습니다.</span>
+                    <span class="bio-block">현장은 저를 기다려주지 않았습니다. 적응하는 데 한 달, 하지만 재촉은 첫날부터였습니다.</span>
+                    <span class="bio-block">그 경험이 저를 바꿨습니다. 규격보다 구조를 보게 됐고, 서류보다 흐름을 먼저 묻게 됐습니다.</span>
                 </p>
                 
-                <ul class="expert-list" style="margin-bottom: 15px;">
-                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle"></i> 비영리단체 20년 기획 및 경영 관리</li>
-                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle"></i> 지게차 실무 및 물류 현장 관리 1년 6개월</li>
-                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle"></i> ISO 9001 / 14001 / 45001 통합 인증 심사원</li>
+                <ul class="expert-list mb-15">
+                    <li class="mb-6"><i class="fas fa-check-circle"></i> 비영리단체 20년 기획 및 경영 관리</li>
+                    <li class="mb-6"><i class="fas fa-check-circle"></i> 지게차 실무 및 물류 현장 관리 1년 6개월</li>
+                    <li class="mb-6"><i class="fas fa-check-circle"></i> ISO 9001 / 14001 / 45001 통합 인증 심사원</li>
                 </ul>
                 
-                <div class="trust-badge" style="margin-bottom: 0; padding: 12px 15px; font-size: 14.5px;">
+                <div class="trust-badge mb-0 p-12">
                     <strong>현장을 알아야 구조가 보입니다.</strong><br>
                     대표님의 속마음과 현장의 고충을 동시에 읽어내는 통역사가 되겠습니다.
                 </div>
                 
                 <!-- 보안 속성 추가 -->
-                <a href="risa-field-os/intro.html" target="_blank" rel="noopener noreferrer" class="btn btn-ivory" style="display: block; text-align: center; padding: 12px; font-weight: 900; border-radius: 8px;">RISA 브랜드 스토리 및 소개서 보기</a>
+                <a href="risa-field-os/intro.html" target="_blank" rel="noopener noreferrer" class="btn btn-ivory display-block text-center font-black p-12 rounded-md">RISA 브랜드 스토리 및 소개서 보기</a>
             </div>
         </div>
     </section>
@@ -220,17 +220,17 @@
                 <button class="btn btn-outline" onclick="showTab('food')" id="btn-food">식품제조</button>
                 <button class="btn btn-outline" onclick="showTab('metal')" id="btn-metal">금속/기계</button>
             </div>
-            <div class="media-grid" style="align-items: stretch;">
+            <div class="media-grid items-stretch">
                 <div class="case-study-display">
                     <div id="logistics-tab" class="case-content active">
                         <div class="media-card">
                             <div class="media-icon"><i class="fas fa-truck-loading" style="color: #0066FF;"></i></div>
                             <h3>[물류] 지게차 동선 구조 진단 사례</h3>
                             <p>지게차 1.5년 실무 경험으로 분석한 물류 현장의 치명적 병목 구간 해소 전략입니다.</p>
-                            <div style="display: flex; gap: 10px; margin-bottom: 25px; margin-top: 20px;">
+                            <div class="case-img-pair">
                                 <!-- SEO 최적화 속성 적용 -->
-                                <img src="assets/images/logistics_risk.png" alt="물류창고 지게차 동선 충돌 퀵스캔 사례" loading="lazy" style="width: 48%; border-radius: 8px;">
-                                <img src="assets/images/logistics_safe.png" alt="물류창고 지게차 동선 개선 구조" loading="lazy" style="width: 48%; border-radius: 8px; border: 2px solid #0066FF;">
+                                <img src="assets/images/logistics_risk.png" alt="물류창고 지게차 동선 충돌 퀵스캔 사례" loading="lazy">
+                                <img src="assets/images/logistics_safe.png" alt="물류창고 지게차 동선 개선 구조" loading="lazy" class="border-blue-outline">
                             </div>
                             <div class="viral-download-box viral-box-logistics">
                                 <p class="viral-download-text">우리 공장 동선과 비교해 보세요</p>
@@ -243,10 +243,10 @@
                             <div class="media-icon"><i class="fas fa-utensils" style="color: #00C6BE;"></i></div>
                             <h3>[식품] 위생 및 공정 안전 진단 사례</h3>
                             <p>교차 오염 방지 및 작업자 안전을 고려한 식품 제조 현장의 스마트 구조 개선 사례입니다.</p>
-                            <div style="display: flex; gap: 10px; margin-bottom: 25px; margin-top: 20px;">
+                            <div class="case-img-pair">
                                 <!-- SEO 최적화 속성 적용 -->
-                                <img src="assets/images/food_risk.png" alt="식품제조 위생 공정 퀵스캔 분석" loading="lazy" style="width: 48%; border-radius: 8px;">
-                                <img src="assets/images/food_safe.png" alt="식품제조 위생 공정 안전 개선안" loading="lazy" style="width: 48%; border-radius: 8px; border: 2px solid #00C6BE;">
+                                <img src="assets/images/food_risk.png" alt="식품제조 위생 공정 퀵스캔 분석" loading="lazy">
+                                <img src="assets/images/food_safe.png" alt="식품제조 위생 공정 안전 개선안" loading="lazy" class="border-mint-outline">
                             </div>
                             <div class="viral-download-box viral-box-food">
                                 <p class="viral-download-text">우리 공장 위생 공정과 비교해 보세요</p>
@@ -259,10 +259,10 @@
                             <div class="media-icon"><i class="fas fa-cogs" style="color: #FF5E5E;"></i></div>
                             <h3>[금속] 프레스 가공 공정 리스크 진단</h3>
                             <p>중대재해 리스크가 높은 금속 가공 현장의 핵심 위험 요소 제거 및 구조적 예방 사례입니다.</p>
-                            <div style="display: flex; gap: 10px; margin-bottom: 25px; margin-top: 20px;">
+                            <div class="case-img-pair">
                                 <!-- SEO 최적화 속성 적용 -->
-                                <img src="assets/images/metal_risk.png" alt="금속 기계 프레스 위험성 진단" loading="lazy" style="width: 48%; border-radius: 8px;">
-                                <img src="assets/images/metal_safe.png" alt="금속 기계 프레스 사고 예방 구조" loading="lazy" style="width: 48%; border-radius: 8px; border: 2px solid #FF5E5E;">
+                                <img src="assets/images/metal_risk.png" alt="금속 기계 프레스 위험성 진단" loading="lazy">
+                                <img src="assets/images/metal_safe.png" alt="금속 기계 프레스 사고 예방 구조" loading="lazy" class="border-red-outline">
                             </div>
                             <div class="viral-download-box viral-box-metal">
                                 <p class="viral-download-text">우리 공장 설비 안전과 비교해 보세요</p>
@@ -271,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="media-card fade-in" style="transition-delay: 0.1s">
+                <div class="media-card fade-in fade-delay-1">
                     <div class="media-icon youtube"><i class="fab fa-youtube"></i></div>
                     <h3>유튜브 : RISA 구조 진단</h3>
                     <p>현장의 문제점을 날카롭게 짚어내는 영상 인사이트. 대표님들의 출퇴근길 필수 시청 콘텐츠.</p>

@@ -1,15 +1,90 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   RISA™ Design System - Home Page Specific Styles
+   RISA™ Design System - Home Page Components
+   컴포넌트 우선 원칙: 반복 패턴 → component, 미세 조정 → utility
    ========================================================================== */
 
 /* --- Philosophy Section Dark Industrial Overlay --- */
 .philosophy-bg-overlay {
     position: relative;
-    /* WebP CDN 최적화 적용: Unsplash 이미지 끝에 &fm=webp 를 붙여 트래픽을 80% 절감시킴 */
     background-image: linear-gradient(rgba(10, 37, 64, 0.85), rgba(10, 37, 64, 0.95)), 
                       url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp');
     background-size: cover;
     background-position: center;
+}
+
+/* --- Bottleneck Section Background --- */
+.bottleneck-section {
+    background-color: #FFF9F0;
+    border-top: 1px solid #FFE8D1;
+    border-bottom: 1px solid #FFE8D1;
+}
+
+/* --- Insight Tab Image Pair (반복 3회: 물류/식품/금속) --- */
+.case-img-pair {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    margin-top: 20px;
+}
+.case-img-pair img {
+    width: 48%;
+    border-radius: var(--radius-md);
+}
+
+/* --- Contact: Worry List Item (반복 3회: 위험성평가/ISO/중대재해) --- */
+.worry-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+.worry-item:last-of-type {
+    margin-bottom: 15px;
+}
+.worry-item i {
+    color: #FF9800;
+    margin-top: 4px;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* --- Contact: Danger Callout (대표 불안 강조 박스) --- */
+.danger-callout {
+    margin-top: 20px;
+    padding: 12px 15px;
+    background: rgba(255, 94, 94, 0.1);
+    border-left: 4px solid var(--color-danger);
+    border-radius: var(--radius-sm);
+}
+.danger-callout__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.93rem;
+    color: #fff;
+    font-weight: 700;
+}
+.danger-callout__item + .danger-callout__item {
+    margin-top: 8px;
+}
+.danger-callout__item i {
+    color: var(--color-danger);
+    margin-top: 4px;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* --- Insight Section: Delayed Fade Card (YouTube card) --- */
+.fade-delay-1 {
+    transition-delay: 0.1s;
+}
+
+/* --- Expert Section: Inline Bio Block --- */
+.bio-block {
+    display: block;
+    margin-top: 6px;
 }

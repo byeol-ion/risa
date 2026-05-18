@@ -10,14 +10,32 @@
 .mt-md { margin-top: var(--space-md); }
 .mt-lg { margin-top: var(--space-lg); }
 .mt-xl { margin-top: var(--space-xl); }
+/* Fine-grain (from inline audit) */
+.mt-5  { margin-top: 5px !important; }
+.mt-6  { margin-top: 6px !important; }
+.mt-8  { margin-top: 8px !important; }
+.mt-20 { margin-top: 20px !important; }
+.mt-25 { margin-top: 25px !important; }
+.mt-40 { margin-top: 40px !important; }
 
 /* --- Margin Bottom --- */
-.mb-0  { margin-bottom: 0; }
+.mb-0  { margin-bottom: 0 !important; }
 .mb-xs { margin-bottom: var(--space-xs); }
 .mb-sm { margin-bottom: var(--space-sm); }
 .mb-md { margin-bottom: var(--space-md); }
 .mb-lg { margin-bottom: var(--space-lg); }
 .mb-xl { margin-bottom: var(--space-xl); }
+/* Fine-grain (from inline audit) */
+.mb-5  { margin-bottom: 5px !important; }
+.mb-6  { margin-bottom: 6px !important; }
+.mb-8  { margin-bottom: 8px !important; }
+.mb-10 { margin-bottom: 10px !important; }
+.mb-12 { margin-bottom: 12px !important; }
+.mb-15 { margin-bottom: 15px !important; }
+.mb-25 { margin-bottom: 25px !important; }
+
+/* --- Margin Axis --- */
+.my-25 { margin-top: 25px !important; margin-bottom: 25px !important; }
 
 /* --- Padding Bottom --- */
 .pb-xs { padding-bottom: var(--space-xs); }
@@ -25,3 +43,8 @@
 .pb-md { padding-bottom: var(--space-md); }
 .pb-lg { padding-bottom: var(--space-lg); }
 .pb-xl { padding-bottom: var(--space-xl); }
+
+/* --- Padding Fine-grain --- */
+.pt-20 { padding-top: 20px !important; }
+.p-12  { padding: 12px !important; }
+.px-15 { padding-left: 15px !important; padding-right: 15px !important; }
