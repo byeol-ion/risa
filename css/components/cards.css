@@ -115,6 +115,7 @@
     display: flex;
     align-items: stretch;
     gap: var(--space-lg);
+    flex-wrap: wrap; /* CTA 래퍼가 다음 줄로 떨어지도록 */
 }
 
 #expert .expert-image {
