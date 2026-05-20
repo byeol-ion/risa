@@ -170,10 +170,8 @@
    사용: Hero 바로 아래 "신청→전화→퀵스캔→보고서" 프로세스 행
 ───────────────────────────────────────────────────────────────────── */
 .process-section {
-    background: var(--bg-light);
+    background: #ffffff;
     padding: 50px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
 }
 .process-label {
     text-align: center;
