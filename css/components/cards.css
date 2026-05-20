@@ -257,7 +257,7 @@
 
 .bottleneck-card {
     background: white;
-    padding: 30px;
+    padding: 22px 18px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     display: flex;
@@ -279,10 +279,10 @@
 }
 
 .bottleneck-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .bottleneck-card p {
