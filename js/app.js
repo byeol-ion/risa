@@ -79,3 +79,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ─────────────────────────────────────────────────────────────────────
+// RISA™ 대표님 공장 체크리스트 — 실시간 카운터 및 피드백
+// ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.check-item input[type="checkbox"]');
+    const resultEl   = document.getElementById('check-result');
+    const resultText = document.getElementById('check-result-text');
+    if (!checkboxes.length || !resultEl) return;
+
+    function update() {
+        const count = [...checkboxes].filter(cb => cb.checked).length;
+        if (count === 0) {
+            resultText.textContent = '항목을 체크해 보세요';
+            resultEl.style.borderColor = 'rgba(255,152,0,0.4)';
+        } else if (count <= 2) {
+            resultText.textContent = count + '개 해당 — 주의 구간. 구조 점검이 필요합니다.';
+            resultEl.style.borderColor = 'rgba(255,152,0,0.6)';
+        } else if (count <= 4) {
+            resultText.textContent = '⚠️ ' + count + '개 해당 — 위험 구간! 현장 병목 가능성이 높습니다.';
+            resultEl.style.borderColor = '#FF9800';
+        } else {
+            resultText.textContent = '🚨 ' + count + '개 해당 — 고위험! 무료 구조 진단이 즉시 필요합니다.';
+            resultEl.style.borderColor = '#FF5E5E';
+            resultEl.style.color = '#FF5E5E';
+        }
+    }
+    checkboxes.forEach(cb => cb.addEventListener('change', update));
+});
+
