@@ -21,10 +21,10 @@
 @import url('css/components/buttons.css') layer(component);
 @import url('css/components/cards.css') layer(component);
 @import url('css/components/forms.css') layer(component);
-@import url('css/components/hero.css?v=1.6') layer(component);
+@import url('css/components/hero.css?v=1.7') layer(component);
 
 /* --- 5. Page Layer --- */
-@import url('css/pages/home.css?v=1.6') layer(component);
+@import url('css/pages/home.css?v=1.7') layer(component);
 
 /* --- 6. Utility Layer --- */
 @import url('css/utilities/spacing.css') layer(utility);
