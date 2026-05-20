@@ -139,3 +139,13 @@
         display: inline !important;
     }
 }
+
+.desktop-only {
+    display: block !important;
+}
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+}

@@ -19,13 +19,13 @@
 
 /* --- 4. Component Layer --- */
 @import url('css/components/buttons.css') layer(component);
-@import url('css/components/cards.css?v=2.6') layer(component);
-@import url('css/components/forms.css?v=2.6') layer(component);
-@import url('css/components/hero.css?v=2.6') layer(component);
+@import url('css/components/cards.css?v=2.7') layer(component);
+@import url('css/components/forms.css?v=2.7') layer(component);
+@import url('css/components/hero.css?v=2.7') layer(component);
 
 /* --- 5. Page Layer --- */
-@import url('css/pages/home.css?v=2.6') layer(component);
+@import url('css/pages/home.css?v=2.7') layer(component);
 
 /* --- 6. Utility Layer --- */
 @import url('css/utilities/spacing.css') layer(utility);
-@import url('css/utilities/helpers.css?v=2.5') layer(utility);
+@import url('css/utilities/helpers.css?v=2.7') layer(utility);
