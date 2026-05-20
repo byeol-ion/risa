@@ -109,3 +109,77 @@ document.addEventListener('DOMContentLoaded', function() {
     checkboxes.forEach(cb => cb.addEventListener('change', update));
 });
 
+
+// ─────────────────────────────────────────────────────────────────────
+// RISA™ 모바일 전용 뒤로가기 방어 (Back-Button Guard)
+// 원리: history.pushState()로 가짜 히스토리를 심어두고,
+//       1차 뒤로가기 = 토스트 경고 노출 / 2차(3초 이내) = 실제 이탈
+// ─────────────────────────────────────────────────────────────────────
+(function() {
+    // 모바일 터치 기기에서만 동작
+    const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (!isMobile) return;
+
+    // 가짜 히스토리 항목 삽입 (페이지 최초 로딩 시)
+    history.pushState({ risaGuard: true }, '', location.href);
+
+    let backPressedOnce = false;
+    let backTimer = null;
+
+    // 토스트 메시지 엘리먼트 생성
+    const toast = document.createElement('div');
+    toast.id = 'risa-back-toast';
+    toast.textContent = '한 번 더 누르시면 페이지를 나갑니다.';
+    toast.style.cssText = [
+        'position:fixed',
+        'bottom:80px',
+        'left:50%',
+        'transform:translateX(-50%) translateY(20px)',
+        'background:rgba(10,37,64,0.92)',
+        'color:#fff',
+        'padding:13px 26px',
+        'border-radius:50px',
+        'font-size:0.9rem',
+        'font-weight:600',
+        'letter-spacing:-0.01em',
+        'white-space:nowrap',
+        'box-shadow:0 8px 30px rgba(0,0,0,0.25)',
+        'z-index:99999',
+        'opacity:0',
+        'transition:opacity 0.25s ease, transform 0.25s ease',
+        'pointer-events:none'
+    ].join(';');
+    document.body.appendChild(toast);
+
+    function showToast() {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }
+    function hideToast() {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }
+
+    window.addEventListener('popstate', function() {
+        if (!backPressedOnce) {
+            // 1차 뒤로가기: 가짜 히스토리를 다시 심고 토스트 표시
+            history.pushState({ risaGuard: true }, '', location.href);
+            backPressedOnce = true;
+            showToast();
+
+            // 3초 후 자동 리셋
+            clearTimeout(backTimer);
+            backTimer = setTimeout(function() {
+                backPressedOnce = false;
+                hideToast();
+            }, 3000);
+        } else {
+            // 2차 뒤로가기: 실제 이탈 허용
+            clearTimeout(backTimer);
+            hideToast();
+            history.back();
+        }
+    });
+})();
+
+
