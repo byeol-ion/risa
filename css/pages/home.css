@@ -617,4 +617,30 @@
     }
 }
 
+/* --- 5대 병목 카드 수직 목록화 (대표님 스캔 가독성 극대화) --- */
+.bottleneck-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+.b-step {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    line-height: 1.4;
+    word-break: keep-all;
+}
+.b-step:first-child {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+.b-step.b-step--danger {
+    color: var(--risa-red);
+    font-weight: 800;
+    font-size: 0.92rem;
+}
+
 
