@@ -25,7 +25,7 @@
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp">
     
     <!-- 기존 메인 스타일 (바탕화면의 risa_style.css와 연결됨) -->
-    <link rel="stylesheet" href="style.css?v=1.7">
+    <link rel="stylesheet" href="style.css?v=1.8">
 </head>
 <body>
     <header id="header">
@@ -131,7 +131,6 @@
                     <p class="checklist-badge">진단 체크리스트</p>
                     <h2 class="checklist-title">대표님 공장도<br><span>이런 상태 아닙니까?</span></h2>
                     <p class="checklist-sub">3개 이상 해당되면<br>현장 구조 병목 가능성이 높습니다.</p>
-                    <a href="#contact" class="btn btn-primary checklist-cta">무료로 구조 진단 받기</a>
                 </div>
                 <div class="checklist-right">
                     <label class="check-item"><input type="checkbox"><span>작업자가 절차보다 속도를 선택한다</span></label>
@@ -146,6 +145,10 @@
                         <span id="check-result-text">항목을 체크해 보세요</span>
                     </div>
                 </div>
+            </div>
+            <!-- 체크리스트 섹션 끝 CTA (5대 병목 아래에서 여기로 이동) -->
+            <div class="section-cta-wrap fade-in" style="border-top: 1px solid rgba(255,255,255,0.15); margin-top: 40px; padding-top: 30px;">
+                <a href="#contact" class="btn btn-primary">무료 30분 전화 진단 신청하기</a>
             </div>
         </div>
     </section>
@@ -217,10 +220,7 @@
                     <p>사고 발생 시 시스템보다 작업자 부주의를 탓하며 서류 꼬리 자르기로 종결합니다.</p>
                 </div>
             </div>
-            <!-- 5대병목 섹션 끝 CTA -->
-            <div class="section-cta-wrap fade-in">
-                <a href="#contact" class="btn btn-primary">무료 30분 전화 진단 신청하기</a>
-            </div>
+            <!-- 5대병목 섹션 끝 CTA (체크리스트 하단으로 이동하여 퀵스캔 배너와의 중복 제거) -->
         </div>
     </section>
 
