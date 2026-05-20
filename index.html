@@ -25,7 +25,34 @@
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp">
     
     <!-- 기존 메인 스타일 (바탕화면의 risa_style.css와 연결됨) -->
-    <link rel="stylesheet" href="style.css?v=1.4">
+    <link rel="stylesheet" href="style.css?v=1.5">
+    <style>
+        /* 캐시 방지 및 즉시 렌더링용 퀵스캔 배너 추가 스타일 */
+        .quickscan-banner-section { padding: 80px 0; background: #ffffff; }
+        .quickscan-banner { background: linear-gradient(135deg, #0b1f40 0%, #1a3c6d 100%); border-radius: 12px; padding: 50px 40px; color: white; text-align: center; box-shadow: 0 15px 35px rgba(10, 31, 64, 0.15); position: relative; overflow: hidden; }
+        .quickscan-banner::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; pointer-events: none; }
+        .quickscan-banner__badge { display: inline-block; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25); color: #ffd043; font-size: 0.88rem; font-weight: 800; padding: 6px 16px; border-radius: 30px; margin-bottom: 20px; letter-spacing: 0.02em; }
+        .quickscan-banner__title { font-size: 2.1rem; font-weight: 800; line-height: 1.4; margin-bottom: 20px; letter-spacing: -0.02em; }
+        .quickscan-banner__title .highlight-yellow { color: #ffd043; }
+        .quickscan-banner__desc { font-size: 1.05rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 35px; }
+        .quickscan-banner__info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto 40px; }
+        .quickscan-banner .info-item { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px 15px; display: flex; align-items: center; gap: 15px; text-align: left; }
+        .quickscan-banner .info-item i { font-size: 1.8rem; color: #ffd043; flex-shrink: 0; }
+        .quickscan-banner .info-item h4 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; color: white; }
+        .quickscan-banner .info-item p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin: 0; }
+        .btn-yellow { display: inline-block; background: #ffd043; color: #0b1f40 !important; font-weight: 900; font-size: 1.1rem; padding: 16px 40px; border-radius: 6px; box-shadow: 0 4px 15px rgba(255, 208, 67, 0.4); text-decoration: none; transition: all 0.3s ease; }
+        .btn-yellow:hover { background: #e6b935; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 208, 67, 0.5); }
+        @media (max-width: 768px) {
+            .quickscan-banner-section { padding: 50px 0; }
+            .quickscan-banner { padding: 35px 20px; }
+            .quickscan-banner__title { font-size: 1.45rem; }
+            .quickscan-banner__desc { font-size: 0.9rem; }
+            .quickscan-banner__info-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 30px; }
+            .quickscan-banner .info-item { padding: 15px; gap: 12px; }
+            .quickscan-banner .info-item i { font-size: 1.4rem; }
+            .btn-yellow { padding: 14px 28px; font-size: 1rem; width: 100%; text-align: center; }
+        }
+    </style>
 </head>
 <body>
     <header id="header">
