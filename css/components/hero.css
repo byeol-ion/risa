@@ -134,7 +134,7 @@
     z-index: 2;
 }
 
-/* --- Responsive Hero Section Rules (Inline) --- */
+/* --- Responsive Hero Section Rules --- */
 @media (max-width: 992px) {
     .hero-title {
         font-size: 3rem;
@@ -143,58 +143,78 @@
 
 @media screen and (max-width: 768px) {
     .hero {
-        padding: 140px 0 80px;
+        padding: 120px 0 60px;
         text-align: center;
     }
-    
+
     .hero-buttons {
         justify-content: center;
         flex-direction: column;
+        align-items: stretch;
     }
-    
+
     .hero-buttons .btn {
         width: 100%;
+        text-align: center;
     }
-    
+
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.85rem;
         line-height: 1.4;
     }
-    
+
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 0.97rem;
+        padding: 0 8px;
+        line-height: 1.7;
+    }
+
+    .hero-quick-info {
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .hero-quick-item {
+        font-size: 0.8rem;
+        padding: 5px 11px;
+    }
+
+    .hero-cta-proof {
+        font-size: 0.82rem;
+        margin-top: 10px;
         padding: 0 10px;
     }
-    
-    .hero-cta-subtext {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        margin-top: 20px;
-        gap: 6px;
-    }
-    
-    .hero-cta-subtext i {
-        top: -1.5px; /* 모바일 2줄 줄바꿈 상황을 고려하여 중용(-1.5px)의 정렬 오프셋으로 복원! */
-    }
-    
-    .hero-cta-proof {
-        font-size: 0.85rem;
-    }
-    
+
     .hero-text-slider {
-        min-height: 380px;
+        min-height: auto;
+        margin-bottom: 20px;
+    }
+
+    .hero-tag {
+        font-size: 0.88rem;
+        padding: 6px 14px;
+        margin-bottom: 18px;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-text-slider {
-        min-height: 340px;
+    .hero {
+        padding: 110px 0 50px;
     }
-    
+
     .hero-title {
-        font-size: 32px;
-        line-height: 1.3;
+        font-size: 1.65rem;
+        line-height: 1.35;
+    }
+
+    .hero-quick-info {
+        gap: 6px;
+    }
+
+    .hero-quick-item {
+        font-size: 0.76rem;
+        padding: 4px 9px;
     }
 }
+
