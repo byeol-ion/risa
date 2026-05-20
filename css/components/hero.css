@@ -18,6 +18,35 @@
     max-width: 800px;
 }
 
+.hero-identity-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.95);
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+@media screen and (max-width: 768px) {
+    .hero-identity-badge {
+        font-size: 0.78rem;
+        padding: 5px 12px;
+        margin-bottom: 16px;
+        line-height: 1.45;
+        text-align: center;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 .hero-tag {
     display: inline-block;
     padding: 8px 20px;
