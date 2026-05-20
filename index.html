@@ -25,7 +25,7 @@
     <link rel="preload" as="image" href="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80&fm=webp">
     
     <!-- 기존 메인 스타일 (바탕화면의 risa_style.css와 연결됨) -->
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body>
     <header id="header">
@@ -470,7 +470,17 @@
                     <form class="contact-form" action="https://formspree.io/f/xvzldqjq" method="POST">
                         <div class="form-group"><label for="name">기업명 / 성함</label><input type="text" id="name" name="company_name" required placeholder="예: (주)대한정밀 김대표"></div>
                         <div class="form-group"><label for="phone">연락처</label><input type="tel" id="phone" name="contact_phone" required placeholder="010-3955-4994"></div>
-                        <div class="form-group"><label for="service">관심 분야</label><select id="service" name="service_interest"><option>위험성 평가 및 안전서류 대행 (빠른 해결)</option><option>ISO 9001 (품질/병목 진단)</option><option>ISO 14001 (환경)</option><option>ISO 45001 (안전보건/중대재해)</option><option>통합 인증 컨설팅</option></select></div>
+                        <div class="form-group">
+                            <label for="service">관심 분야</label>
+                            <select id="service" name="service_interest" required>
+                                <option value="" disabled selected hidden>버튼을 눌러 관심분야를 선택하세요</option>
+                                <option value="위험성 평가 및 안전서류 대행 (빠른 해결)">위험성 평가 및 안전서류 대행 (빠른 해결)</option>
+                                <option value="ISO 9001 (품질/병목 진단)">ISO 9001 (품질/병목 진단)</option>
+                                <option value="ISO 14001 (환경)">ISO 14001 (환경)</option>
+                                <option value="ISO 45001 (안전보건/중대재해)">ISO 45001 (안전보건/중대재해)</option>
+                                <option value="통합 인증 컨설팅">통합 인증 컨설팅</option>
+                            </select>
+                        </div>
                         <div class="form-group"><label for="message">문의 내용 (선택)</label><textarea id="message" name="message_detail" rows="3" placeholder="간단히 적어주세요."></textarea></div>
                         <!-- 최종 확신 장치 블록: 제출 버튼 바로 위로 이동하여 전환율 상승 유도 -->
                         <div class="contact-assurance-box">

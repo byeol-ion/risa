@@ -74,6 +74,14 @@
     transition: var(--motion-fast);
 }
 
+.form-group select:invalid {
+    color: var(--text-light);
+}
+
+.form-group select option {
+    color: var(--text-dark);
+}
+
 .form-group input:focus, 
 .form-group select:focus, 
 .form-group textarea:focus {
