@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://byeol-ion.github.io/risa/sitemap.xml
