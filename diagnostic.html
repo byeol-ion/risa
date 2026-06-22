@@ -303,6 +303,20 @@
       #grade-urgency-box p { color: #1a202c !important; }
       #grade-urgency-box span { color: #1a202c !important; }
 
+      /* ★ 신규 추가된 박스들의 인쇄용 색상 (흰 배경에서 보이도록) 및 잘림 방지 */
+      #risk-level-box { page-break-inside: avoid; }
+      #risk-level-box > div { background: #f7fafc !important; border: 1px solid #cbd5e0 !important; }
+      #risk-level-box span { color: #1a202c !important; }
+      #risk-level-box div:first-child { color: #4a5568 !important; }
+      
+      #shock-message-box { page-break-inside: avoid; }
+      #shock-message-box > div { background: #fff5f5 !important; border: 2px solid #e53e3e !important; }
+      #shock-message-box div > div { color: #e53e3e !important; }
+      #shock-message-box ul { color: #1a202c !important; font-weight: 800; }
+      
+      .checklist-container { page-break-inside: avoid; }
+      .factory-type-box { page-break-inside: avoid; }
+
       /* ★ CTA 버튼 섹션: PDF에서 숨김 (상호작용 요소) */
       #cta-deep-diagnosis { display: none !important; }
 
