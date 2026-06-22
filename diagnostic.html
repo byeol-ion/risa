@@ -140,8 +140,8 @@
     .btn-prev { background: #1e293b; color: var(--text-gray); }
     .btn-next { background: var(--accent); color: white; }
     .btn-full { width: 100%; padding: 16px; font-size: 16px; margin-bottom: 12px; }
-    .btn-kakao { background: #fee500; color: #000; font-weight: 900; }
-    .btn-call { background: #38a169; color: white; font-weight: 900; }
+    .btn-kakao { background: #ff7a00; color: white; font-weight: 900; }
+    .btn-call { background: #ff7a00; color: white; font-weight: 900; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* 결과 스크린 */
@@ -358,7 +358,7 @@
   <div id="result-screen" class="result-screen">
     <div class="header">
       <div class="logo" style="font-size: 24px;">RISA<span>™</span></div>
-      <div class="subtitle">구조건강지수 진단 완료</div>
+      <div class="subtitle">RISA™ 공장 구조진단 보고서</div>
       <div class="print-meta" style="display: none; margin-top: 15px; font-size: 16px; font-weight: 800; color: #1a202c;">
         진단 기업: <span id="print-company-name" style="color: var(--accent);"></span> | 
         진단 일자: <span id="print-date"></span>
@@ -371,6 +371,9 @@
       <div class="grade-desc" id="grade-desc">총점: <span id="total-score" style="font-weight: bold; color: white;">74</span>점 / 100점</div>
     </div>
 
+    <!-- ★ 현재 위험 수준 (동적 주입) -->
+    <div id="risk-level-box"></div>
+
     <!-- 공장 유형 박스 -->
     <div class="factory-type-box" id="factory-type-box">
       <div class="type-label">RISA™ 진단 결과</div>
@@ -379,6 +382,9 @@
         설명 텍스트
       </div>
     </div>
+
+    <!-- ★ 방치 시 충격 메시지 (동적 주입) -->
+    <div id="shock-message-box"></div>
 
     <!-- 즉시 실행 체크리스트 -->
     <div class="checklist-container">
@@ -570,6 +576,7 @@
     let typeTitle = "";
     let typeDesc = "";
     let checklist = [];
+    let shockItems = [];
 
     // S형 판단 로직 (총점 80 이상)
     if (totalScore >= 80) {
@@ -579,6 +586,7 @@
         "기존 표준서가 현장의 최신 변화를 잘 반영하고 있는지 연 1회 점검하라",
         "현재의 무재해 및 고품질 이력을 공식 인증 자료로 문서화하라"
       ];
+      shockItems = []; // S형은 충격 메시지 없음
     // E형 판단 로직 (취약 영역이 2개 이상일 때 복합 리스크로 판별)
     } else if (vulnerableCount >= 2) {
       typeTitle = "E형: 복합 리스크형 공장";
@@ -587,6 +595,11 @@
         "생산 일정을 늦추더라도 품질/안전 병목의 근본 원인 파악을 최우선으로 하라",
         "대표 주도의 '현장 구조 개선 TFT'를 즉각 구성하라",
         "내부 인력만으로는 단기 해결이 불가함을 인지하고 전문가 심층 진단을 의뢰하라"
+      ];
+      shockItems = [
+        "복합 리스크로 인한 도미노식 사고 발생 가능",
+        "품질 + 안전 동시 위기로 생산 전면 중단 위험",
+        "전면 시스템 붕괴 시 복구 비용 폭증"
       ];
     // A, B, C, D 단일 취약형 판별 로직
     } else if (worstCat === CAT_STD) {
@@ -598,6 +611,11 @@
         "신입이 혼자 작업 가능한 공정을 점검하라",
         "숙련자만 알고 있는 노하우(온도, 속도, 소리 등)를 인터뷰하여 문서화하라"
       ];
+      shockItems = [
+        "핵심 인원 퇴사 시 현장 즉각 마비 가능",
+        "신규 직원 적응 장기화 및 반복 불량 증가",
+        "표준 부재로 품질 편차 무한 반복"
+      ];
     } else if (worstCat === CAT_SAF) {
       typeTitle = "B형: 안전문화 취약형 공장";
       typeDesc = "생산 납기를 맞추느라 센서를 끄고, 아차사고를 운으로 넘기고 계십니다.<br>중대재해처벌법의 1순위 타깃이 될 수 있습니다.";
@@ -607,6 +625,11 @@
         "가장 최근의 위험성평가 결과가 현장에 게시되어 있는지 점검하라",
         "최근 1개월 내 입사한 신규 작업자의 안전 교육 이력을 점검하라"
       ];
+      shockItems = [
+        "중대재해처벌법 처벌 위험 상시 노출 중",
+        "아차사고가 중대사고로 전환될 가능성 높음",
+        "산재보험료 급등 및 조업 정지 위험"
+      ];
     } else if (worstCat === CAT_MOV) {
       typeTitle = "C형: 병목 누적형 공장";
       typeDesc = "직원들은 하루 종일 바쁘게 뛰어다니는데, 정작 출하량은 그대로죠?<br>꼬여버린 동선과 레이아웃에 돈이 줄줄 새고 있습니다.";
@@ -614,6 +637,11 @@
         "공장 내 보행자와 지게차 동선이 혼재된 위험 교차로를 도출하라",
         "재고나 폐기물이 쌓여 보행 통로를 침범한 구역을 시각적으로 구획하라",
         "가장 많이 돌아다니는 작업자의 불필요한 도보 이동 시간(낭비)을 측정하라"
+      ];
+      shockItems = [
+        "불필요한 이동 낭비로 생산성·인건비 손실 지속",
+        "지게차·보행 동선 혼재로 사고 위험 누적",
+        "물류 병목으로 납기 지연 반복 및 고객 이탈"
       ];
     } else { // CAT_IMP
       typeTitle = "D형: 데이터 단절형 공장";
@@ -623,10 +651,64 @@
         "현장 작업자가 제기한 안전/설비 문제가 1주일 내 조치되는지 이력을 확인하라",
         "문제가 반복되는 공정의 일일 생산/품질 데이터가 교차 검증되는지 확인하라"
       ];
+      shockItems = [
+        "불량 원인 추적 실패로 동일 불량 무한 반복",
+        "신규 직원 적응 지연 및 현장 혼란 지속",
+        "위험 정보 단절로 선제 대응 완전 불가"
+      ];
     }
 
     document.getElementById('factory-type-title').innerText = typeTitle;
     document.getElementById('factory-type-desc').innerHTML = typeDesc;
+
+    // ★ 위험 수준 계산 및 표시
+    const getRiskLabel = (pct) => {
+      if (pct < 50) return { label: '높음', color: '#e53e3e', icon: '🔴' };
+      if (pct < 70) return { label: '중',  color: '#dd6b20', icon: '🟠' };
+      return { label: '낮음', color: '#48bb78', icon: '🟢' };
+    };
+    const safPct  = (categories[CAT_SAF].score / categories[CAT_SAF].max) * 100;
+    const movPct  = (categories[CAT_MOV].score / categories[CAT_MOV].max) * 100;
+    const qualPct = Math.min(
+      (categories[CAT_STD].score / categories[CAT_STD].max) * 100,
+      (categories[CAT_IMP].score / categories[CAT_IMP].max) * 100
+    );
+    const safRisk  = getRiskLabel(safPct);
+    const movRisk  = getRiskLabel(movPct);
+    const qualRisk = getRiskLabel(qualPct);
+
+    document.getElementById('risk-level-box').innerHTML = `
+      <div style="background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin:15px 0;">
+        <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px; font-weight:800; letter-spacing:1.5px;">현재 위험 수준</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span style="font-size:14px; color:var(--text);">🏭 품질 리스크</span>
+            <span style="font-weight:900; color:${qualRisk.color}; font-size:15px;">${qualRisk.icon} ${qualRisk.label}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span style="font-size:14px; color:var(--text);">⚠️ 안전 리스크</span>
+            <span style="font-weight:900; color:${safRisk.color}; font-size:15px;">${safRisk.icon} ${safRisk.label}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0;">
+            <span style="font-size:14px; color:var(--text);">⚡ 생산성 리스크</span>
+            <span style="font-weight:900; color:${movRisk.color}; font-size:15px;">${movRisk.icon} ${movRisk.label}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // ★ 충격 메시지 주입 (S형 제외)
+    if (shockItems.length > 0) {
+      const shockHtml = shockItems.map(item => `<li style="margin-bottom:6px;">${item}</li>`).join('');
+      document.getElementById('shock-message-box').innerHTML = `
+        <div style="background:rgba(229,62,62,0.1); border:1px solid rgba(229,62,62,0.4); border-radius:10px; padding:14px 16px; margin:12px 0;">
+          <div style="font-size:12px; font-weight:900; color:#fc8181; margin-bottom:10px; letter-spacing:0.5px;">⚡ 현재 상태를 방치할 경우</div>
+          <ul style="padding-left:18px; color:#fed7d7; font-size:13.5px; line-height:1.7; margin:0;">
+            ${shockHtml}
+          </ul>
+        </div>
+      `;
+    }
 
     const listHtml = checklist.map(item => `
       <div class="checklist-item">
@@ -641,29 +723,29 @@
         bg: 'rgba(56,161,105,0.15)', border: '#38a169', icon: '✅',
         urgency: '안정', urgencyColor: '#38a169',
         msg: '현재 공장 구조는 안정적으로 운영되고 있습니다. ISO 갱신 심사를 통해 현 수준을 공식 인증하고 더욱 강화하세요.',
-        mainBtnText: '📋 ISO 갱신 심사 상담 신청하기',
-        mainBtnBg: '#38a169'
+        mainBtnText: '우리 공장 구조 상담받기',
+        mainBtnBg: '#ff7a00'
       },
       'B': {
         bg: 'rgba(49,130,206,0.15)', border: '#3182ce', icon: '🔵',
         urgency: '주의', urgencyColor: '#3182ce',
         msg: '향후 성장 시 구조적 병목 발생 가능성이 있습니다. 지금 선제적으로 점검하면 큰 비용 없이 해결할 수 있습니다.',
-        mainBtnText: '📞 무료 전화 구조 진단 신청하기',
-        mainBtnBg: '#3182ce'
+        mainBtnText: '우리 공장 구조 상담받기',
+        mainBtnBg: '#ff7a00'
       },
       'C': {
         bg: 'rgba(221,107,32,0.15)', border: '#dd6b20', icon: '⚠️',
         urgency: '긴급', urgencyColor: '#dd6b20',
         msg: '현재 구조적 병목이 진행 중입니다. 방치할 경우 품질 손실 및 산재 사고로 이어질 수 있습니다. 빠른 점검이 필요합니다.',
-        mainBtnText: '⚡ 빠른 심층 진단 신청하기',
-        mainBtnBg: '#dd6b20'
+        mainBtnText: '우리 공장 구조 상담받기',
+        mainBtnBg: '#ff7a00'
       },
       'D': {
         bg: 'rgba(229,62,62,0.15)', border: '#e53e3e', icon: '🚨',
         urgency: '즉시 조치 필요', urgencyColor: '#e53e3e',
         msg: '심각한 구조적 위험이 발견되었습니다. 중대재해처벌법 적용 대상이 될 수 있습니다. 즉각적인 전문가 심층 진단이 필요합니다.',
-        mainBtnText: '🚨 지금 즉시 심층 진단 신청하기',
-        mainBtnBg: '#e53e3e'
+        mainBtnText: '우리 공장 구조 상담받기',
+        mainBtnBg: '#ff7a00'
       }
     };
 
