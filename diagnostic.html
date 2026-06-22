@@ -634,10 +634,20 @@
     const email = document.getElementById('userEmail').value;
     const company = document.getElementById('companyName').value || "고객사";
     
+    // 이메일 유효성 검사 (빈칸 + 형식 정규식)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!email) {
       alert("보고서를 수신할 이메일을 입력해 주세요.");
+      document.getElementById('userEmail').focus();
       return;
     }
+    if (!emailRegex.test(email)) {
+      alert("올바른 이메일 주소를 입력해 주세요.\n예: example@naver.com");
+      document.getElementById('userEmail').focus();
+      document.getElementById('userEmail').select();
+      return;
+    }
+
     
     // (향후 이곳에 Formspree 등 이메일 전송 API 로직 추가)
     console.log("리드 수집:", email, company);
