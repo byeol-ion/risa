@@ -181,7 +181,10 @@
       <span style="color: var(--accent);">딱 30초면</span> 확인됩니다.
     </div>
 
-    <button class="btn btn-next" onclick="startQuiz()">30초 진단 시작하기</button>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <button class="btn btn-next" style="background:#ff7a00; font-size: 16px; padding: 18px;" onclick="startQuiz(3)">⚡ 15초 퀵스캔 (핵심 3문항)</button>
+      <button class="btn btn-next" style="background:#2d3748; font-size: 15px; padding: 15px; box-shadow: none;" onclick="startQuiz(5)">🔍 30초 정식스캔 (전체 5문항)</button>
+    </div>
   </div>
 
   <!-- 퀴즈 화면 -->
@@ -284,8 +287,10 @@
 
   let currentIdx = 0;
   let badAnswers = [];
+  let totalQuestions = 5;
 
-  function startQuiz() {
+  function startQuiz(count) {
+    totalQuestions = count;
     document.getElementById('intro-screen').style.display = 'none';
     document.getElementById('quiz-screen').style.display = 'block';
     showQuestion();
@@ -293,7 +298,7 @@
 
   function showQuestion() {
     const q = questions[currentIdx];
-    document.getElementById('progress-text').innerText = `Question ${currentIdx + 1} / 5`;
+    document.getElementById('progress-text').innerText = `Question ${currentIdx + 1} / ${totalQuestions}`;
     document.getElementById('q-number').innerText = `Q${currentIdx + 1}`;
     document.getElementById('q-question').innerText = q.q;
 
@@ -314,7 +319,7 @@
       badAnswers.push(opt);
     }
     
-    if (currentIdx < questions.length - 1) {
+    if (currentIdx < totalQuestions - 1) {
       currentIdx++;
       showQuestion();
     } else {
