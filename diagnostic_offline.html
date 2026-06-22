@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RISA™ 오프라인 퀵스캔</title>
+  
+  <style>
+    :root {
+      --primary: #0f2942;
+      --accent: #ff7a00;
+      --bg: #0a1930;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f7fafc;
+      --text-gray: #a0aec0;
+      --success: #38a169;
+      --warning: #dd6b20;
+      --danger: #e53e3e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0a1930 0%, #172a45 100%);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .diagnostic-container {
+      width: 100%;
+      max-width: 650px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 50px 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .logo {
+      font-family: 'Arial Black', 'Impact', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 5px;
+    }
+    .logo span { color: var(--accent); }
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-gray);
+      letter-spacing: 0.5px;
+    }
+    
+    /* 문항 스타일 */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .q-num {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+    .q-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 30px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+    .options-grid {
+      display: flex;
+      gap: 15px;
+    }
+    .option-btn {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .option-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .btn {
+      padding: 18px 30px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-next { background: var(--accent); color: white; width: 100%; box-shadow: 0 10px 20px rgba(255,122,0,0.3); }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(255,122,0,0.4); }
+
+    /* 결과 스크린 */
+    .result-screen { display: none; animation: fadeIn 0.5s ease; text-align: center; }
+    
+    .factory-type-box {
+      background: rgba(229, 62, 62, 0.1);
+      border: 2px solid var(--danger);
+      border-radius: 20px;
+      padding: 40px 25px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(229, 62, 62, 0.2);
+    }
+    .type-label {
+      font-size: 18px;
+      color: #fc8181;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+    .type-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 20px;
+      word-break: keep-all;
+      line-height: 1.3;
+    }
+    .type-desc {
+      font-size: 18px;
+      color: #f7fafc;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+    .type-desc strong {
+      color: var(--danger);
+    }
+
+    .action-box {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px dashed var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="diagnostic-container">
+  <!-- 인트로 화면 -->
+  <div id="intro-screen">
+    <div class="header">
+      <div class="logo">RISA<span>™</span></div>
+      <div class="subtitle">오프라인 현장 진단용 퀵스캔</div>
+    </div>
+    
+    <div style="font-size: 28px; font-weight: 900; text-align: center; margin-bottom: 30px; line-height: 1.4;">
+      대표님 공장의 진짜 문제점<br>
+      <span style="color: var(--accent);">딱 30초면</span> 확인됩니다.
+    </div>
+
+    <button class="btn btn-next" onclick="startQuiz()">30초 진단 시작하기</button>
+  </div>
+
+  <!-- 퀴즈 화면 -->
+  <div id="quiz-screen" style="display: none;">
+    <div class="header" style="margin-bottom: 20px;">
+      <div class="logo" style="font-size: 28px;">RISA<span>™</span></div>
+      <div class="subtitle" id="progress-text" style="font-size: 14px; margin-top: 5px;">Question 1 / 5</div>
+    </div>
+
+    <div class="question-card">
+      <div class="q-num" id="q-number">Q1</div>
+      <div class="q-text" id="q-question">질문 내용</div>
+      <div class="options-grid" id="options-container"></div>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="result-screen" class="result-screen">
+    <div class="header">
+      <div class="logo">RISA<span>™</span></div>
+      <div class="subtitle">구조 퀵스캔 분석 완료</div>
+    </div>
+
+    <!-- 공장 유형 박스 -->
+    <div class="factory-type-box" id="factory-type-box">
+      <div class="type-label">분석 결과</div>
+      <div class="type-title" id="factory-type-title">당신의 공장은 현재<br><span style="color: var(--danger);">[병목 누적형 공장]</span> 입니다.</div>
+      <div class="type-desc" id="factory-type-desc">
+        설명 텍스트
+      </div>
+      <!-- 오늘 당장 확인할 것 (체크리스트) -->
+      <div id="action-checklist" style="margin-top: 30px; text-align: left; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; display: none;">
+        <div style="font-size: 16px; color: var(--accent); font-weight: 800; margin-bottom: 12px;">✅ 대표님이 오늘 당장 확인할 것</div>
+        <div id="checklist-items" style="color: #f7fafc; font-size: 15px; line-height: 1.8;"></div>
+      </div>
+    </div>
+
+    <div class="action-box">
+      <div style="font-size: 22px; font-weight: 800; color: white;">
+        "대표님, 왜 이런 결과가 나왔는지 아십니까?"
+      </div>
+    </div>
+
+    <button class="btn btn-next" style="background: #1e293b; color: white; box-shadow: none;" onclick="location.reload()">처음으로 돌아가기 (다음 대기자용)</button>
+  </div>
+</div>
+
+<script>
+  // 질문 및 조건 설정
+  // answerType: 이 답변을 선택했을 때 어떤 유형에 해당하는지 (부정적 답변 기준)
+  const questions = [
+    {
+      q: "담당자가 안 나오면 해당 업무나 공정이 멈추나요?",
+      opts: [
+        { label: "그렇다", bad: true, type: "A", typeName: "사람 의존형 공장" },
+        { label: "아니다", bad: false }
+      ]
+    },
+    {
+      q: "최근 1년 내 공장에서 아차사고가 있었나요?",
+      opts: [
+        { label: "있다", bad: true, type: "B", typeName: "안전 취약형 공장" },
+        { label: "없다", bad: false }
+      ]
+    },
+    {
+      q: "불량 원인이 명확히 기록되고 재발방지 체계로 연결되나요?",
+      opts: [
+        { label: "그렇다", bad: false },
+        { label: "아니다", bad: true, type: "D", typeName: "데이터 단절형 공장" }
+      ]
+    },
+    {
+      q: "직원들은 하루 종일 바쁜데 총 생산량은 비슷한가요?",
+      opts: [
+        { label: "그렇다", bad: true, type: "C", typeName: "병목 누적형 공장" },
+        { label: "아니다", bad: false }
+      ]
+    },
+    {
+      q: "개선 회의에서 나온 결과가 실제 현장에 즉각 반영되나요?",
+      opts: [
+        { label: "그렇다", bad: false },
+        { label: "아니다", bad: true, type: "D", typeName: "데이터 단절형 공장" }
+      ]
+    }
+  ];
+
+  let currentIdx = 0;
+  let badAnswers = [];
+
+  function startQuiz() {
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('quiz-screen').style.display = 'block';
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const q = questions[currentIdx];
+    document.getElementById('progress-text').innerText = `Question ${currentIdx + 1} / 5`;
+    document.getElementById('q-number').innerText = `Q${currentIdx + 1}`;
+    document.getElementById('q-question').innerText = q.q;
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    q.opts.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerHTML = opt.label;
+      btn.onclick = () => selectOption(opt);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function selectOption(opt) {
+    if (opt.bad) {
+      badAnswers.push(opt);
+    }
+    
+    if (currentIdx < questions.length - 1) {
+      currentIdx++;
+      showQuestion();
+    } else {
+      calculateResult();
+    }
+  }
+
+  const checklists = {
+    "A": [
+      "□ 핵심 작업자 의존 공정 파악",
+      "□ 작업표준서 존재 여부 확인",
+      "□ 신입 작업자 단독 작업 가능 여부 확인"
+    ],
+    "B": [
+      "□ 최근 아차사고 기록 존재 여부 점검",
+      "□ 생산 속도를 위한 안전장치 우회 여부 확인",
+      "□ 위험성평가 결과 현장 공유 여부 파악"
+    ],
+    "C": [
+      "□ 보행자와 지게차 동선 혼재 구역 도출",
+      "□ 재고나 폐기물의 보행 통로 침범 여부 점검",
+      "□ 작업자의 불필요한 도보 이동 시간 측정"
+    ],
+    "D": [
+      "□ 최근 불량 요인 기록 및 교차 검증 여부",
+      "□ 제기된 현장 문제가 1주일 내 조치되는지 이력 확인",
+      "□ 개선 회의 결과의 실제 현장 반영 여부 추적"
+    ],
+    "E": [
+      "□ 생산 일정을 늦추더라도 품질/안전 병목 근본 원인 우선 파악",
+      "□ 대표 주도의 '현장 구조 개선 TFT' 즉각 구성",
+      "□ 내부 인력 해결이 불가함을 인지하고 심층 진단 의뢰 검토"
+    ],
+    "S": [
+      "□ 기존 표준서가 현장 최신 변화를 반영하는지 연 1회 점검",
+      "□ 현재 무재해 및 고품질 이력을 공식 인증 자료로 문서화"
+    ]
+  };
+
+  function calculateResult() {
+    document.getElementById('quiz-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
+
+    let titleHtml = "";
+    let descHtml = "";
+    let boxColor = "var(--danger)";
+    let boxBg = "rgba(229, 62, 62, 0.1)";
+    let currentChecklist = [];
+
+    if (badAnswers.length >= 2) {
+      titleHtml = `당신의 공장은 현재<br><span style="color: var(--danger); font-size:40px;">'E형: 복합 리스크형 공장'</span> 입니다.`;
+      
+      const uniqueTypeNames = [...new Set(badAnswers.map(a => a.typeName))];
+      const detectedTypes = uniqueTypeNames.map(name => `<li style="margin-bottom: 5px;">${name}</li>`).join('');
+      descHtml = `안전, 품질, 동선 등 <strong>${uniqueTypeNames.length}개 이상의 영역에서 동시다발적으로 구조적 병목</strong>이 확인되었습니다.<br>땜질식 처방이 아닌 전면적인 구조 진단이 시급합니다.
+                  <div style="margin-top: 20px; text-align: left; background: rgba(229,62,62,0.15); border-left: 3px solid var(--danger); padding: 15px; border-radius: 4px;">
+                    <div style="font-weight: 800; color: var(--danger); margin-bottom: 8px;">🚨 주요 진단 위험요인</div>
+                    <ul style="padding-left: 20px; color: white; font-size: 15px;">
+                      ${detectedTypes}
+                    </ul>
+                  </div>`;
+      currentChecklist = checklists["E"];
+    } else if (badAnswers.length === 1) {
+      const type = badAnswers[0];
+      titleHtml = `당신의 공장은 현재<br><span style="color: var(--danger); font-size:40px;">'${type.type}형: ${type.typeName}'</span> 입니다.`;
+      if(type.type === "A") descHtml = `김 반장님 없으면 공장이 안 돌아가시죠?<br>매뉴얼 없이 베테랑의 입과 손에만 의존하는 <strong>매우 위험한 상태</strong>입니다.`;
+      if(type.type === "B") descHtml = `생산 납기를 맞추느라 아차사고를 운으로 넘기고 계십니다.<br>중대재해처벌법의 <strong>1순위 타깃</strong>이 될 수 있습니다.`;
+      if(type.type === "C") descHtml = `직원들은 하루 종일 바쁘게 뛰어다니는데, 출하량은 그대로죠?<br>꼬여버린 동선에 <strong>돈이 줄줄 새고 있습니다.</strong>`;
+      if(type.type === "D") descHtml = `불량이 나도 왜 났는지 기록하고 고쳐지는 시스템이 없습니다.<br>밑빠진 독에 물 붓기, <strong>악순환의 반복</strong>입니다.`;
+      
+      currentChecklist = checklists[type.type];
+    } else {
+      titleHtml = `당신의 공장은 현재<br><span style="color: var(--success); font-size:40px;">'S형: 구조 건강형 공장'</span> 입니다.`;
+      descHtml = `현장 구조가 원활하게 작동하고 있습니다.<br>현재의 훌륭한 시스템을 유지하기 위한 ISO 갱신 심사를 권장합니다.`;
+      boxColor = "var(--success)";
+      boxBg = "rgba(56, 161, 105, 0.1)";
+      
+      currentChecklist = checklists["S"];
+    }
+
+    const typeBox = document.getElementById('factory-type-box');
+    typeBox.style.borderColor = boxColor;
+    typeBox.style.background = boxBg;
+    
+    document.getElementById('factory-type-title').innerHTML = titleHtml;
+    document.getElementById('factory-type-desc').innerHTML = descHtml;
+
+    // 체크리스트 렌더링
+    if (currentChecklist.length > 0) {
+      document.getElementById('action-checklist').style.display = 'block';
+      const clistHtml = currentChecklist.map(item => `<div>${item}</div>`).join('');
+      document.getElementById('checklist-items').innerHTML = clistHtml;
+    }
+  }
+</script>
+
+</body>
+</html>
