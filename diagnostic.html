@@ -270,20 +270,20 @@
       .logo span { color: var(--accent); }
       .subtitle { color: #4a5568 !important; font-weight: 800; font-size: 16px; }
       
-      .grade-box { background: #f0f4f8 !important; border: 2px solid var(--primary) !important; padding: 40px 20px; }
+      .grade-box { background: #f0f4f8 !important; border: 2px solid var(--primary) !important; padding: 20px 15px !important; margin-bottom: 10px !important; }
       .grade-letter { color: var(--accent) !important; }
       .grade-title { color: var(--primary) !important; font-size: 24px; font-weight: 900; }
-      .grade-desc { color: #2d3748 !important; font-weight: 800; font-size: 18px; }
+      .grade-desc { color: #2d3748 !important; font-weight: 800; font-size: 18px; margin-top: 5px !important; }
       #total-score { color: var(--danger) !important; font-size: 22px; }
 
-      .factory-type-box { background: #fff5f5 !important; border: 2px solid var(--danger) !important; padding: 30px; }
+      .factory-type-box { background: #fff5f5 !important; border: 2px solid var(--danger) !important; padding: 15px 20px !important; margin-bottom: 10px !important; }
       .type-label { color: var(--danger) !important; font-size: 14px; }
-      .type-title { color: var(--danger) !important; font-size: 26px; font-weight: 900; }
-      .type-desc { color: #1a202c !important; font-weight: 900 !important; font-size: 16px !important; }
+      .type-title { color: var(--danger) !important; font-size: 24px; font-weight: 900; }
+      .type-desc { color: #1a202c !important; font-weight: 900 !important; font-size: 15px !important; margin-top: 5px !important; }
 
-      .checklist-container { background: #f7fafc !important; border: 2px solid #cbd5e0 !important; padding: 30px; }
-      .checklist-item { color: #1a202c !important; font-weight: 800 !important; font-size: 15px !important; margin-bottom: 15px !important; }
-      .checklist-title { color: var(--primary) !important; font-size: 18px !important; font-weight: 900 !important; }
+      .checklist-container { background: #f7fafc !important; border: 2px solid #cbd5e0 !important; padding: 15px 20px !important; margin-bottom: 10px !important; }
+      .checklist-item { color: #1a202c !important; font-weight: 800 !important; font-size: 14px !important; margin-bottom: 8px !important; }
+      .checklist-title { color: var(--primary) !important; font-size: 18px !important; font-weight: 900 !important; margin-bottom: 10px !important; }
       
       /* 인쇄 시 불필요한 안내 문구 숨김 (pdf 어쩌고 하는 문구) */
       .pdf-notice { display: none !important; }
@@ -304,15 +304,16 @@
       #grade-urgency-box span { color: #1a202c !important; }
 
       /* ★ 신규 추가된 박스들의 인쇄용 색상 (흰 배경에서 보이도록) 및 잘림 방지 */
-      #risk-level-box { page-break-inside: avoid; }
-      #risk-level-box > div { background: #f7fafc !important; border: 1px solid #cbd5e0 !important; }
+      #risk-level-box { page-break-inside: avoid; margin-bottom: 10px !important; }
+      #risk-level-box > div { background: #f7fafc !important; border: 1px solid #cbd5e0 !important; padding: 10px 15px !important; margin: 0 !important; }
       #risk-level-box span { color: #1a202c !important; }
-      #risk-level-box div:first-child { color: #4a5568 !important; }
+      #risk-level-box div:first-child { color: #4a5568 !important; margin-bottom: 8px !important; }
+      #risk-level-box div > div > div { padding: 5px 0 !important; } /* 리스크 개별 항목 상하 여백 축소 */
       
-      #shock-message-box { page-break-inside: avoid; }
-      #shock-message-box > div { background: #fff5f5 !important; border: 2px solid #e53e3e !important; }
-      #shock-message-box div > div { color: #e53e3e !important; }
-      #shock-message-box ul { color: #1a202c !important; font-weight: 800; }
+      #shock-message-box { page-break-inside: avoid; margin-bottom: 10px !important; }
+      #shock-message-box > div { background: #fff5f5 !important; border: 2px solid #e53e3e !important; padding: 10px 15px !important; margin: 0 !important; }
+      #shock-message-box div > div { color: #e53e3e !important; margin-bottom: 5px !important; }
+      #shock-message-box ul { color: #1a202c !important; font-weight: 800; line-height: 1.4 !important; }
       
       .checklist-container { page-break-inside: avoid; }
       .factory-type-box { page-break-inside: avoid; }
