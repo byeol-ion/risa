@@ -550,9 +550,9 @@
     // 등급
     let grade = "D"; let gradeColor = "var(--danger)";
     let gradeTitle = "구조적 전면 개선이 시급한 상태";
-    if (totalScore >= 85) { grade = "A"; gradeColor = "#38a169"; gradeTitle = "구조적으로 매우 건강한 상태"; }
-    else if (totalScore >= 70) { grade = "B"; gradeColor = "#3182ce"; gradeTitle = "양호한 관리 상태"; }
-    else if (totalScore >= 55) { grade = "C"; gradeColor = "var(--warning)"; gradeTitle = "부분적 병목이 발생 중인 상태"; }
+    if (totalScore >= 80) { grade = "A"; gradeColor = "#38a169"; gradeTitle = "구조적으로 매우 건강한 상태"; }
+    else if (totalScore >= 65) { grade = "B"; gradeColor = "#3182ce"; gradeTitle = "양호한 관리 상태"; }
+    else if (totalScore >= 50) { grade = "C"; gradeColor = "var(--warning)"; gradeTitle = "부분적 병목이 발생 중인 상태"; }
 
     document.getElementById('grade-display').innerText = grade;
     document.getElementById('grade-display').style.color = gradeColor;
