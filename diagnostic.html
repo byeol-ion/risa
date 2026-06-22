@@ -678,22 +678,25 @@
     // ★ 위험 수준 계산 및 표시
     const getRiskLabel = (pct) => {
       if (pct < 50) return { label: '높음', color: '#e53e3e', icon: '🔴' };
-      if (pct < 70) return { label: '중',  color: '#dd6b20', icon: '🟠' };
+      if (pct < 80) return { label: '중',  color: '#dd6b20', icon: '🟠' };
       return { label: '낮음', color: '#48bb78', icon: '🟢' };
     };
     const safPct  = (categories[CAT_SAF].score / categories[CAT_SAF].max) * 100;
     const movPct  = (categories[CAT_MOV].score / categories[CAT_MOV].max) * 100;
-    const qualPct = Math.min(
-      (categories[CAT_STD].score / categories[CAT_STD].max) * 100,
-      (categories[CAT_IMP].score / categories[CAT_IMP].max) * 100
-    );
+    
+    // 품질 리스크는 표준화(STD)와 개선체계(IMP)의 합산 평균 비율로 합리적 산출
+    const qualPct = ((categories[CAT_STD].score + categories[CAT_IMP].score) / (categories[CAT_STD].max + categories[CAT_IMP].max)) * 100;
+    
     const safRisk  = getRiskLabel(safPct);
     const movRisk  = getRiskLabel(movPct);
     const qualRisk = getRiskLabel(qualPct);
 
     document.getElementById('risk-level-box').innerHTML = `
       <div style="background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin:15px 0;">
-        <div style="font-size:11px; color:var(--text-gray); margin-bottom:12px; font-weight:800; letter-spacing:1.5px;">현재 위험 수준</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:12px;">
+          <div style="font-size:11px; color:var(--text-gray); font-weight:800; letter-spacing:1.5px;">현재 위험 수준</div>
+          <div style="font-size:10px; color:var(--text-gray); opacity:0.8;">기준: 🔴50%미만 🟠50~79% 🟢80%이상</div>
+        </div>
         <div style="display:flex; flex-direction:column; gap:10px;">
           <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
             <span style="font-size:14px; color:var(--text);">🏭 품질 리스크</span>
