@@ -370,6 +370,9 @@
       </div>
     </div>
 
+    <!-- ★ 등급별 긴급도 메시지 (동적 주입) -->
+    <div id="grade-urgency-box"></div>
+
     <div class="pdf-notice" style="font-size: 13px; color: var(--text-gray); text-align: center; margin-bottom: 20px;">
       상세한 영역별 점수와 취약점 분석은 PDF 보고서에 포함되어 있습니다.
     </div>
@@ -377,17 +380,10 @@
     <button class="btn btn-next btn-full" onclick="openLeadForm()">
       📄 분석 리포트(PDF) 다운로드
     </button>
-    
-    <!-- 상담 신청 CTA (2가지 옵션) -->
-    <div style="display: flex; gap: 10px;">
-      <button class="btn btn-call" style="flex: 1; padding: 16px; font-size: 15px;" onclick="location.href='tel:010-3955-4994'">
-        📞 심층진단 즉시 전화
-      </button>
-      <button class="btn btn-kakao" style="flex: 1; padding: 16px; font-size: 15px;" onclick="window.open('https://open.kakao.com/o/sgDllczi', '_blank')">
-        💬 카카오톡 오픈채팅
-      </button>
-    </div>
-    
+
+    <!-- ★ 등급별 심층진단 CTA (동적 주입) -->
+    <div id="cta-deep-diagnosis"></div>
+
     <button class="btn btn-prev" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="location.reload()">
       다시 진단하기
     </button>
@@ -620,6 +616,69 @@
       </div>
     `).join('');
     document.getElementById('checklist-items').innerHTML = listHtml;
+
+    // ★ 등급별 긴급도 메시지 + 심층진단 CTA 동적 생성
+    const ctaConfigs = {
+      'A': {
+        bg: 'rgba(56,161,105,0.15)', border: '#38a169', icon: '✅',
+        urgency: '안정', urgencyColor: '#38a169',
+        msg: '현재 공장 구조는 안정적으로 운영되고 있습니다. ISO 갱신 심사를 통해 현 수준을 공식 인증하고 더욱 강화하세요.',
+        mainBtnText: '📋 ISO 갱신 심사 상담 신청하기',
+        mainBtnBg: '#38a169'
+      },
+      'B': {
+        bg: 'rgba(49,130,206,0.15)', border: '#3182ce', icon: '🔵',
+        urgency: '주의', urgencyColor: '#3182ce',
+        msg: '향후 성장 시 구조적 병목 발생 가능성이 있습니다. 지금 선제적으로 점검하면 큰 비용 없이 해결할 수 있습니다.',
+        mainBtnText: '📞 무료 전화 구조 진단 신청하기',
+        mainBtnBg: '#3182ce'
+      },
+      'C': {
+        bg: 'rgba(221,107,32,0.15)', border: '#dd6b20', icon: '⚠️',
+        urgency: '긴급', urgencyColor: '#dd6b20',
+        msg: '현재 구조적 병목이 진행 중입니다. 방치할 경우 품질 손실 및 산재 사고로 이어질 수 있습니다. 빠른 점검이 필요합니다.',
+        mainBtnText: '⚡ 빠른 심층 진단 신청하기',
+        mainBtnBg: '#dd6b20'
+      },
+      'D': {
+        bg: 'rgba(229,62,62,0.15)', border: '#e53e3e', icon: '🚨',
+        urgency: '즉시 조치 필요', urgencyColor: '#e53e3e',
+        msg: '심각한 구조적 위험이 발견되었습니다. 중대재해처벌법 적용 대상이 될 수 있습니다. 즉각적인 전문가 심층 진단이 필요합니다.',
+        mainBtnText: '🚨 지금 즉시 심층 진단 신청하기',
+        mainBtnBg: '#e53e3e'
+      }
+    };
+
+    const cfg = ctaConfigs[grade] || ctaConfigs['D'];
+
+    document.getElementById('grade-urgency-box').innerHTML = `
+      <div style="background:${cfg.bg}; border:2px solid ${cfg.border}; border-radius:12px; padding:16px 18px; margin:20px 0;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <span style="font-size:20px;">${cfg.icon}</span>
+          <span style="font-weight:900; color:${cfg.urgencyColor}; font-size:14px; letter-spacing:0.3px;">
+            구조건강지수 ${grade}등급 &mdash; ${cfg.urgency}
+          </span>
+        </div>
+        <p style="color:var(--text); font-size:13.5px; line-height:1.65; margin:0;">${cfg.msg}</p>
+      </div>
+    `;
+
+    document.getElementById('cta-deep-diagnosis').innerHTML = `
+      <div style="margin:15px 0; display:flex; flex-direction:column; gap:10px;">
+        <button style="width:100%; padding:18px; font-size:16px; font-weight:900; border-radius:10px; color:white; background:${cfg.mainBtnBg}; border:none; cursor:pointer; letter-spacing:0.3px; box-shadow:0 4px 15px rgba(0,0,0,0.25);"
+          onclick="location.href='tel:010-3955-4994'">
+          ${cfg.mainBtnText}
+        </button>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-call" style="flex:1; padding:13px; font-size:14px;" onclick="location.href='tel:010-3955-4994'">
+            📞 전화 연결
+          </button>
+          <button class="btn btn-kakao" style="flex:1; padding:13px; font-size:14px;" onclick="window.open('https://open.kakao.com/o/sgDllczi','_blank')">
+            💬 카카오 채팅
+          </button>
+        </div>
+      </div>
+    `;
   }
 
   function openLeadForm() {
