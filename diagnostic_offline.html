@@ -220,8 +220,22 @@
     </div>
 
     <div class="action-box">
-      <div style="font-size: 22px; font-weight: 800; color: white;">
-        "대표님, 왜 이런 결과가 나왔는지 아십니까?"
+      <div style="font-size: 16px; font-weight: 800; color: white; line-height: 1.7; text-align: center;">
+        대표님,<br><br>
+        이 결과는 단순 테스트가 아닙니다.<br><br>
+        앞으로 공장이 커질 때<br>
+        가장 먼저 터질 병목을 보여주는<br>
+        <span style="color: var(--danger); font-size: 20px;">구조 경고등</span>입니다.
+      </div>
+    </div>
+
+    <!-- 정식 진단판 QR 코드 영역 -->
+    <div style="text-align: center; margin-bottom: 25px;">
+      <div style="font-size: 14px; color: var(--text-gray); margin-bottom: 10px; font-weight: 800;">RISA 구조건강지수 정식 진단판</div>
+      <div style="display: inline-block; padding: 10px; background: white; border-radius: 8px;">
+        <div style="width: 120px; height: 120px; background: #f0f4f8; border: 2px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; color: #4a5568; font-size: 13px; font-weight: bold; text-align: center; line-height: 1.4;">
+          QR 스캔<br>(이미지 교체용)
+        </div>
       </div>
     </div>
 
@@ -234,13 +248,6 @@
   // answerType: 이 답변을 선택했을 때 어떤 유형에 해당하는지 (부정적 답변 기준)
   const questions = [
     {
-      q: "담당자가 안 나오면 해당 업무나 공정이 멈추나요?",
-      opts: [
-        { label: "그렇다", bad: true, type: "A", typeName: "사람 의존형 공장" },
-        { label: "아니다", bad: false }
-      ]
-    },
-    {
       q: "최근 1년 내 공장에서 아차사고가 있었나요?",
       opts: [
         { label: "있다", bad: true, type: "B", typeName: "안전 취약형 공장" },
@@ -248,10 +255,10 @@
       ]
     },
     {
-      q: "불량 원인이 명확히 기록되고 재발방지 체계로 연결되나요?",
+      q: "담당자가 안 나오면 해당 업무나 공정이 멈추나요?",
       opts: [
-        { label: "그렇다", bad: false },
-        { label: "아니다", bad: true, type: "D", typeName: "데이터 단절형 공장" }
+        { label: "그렇다", bad: true, type: "A", typeName: "사람 의존형 공장" },
+        { label: "아니다", bad: false }
       ]
     },
     {
@@ -259,6 +266,13 @@
       opts: [
         { label: "그렇다", bad: true, type: "C", typeName: "병목 누적형 공장" },
         { label: "아니다", bad: false }
+      ]
+    },
+    {
+      q: "불량 원인이 명확히 기록되고 재발방지 체계로 연결되나요?",
+      opts: [
+        { label: "그렇다", bad: false },
+        { label: "아니다", bad: true, type: "D", typeName: "데이터 단절형 공장" }
       ]
     },
     {
