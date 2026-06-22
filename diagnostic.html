@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RISA™ 구조건강지수 무료 진단</title>
+  
+  <style>
+    :root {
+      --primary: #0f2942;
+      --accent: #ff7a00;
+      --bg: #0a1930;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f7fafc;
+      --text-gray: #a0aec0;
+      --success: #38a169;
+      --warning: #dd6b20;
+      --danger: #e53e3e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0a1930 0%, #172a45 100%);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .diagnostic-container {
+      width: 100%;
+      max-width: 650px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    .logo {
+      font-family: 'Arial Black', 'Impact', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 5px;
+    }
+    .logo span { color: var(--accent); }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-gray);
+      letter-spacing: 0.5px;
+    }
+    
+    .intro-box {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 15px 20px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 25px;
+      font-size: 14px;
+      color: #cbd5e0;
+    }
+    .intro-box strong { color: var(--accent); }
+
+    /* 문항 스타일 */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .q-num {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .q-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .options-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      color: var(--text-gray);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .option-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .option-btn.selected {
+      background: rgba(255, 122, 0, 0.1);
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+    
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    .btn {
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-prev { background: #1e293b; color: var(--text-gray); }
+    .btn-next { background: var(--accent); color: white; }
+    .btn-full { width: 100%; padding: 16px; font-size: 16px; margin-bottom: 12px; }
+    .btn-kakao { background: #fee500; color: #000; font-weight: 900; }
+    .btn-call { background: #38a169; color: white; font-weight: 900; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 결과 스크린 */
+    .result-screen { display: none; animation: fadeIn 0.5s ease; }
+    
+    .grade-box {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(255,122,0,0.1) 0%, rgba(15,41,66,0.5) 100%);
+      border: 1px solid rgba(255,122,0,0.3);
+      border-radius: 20px;
+    }
+    .grade-letter { font-size: 72px; font-weight: 900; line-height: 1; margin-bottom: 5px; font-family: 'Arial Black', 'Impact', sans-serif; }
+    .grade-title { font-size: 20px; font-weight: 900; color: white; margin-bottom: 10px; }
+    .grade-desc { font-size: 14px; color: var(--text-gray); }
+
+    /* 공장 유형 분석 */
+    .factory-type-box {
+      background: rgba(229, 62, 62, 0.1);
+      border: 1px solid var(--danger);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .type-label {
+      font-size: 12px;
+      color: var(--danger);
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+    .type-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 15px;
+    }
+    .type-desc {
+      font-size: 14px;
+      color: #fc8181;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    /* 즉시 실행 체크리스트 */
+    .checklist-container {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .checklist-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .checklist-title::before {
+      content: '✅';
+      margin-right: 8px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .checklist-item input[type="checkbox"] {
+      margin-top: 4px;
+      margin-right: 10px;
+      transform: scale(1.2);
+      accent-color: var(--accent);
+    }
+
+    /* 리드 폼 오버레이 */
+    .lead-form-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .lead-form-container {
+      background: var(--primary);
+      border: 1px solid var(--accent);
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .form-title { font-size: 18px; font-weight: 800; color: white; margin-bottom: 10px; text-align: center; }
+    .form-desc { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; text-align: center; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; color: var(--text-gray); margin-bottom: 5px; font-weight: 700; }
+    .form-control {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--accent); }
+
+    /* 인쇄 전용 영역 */
+    .print-only { display: none; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media print {
+      body { background: white; color: black; display: block; padding: 20px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .diagnostic-container { max-width: 100%; background: white; border: none; box-shadow: none; padding: 0; }
+      .logo { color: var(--primary); font-size: 36px; }
+      .logo span { color: var(--accent); }
+      .subtitle { color: #4a5568 !important; font-weight: 800; font-size: 16px; }
+      
+      .grade-box { background: #f0f4f8 !important; border: 2px solid var(--primary) !important; padding: 40px 20px; }
+      .grade-letter { color: var(--accent) !important; }
+      .grade-title { color: var(--primary) !important; font-size: 24px; font-weight: 900; }
+      .grade-desc { color: #2d3748 !important; font-weight: 800; font-size: 18px; }
+      #total-score { color: var(--danger) !important; font-size: 22px; }
+
+      .factory-type-box { background: #fff5f5 !important; border: 2px solid var(--danger) !important; padding: 30px; }
+      .type-label { color: var(--danger) !important; font-size: 14px; }
+      .type-title { color: var(--danger) !important; font-size: 26px; font-weight: 900; }
+      .type-desc { color: #1a202c !important; font-weight: 900 !important; font-size: 16px !important; }
+
+      .checklist-container { background: #f7fafc !important; border: 2px solid #cbd5e0 !important; padding: 30px; }
+      .checklist-item { color: #1a202c !important; font-weight: 800 !important; font-size: 15px !important; margin-bottom: 15px !important; }
+      .checklist-title { color: var(--primary) !important; font-size: 18px !important; font-weight: 900 !important; }
+      
+      /* 인쇄 시 불필요한 안내 문구 숨김 (pdf 어쩌고 하는 문구) */
+      .pdf-notice { display: none !important; }
+
+      .btn, .nav-buttons { display: none !important; }
+      .print-meta { display: block !important; }
+      .print-only { display: block; page-break-before: always; break-before: page; padding-top: 20px; font-size: 15px; line-height: 1.8; color: #1a202c; }
+      #print-scores li { font-size: 16px; font-weight: 800; color: #2d3748; margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="diagnostic-container">
+  <!-- 인트로 화면 -->
+  <div id="intro-screen">
+    <div class="header">
+      <div class="logo">RISA<span>™</span></div>
+      <div class="subtitle">우리 공장 구조건강지수 진단</div>
+    </div>
+    
+    <div style="font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 20px; line-height: 1.3;">
+      대표님 공장은<br>
+      사람 의존형입니까? 병목 누적형입니까?
+    </div>
+
+    <div class="intro-box">
+      눈에 보이지 않는 <strong>구조적 병목</strong>이 진짜 원인입니다. 2분 만에 귀사의 숨은 리스크 유형을 확인하고, 대표님이 오늘 당장 점검하셔야 할 <strong>맞춤형 행동 체크리스트</strong>를 확인해 보십시오.
+    </div>
+
+    <button class="btn btn-next btn-full" onclick="startQuiz()">진단 시작하기 (무료)</button>
+  </div>
+
+  <!-- 퀴즈 화면 -->
+  <div id="quiz-screen" style="display: none;">
+    <div class="header">
+      <div class="logo" style="font-size: 24px;">RISA<span>™</span></div>
+      <div class="subtitle" id="progress-text">문항 1 / 10</div>
+    </div>
+
+    <div class="question-card">
+      <div class="q-num" id="q-number">Question 01</div>
+      <div class="q-text" id="q-question">질문 내용</div>
+      <div class="options-vertical" id="options-container"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-prev" id="btn-prev" onclick="prevQuestion()" disabled>이전</button>
+      <button class="btn btn-next" id="btn-next" onclick="nextQuestion()" disabled>다음</button>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="result-screen" class="result-screen">
+    <div class="header">
+      <div class="logo" style="font-size: 24px;">RISA<span>™</span></div>
+      <div class="subtitle">구조건강지수 진단 완료</div>
+      <div class="print-meta" style="display: none; margin-top: 15px; font-size: 16px; font-weight: 800; color: #1a202c;">
+        진단 기업: <span id="print-company-name" style="color: var(--accent);"></span> | 
+        진단 일자: <span id="print-date"></span>
+      </div>
+    </div>
+
+    <div class="grade-box">
+      <div class="grade-letter" id="grade-display" style="color: var(--accent);">C</div>
+      <div class="grade-title" id="grade-title">상태 설명</div>
+      <div class="grade-desc" id="grade-desc">총점: <span id="total-score" style="font-weight: bold; color: white;">74</span>점 / 100점</div>
+    </div>
+
+    <!-- 공장 유형 박스 -->
+    <div class="factory-type-box" id="factory-type-box">
+      <div class="type-label">RISA™ 진단 결과</div>
+      <div class="type-title" id="factory-type-title">A형: 사람 의존형 공장</div>
+      <div class="type-desc" id="factory-type-desc">
+        설명 텍스트
+      </div>
+    </div>
+
+    <!-- 즉시 실행 체크리스트 -->
+    <div class="checklist-container">
+      <div class="checklist-title">대표님이 오늘 당장 점검하실 사항</div>
+      <div id="checklist-items">
+        <!-- 체크리스트 동적 삽입 -->
+      </div>
+    </div>
+
+    <div class="pdf-notice" style="font-size: 13px; color: var(--text-gray); text-align: center; margin-bottom: 20px;">
+      상세한 영역별 점수와 취약점 분석은 PDF 보고서에 포함되어 있습니다.
+    </div>
+
+    <button class="btn btn-next btn-full" onclick="openLeadForm()">
+      📄 분석 리포트(PDF) 다운로드
+    </button>
+    
+    <!-- 상담 신청 CTA (2가지 옵션) -->
+    <div style="display: flex; gap: 10px;">
+      <button class="btn btn-call" style="flex: 1; padding: 16px; font-size: 15px;" onclick="location.href='tel:010-3955-4994'">
+        📞 심층진단 즉시 전화
+      </button>
+      <button class="btn btn-kakao" style="flex: 1; padding: 16px; font-size: 15px;" onclick="window.open('https://open.kakao.com/o/sgDllczi', '_blank')">
+        💬 카카오톡 오픈채팅
+      </button>
+    </div>
+    
+    <button class="btn btn-prev" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="location.reload()">
+      다시 진단하기
+    </button>
+
+    <!-- 인쇄용 숨김 영역 (PDF 생성 시 노출) -->
+    <div class="print-only" id="print-only-content">
+      <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 15px;">영역별 상세 분석</h3>
+      <div id="print-scores"></div>
+
+      <!-- 80% 공개 전략: 잠금 상자 -->
+      <div style="margin-top:25px; padding: 25px; background-color: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px;">
+        <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 18px;">🔒 상세 개선 로드맵 비공개</h4>
+        <p style="color: #4a5568; font-weight: bold;">근본 원인 분석 및 현장 맞춤형 구조 개선 로드맵은 <span style="color: var(--danger);">[심층진단 결과]</span>에서 전체 제공됩니다.</p>
+        <p style="font-size: 13px; color: #718096; margin-top: 8px;">본 진단은 퀵스캔 용도이며, 정확한 구조 처방은 별이온 수석 심사원의 현장 방문을 통해 100% 완성됩니다.</p>
+      </div>
+
+      <div style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 15px; text-align: center;">
+        <strong>RISA™ Risk Integrated System Audit</strong><br>
+        구조 진단 전문가 황성래 대표 심사원 (010-3955-4994)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 이메일 폼 오버레이 -->
+<div class="lead-form-overlay" id="lead-modal">
+  <div class="lead-form-container">
+    <div class="form-title">보고서 다운로드</div>
+    <div class="form-desc">입력하신 이메일로 상세 분석 결과가 전송됩니다. (확인 시 화면에서 바로 PDF 저장창이 뜹니다)</div>
+    
+    <div class="form-group">
+      <label for="companyName">회사명 (선택)</label>
+      <input type="text" id="companyName" class="form-control" placeholder="예: RISA테크">
+    </div>
+    <div class="form-group">
+      <label for="userEmail">이메일 주소 (필수)</label>
+      <input type="email" id="userEmail" class="form-control" placeholder="example@email.com" required>
+    </div>
+    
+    <button class="btn btn-next btn-full" style="margin-bottom: 5px;" onclick="submitAndDownload()">입력 완료 및 PDF 받기</button>
+    <button class="btn btn-prev btn-full" style="padding: 10px; font-size: 13px;" onclick="closeLeadForm()">취소</button>
+  </div>
+</div>
+
+<script>
+  // 카테고리
+  const CAT_MOV = "동선";
+  const CAT_SAF = "안전문화";
+  const CAT_STD = "표준화";
+  const CAT_IMP = "개선체계";
+
+  const questions = [
+    { cat: CAT_MOV, q: "지게차 주행로와 보행자 통로가 물리적 방지턱이나 펜스로 완벽히 격리되어 있습니까?" },
+    { cat: CAT_SAF, q: "생산 납기 압박 시에도 작업자가 안전장치나 센서를 임시로 우회하지 않고 원칙을 준수합니까?" },
+    { cat: CAT_STD, q: "작업 표준이나 안전 기준이 베테랑의 개인 노하우에만 의존하지 않고 문서화되어 있습니까?" },
+    { cat: CAT_STD, q: "소음이 심한 공정 구역에서도 비상 사이렌이나 상하차 지시 정보가 즉각 전달됩니까?" },
+    { cat: CAT_SAF, q: "설비 이상이나 사소한 트러블 발생 시 관리자에게 즉시 보고되고 투명하게 공유됩니까?" },
+    { cat: CAT_IMP, q: "사고 발생 시 작업자의 부주의를 탓하기 전 공정이나 설비의 구조적 한계를 먼저 개선합니까?" },
+    { cat: CAT_MOV, q: "자재 적재 구역이 넉넉하여 통로나 안전선 위로 원료가 삐져나와 적치되는 현상이 없습니까?" },
+    { cat: CAT_IMP, q: "위험성평가 결과가 서류에 그치지 않고, 매일 아침 TBM 시간에 직접 공유됩니까?" },
+    { cat: CAT_STD, q: "신입 근로자 투입 시 선임 작업자가 1대1로 현장 위험 요인을 밀착 인지시켜주는 체계가 있습니까?" },
+    { cat: CAT_IMP, q: "건의된 위험 유발 요인이 예산 배정 지연 없이 보통 1주일 이내에 즉각 이행 관리됩니까?" }
+  ];
+
+  const scaleOptions = [
+    { label: "항상 그렇다", score: 10 },
+    { label: "대체로 그렇다", score: 7 },
+    { label: "보통이다", score: 5 },
+    { label: "거의 그렇지 않다", score: 3 },
+    { label: "전혀 아니다", score: 0 }
+  ];
+
+  let currentIdx = 0;
+  let answers = Array(10).fill(null);
+
+  function startQuiz() {
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('quiz-screen').style.display = 'block';
+    showQuestion();
+  }
+
+  function showQuestion() {
+    const q = questions[currentIdx];
+    document.getElementById('progress-text').innerText = `문항 ${currentIdx + 1} / 10`;
+    document.getElementById('q-number').innerText = `Question ${String(currentIdx + 1).padStart(2, '0')}`;
+    document.getElementById('q-question').innerText = q.q;
+
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    scaleOptions.forEach((opt) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      if (answers[currentIdx] === opt.score) btn.classList.add('selected');
+      btn.innerHTML = `<span>${opt.label}</span>`;
+      btn.onclick = () => selectOption(opt.score);
+      optionsContainer.appendChild(btn);
+    });
+
+    document.getElementById('btn-prev').disabled = currentIdx === 0;
+    document.getElementById('btn-next').disabled = answers[currentIdx] === null;
+  }
+
+  function selectOption(score) {
+    answers[currentIdx] = score;
+    showQuestion();
+    setTimeout(() => { if (currentIdx < 9) nextQuestion(); else calculateResult(); }, 250);
+  }
+
+  function nextQuestion() {
+    if (currentIdx < 9) { currentIdx++; showQuestion(); }
+  }
+
+  function prevQuestion() {
+    if (currentIdx > 0) { currentIdx--; showQuestion(); }
+  }
+
+  function calculateResult() {
+    document.getElementById('quiz-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
+
+    const totalScore = answers.reduce((sum, score) => sum + score, 0);
+    document.getElementById('total-score').innerText = totalScore;
+
+    // 등급
+    let grade = "D"; let gradeColor = "var(--danger)";
+    let gradeTitle = "구조적 전면 개선이 시급한 상태";
+    if (totalScore >= 85) { grade = "A"; gradeColor = "#38a169"; gradeTitle = "구조적으로 매우 건강한 상태"; }
+    else if (totalScore >= 70) { grade = "B"; gradeColor = "#3182ce"; gradeTitle = "양호한 관리 상태"; }
+    else if (totalScore >= 55) { grade = "C"; gradeColor = "var(--warning)"; gradeTitle = "부분적 병목이 발생 중인 상태"; }
+
+    document.getElementById('grade-display').innerText = grade;
+    document.getElementById('grade-display').style.color = gradeColor;
+    document.getElementById('grade-title').innerText = gradeTitle;
+
+    // 영역 점수
+    let categories = {
+      [CAT_MOV]: { score: 0, max: 20 },
+      [CAT_SAF]: { score: 0, max: 20 },
+      [CAT_STD]: { score: 0, max: 30 },
+      [CAT_IMP]: { score: 0, max: 30 }
+    };
+    questions.forEach((q, idx) => { categories[q.cat].score += answers[idx]; });
+
+    // 인쇄용 영역 점수 생성 및 최약점 분석
+    let printHtml = "<ul>";
+    let minPercent = 100;
+    let worstCat = CAT_MOV;
+    let vulnerableCount = 0; // 50% 미만 취약 영역 개수
+    
+    for (const [name, data] of Object.entries(categories)) {
+      const pct = (data.score / data.max) * 100;
+      printHtml += `<li style="margin-bottom: 8px;"><strong>${name}:</strong> ${data.score} / ${data.max}점 (${Math.round(pct)}%)</li>`;
+      if (pct < minPercent) {
+        minPercent = pct;
+        worstCat = name;
+      }
+      if (pct < 50) {
+        vulnerableCount++;
+      }
+    }
+    printHtml += "</ul>";
+    document.getElementById('print-scores').innerHTML = printHtml;
+
+    // 공장 6개 유형 판별
+    let typeTitle = "";
+    let typeDesc = "";
+    let checklist = [];
+
+    // S형 판단 로직 (총점 80 이상)
+    if (totalScore >= 80) {
+      typeTitle = "S형: 구조 건강형 공장";
+      typeDesc = "현장 구조가 원활하게 작동하고 있습니다.<br>현재의 훌륭한 시스템을 유지하며, ISO 갱신 심사를 통한 심화 모니터링을 권장합니다.";
+      checklist = [
+        "기존 표준서가 현장의 최신 변화를 잘 반영하고 있는지 연 1회 점검하라",
+        "현재의 무재해 및 고품질 이력을 공식 인증 자료로 문서화하라"
+      ];
+    // E형 판단 로직 (취약 영역이 2개 이상일 때 복합 리스크로 판별)
+    } else if (vulnerableCount >= 2) {
+      typeTitle = "E형: 복합 리스크형 공장";
+      typeDesc = "안전과 품질 등 여러 영역에서 동시에 구조적 병목이 발생 중입니다.<br>땜질식 처방이 아닌 전면적인 구조 진단이 시급합니다.";
+      checklist = [
+        "생산 일정을 늦추더라도 품질/안전 병목의 근본 원인 파악을 최우선으로 하라",
+        "대표 주도의 '현장 구조 개선 TFT'를 즉각 구성하라",
+        "내부 인력만으로는 단기 해결이 불가함을 인지하고 전문가 심층 진단을 의뢰하라"
+      ];
+    // A, B, C, D 단일 취약형 판별 로직
+    } else if (worstCat === CAT_STD) {
+      typeTitle = "A형: 사람 의존형 공장";
+      typeDesc = "김 반장님 없으면 공장이 안 돌아가시죠?<br>매뉴얼 없이 베테랑의 입과 손에만 의존하는 매우 위험한 상태입니다.";
+      checklist = [
+        "특정 직원이 없으면 중단되는 병목 공정을 오늘 중으로 기록하라",
+        "해당 공정 중 작업표준서가 없는 곳을 확인하라",
+        "신입이 혼자 작업 가능한 공정을 점검하라",
+        "숙련자만 알고 있는 노하우(온도, 속도, 소리 등)를 인터뷰하여 문서화하라"
+      ];
+    } else if (worstCat === CAT_SAF) {
+      typeTitle = "B형: 안전문화 취약형 공장";
+      typeDesc = "생산 납기를 맞추느라 센서를 끄고, 아차사고를 운으로 넘기고 계십니다.<br>중대재해처벌법의 1순위 타깃이 될 수 있습니다.";
+      checklist = [
+        "최근 1년 내 발생한 '아차사고' 목록을 기록하라",
+        "생산 속도를 위해 우회되거나 해제된 안전장치가 없는지 현장 확인하라",
+        "가장 최근의 위험성평가 결과가 현장에 게시되어 있는지 점검하라",
+        "최근 1개월 내 입사한 신규 작업자의 안전 교육 이력을 점검하라"
+      ];
+    } else if (worstCat === CAT_MOV) {
+      typeTitle = "C형: 병목 누적형 공장";
+      typeDesc = "직원들은 하루 종일 바쁘게 뛰어다니는데, 정작 출하량은 그대로죠?<br>꼬여버린 동선과 레이아웃에 돈이 줄줄 새고 있습니다.";
+      checklist = [
+        "공장 내 보행자와 지게차 동선이 혼재된 위험 교차로를 도출하라",
+        "재고나 폐기물이 쌓여 보행 통로를 침범한 구역을 시각적으로 구획하라",
+        "가장 많이 돌아다니는 작업자의 불필요한 도보 이동 시간(낭비)을 측정하라"
+      ];
+    } else { // CAT_IMP
+      typeTitle = "D형: 데이터 단절형 공장";
+      typeDesc = "불량이 나도 그때뿐, 왜 났는지 기록하고 다음 달에 구조적으로 고쳐지는 시스템이 없습니다.<br>밑빠진 독에 물 붓기입니다.";
+      checklist = [
+        "이번 주 발생한 불량 TOP 3의 근본 원인을 '작업자 실수' 외의 요인에서 찾아라",
+        "현장 작업자가 제기한 안전/설비 문제가 1주일 내 조치되는지 이력을 확인하라",
+        "문제가 반복되는 공정의 일일 생산/품질 데이터가 교차 검증되는지 확인하라"
+      ];
+    }
+
+    document.getElementById('factory-type-title').innerText = typeTitle;
+    document.getElementById('factory-type-desc').innerHTML = typeDesc;
+
+    const listHtml = checklist.map(item => `
+      <div class="checklist-item">
+        <input type="checkbox"> <span style="font-weight:600;">${item}</span>
+      </div>
+    `).join('');
+    document.getElementById('checklist-items').innerHTML = listHtml;
+  }
+
+  function openLeadForm() {
+    document.getElementById('lead-modal').style.display = 'flex';
+  }
+
+  function closeLeadForm() {
+    document.getElementById('lead-modal').style.display = 'none';
+  }
+
+  function submitAndDownload() {
+    const email = document.getElementById('userEmail').value;
+    const company = document.getElementById('companyName').value || "고객사";
+    
+    if (!email) {
+      alert("보고서를 수신할 이메일을 입력해 주세요.");
+      return;
+    }
+    
+    // (향후 이곳에 Formspree 등 이메일 전송 API 로직 추가)
+    console.log("리드 수집:", email, company);
+    
+    // 1. 문서 내 업체명/날짜 삽입
+    const today = new Date();
+    const dateStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+    
+    document.getElementById('print-company-name').innerText = company;
+    document.getElementById('print-date').innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+
+    // 2. 별이온님(대표님) 이메일로 리드 정보 백그라운드 자동 전송 (Formspree 활용)
+    const resultTitle = document.getElementById('factory-type-title').innerText;
+    const score = document.getElementById('total-score').innerText;
+    
+    const formData = new FormData();
+    formData.append("유입경로", "RISA 구조건강지수 웹 진단기");
+    formData.append("기업명", company);
+    formData.append("고객 이메일", email);
+    formData.append("진단 점수", score + "점");
+    formData.append("공장 유형", resultTitle);
+
+    // 3. 인쇄 실행 함수 (데이터 전송 완료 후 실행)
+    const executePrint = () => {
+      const originalTitle = document.title;
+      document.title = `[RISA진단결과]_${company}_${dateStr}`;
+      closeLeadForm();
+      
+      setTimeout(() => { 
+        window.print(); 
+        // 인쇄 창이 닫힌 후 다시 원래 타이틀로 복구
+        setTimeout(() => { document.title = originalTitle; }, 1000);
+      }, 500);
+    };
+
+    fetch("https://formspree.io/f/xvzldqjq", {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      console.log("리드 전송 성공");
+      executePrint();
+    }).catch(error => {
+      console.error("리드 전송 실패", error);
+      executePrint(); // 실패해도 사용자가 PDF는 받을 수 있도록 보장
+    });
+  }
+</script>
+
+</body>
+</html>
