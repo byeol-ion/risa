@@ -290,9 +290,27 @@
 
       .btn, .nav-buttons { display: none !important; }
       .print-meta { display: block !important; }
-      .print-only { display: block; page-break-before: always; break-before: page; padding-top: 20px; font-size: 15px; line-height: 1.8; color: #1a202c; }
+
+      /* ★ 등급 긴급도 박스 → 2페이지 강제 시작 */
+      #grade-urgency-box {
+        page-break-before: always;
+        break-before: page;
+        background: #f7fafc !important;
+        border: 2px solid #2d3748 !important;
+        color: #1a202c !important;
+        padding: 20px !important;
+      }
+      #grade-urgency-box p { color: #1a202c !important; }
+      #grade-urgency-box span { color: #1a202c !important; }
+
+      /* ★ CTA 버튼 섹션: PDF에서 숨김 (상호작용 요소) */
+      #cta-deep-diagnosis { display: none !important; }
+
+      /* print-only: grade-urgency-box 이후 자연스럽게 이어짐 (page-break 제거) */
+      .print-only { display: block; padding-top: 30px; font-size: 15px; line-height: 1.8; color: #1a202c; }
       #print-scores li { font-size: 16px; font-weight: 800; color: #2d3748; margin-bottom: 8px; }
     }
+
   </style>
 </head>
 <body>
